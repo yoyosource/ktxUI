@@ -15,7 +15,10 @@ fun main() {
             Spacer()
             HStack {
                 Padding {
-                    Text("Hello")
+                    ZStack {
+                        Text("Hello")
+                        Text("Hugo")
+                    }
                 }
                     .padding(Side.LEFT, 10)
                 Spacer()
