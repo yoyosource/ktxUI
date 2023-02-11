@@ -56,7 +56,11 @@ class Padding internal constructor() : SingleViewContainer() {
     override fun size(drawableData: DrawableData, screenSize: Element, viewState: ViewState) {
         super.size(drawableData, screenSize, viewState)
         child?.let {
-            it.size(drawableData, screenSize.copy() - Element(left.get() + right.get(), top.get() + bottom.get()), viewState)
+            it.size(
+                drawableData,
+                screenSize.copy() - Element(left.get() + right.get(), top.get() + bottom.get()),
+                viewState
+            )
         }
     }
 

@@ -14,7 +14,7 @@ fun ViewContainer.Text(text: KProperty0<String>): Text {
     return observableInit(text) { +Text(it) }
 }
 
-class Text internal constructor(val text: () -> String) : View() {
+class Text internal constructor(val text: () -> String) : ViewElement() {
 
     private var fontName: ViewOption<String> = ViewOption(Font.MONOSPACED)
     private var fontStyle: ViewOption<Int> = ViewOption(Font.PLAIN)

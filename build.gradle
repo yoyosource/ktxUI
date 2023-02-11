@@ -34,6 +34,8 @@ repositories {
 dependencies {
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
 
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.8.0"
+
     /*
     implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
 
@@ -59,7 +61,7 @@ dependencies {
     runtimeOnly "org.lwjgl:lwjgl-par::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-stb::$lwjglNatives"
     if (lwjglNatives == "natives-macos" || lwjglNatives == "natives-macos-arm64") runtimeOnly "org.lwjgl:lwjgl-vulkan::$lwjglNatives"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:1.8.0"
+
      */
 }
 

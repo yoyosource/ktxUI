@@ -10,8 +10,7 @@ interface DrawableData {
 
 abstract class Drawable : DrawableData {
 
-    fun draw(screen: Screen) {
-        val viewState = ViewState()
+    fun draw(screen: Screen, viewState: ViewState = ViewState()) {
         val (width, height) = getSize()
 
         screen.size(this, Element(width, height), viewState)

@@ -1,5 +1,9 @@
 package de.yoyosource.ktxui
 
+@DslMarker
+annotation class KtxUiDsl
+
+@KtxUiDsl
 abstract class View {
 
     internal var parent: ViewContainer? = null
@@ -21,11 +25,16 @@ abstract class View {
     abstract fun draw(drawable: Drawable, viewState: ViewState, location: Element)
 }
 
+abstract class ViewElement : View()
+
 abstract class ViewContainer : View() {
-    internal var children: List<View> = emptyList()
+    internal val children: MutableList<View> = mutableListOf()
 
     open operator fun <T: View> T.unaryPlus(): T {
-        children += this
+        if (this@ViewContainer.children.contains(this)) {
+            throw IllegalStateException("Child already set")
+        }
+        this@ViewContainer.children += this
         this.parent = this@ViewContainer
         return this
     }
@@ -41,10 +50,10 @@ abstract class SingleViewContainer : ViewContainer() {
     internal var child: View? = null
 
     override operator fun <T: View> T.unaryPlus(): T {
-        if (child != null) {
+        if (this@SingleViewContainer.child != null) {
             throw IllegalStateException("Child already set")
         }
-        child = this
+        this@SingleViewContainer.child = this
         this.parent = this@SingleViewContainer
         return this
     }

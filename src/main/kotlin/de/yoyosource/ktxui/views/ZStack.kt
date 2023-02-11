@@ -20,7 +20,7 @@ class ZStack internal constructor() : ViewContainer() {
 
     override fun size(drawableData: DrawableData, screenSize: Element, viewState: ViewState) {
         children.forEach {
-            it.size(drawableData, screenSize, viewState)
+            it.size(drawableData, screenSize.copy(), viewState)
         }
         viewState.sizeMap[this] = screenSize
     }

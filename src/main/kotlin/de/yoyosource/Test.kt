@@ -1,17 +1,19 @@
 package de.yoyosource
 
+import de.yoyosource.ktxui.Observer
 import de.yoyosource.ktxui.Screen
 import de.yoyosource.ktxui.impl.Graphics2dDrawable
-import de.yoyosource.ktxui.views.Spacer
-import de.yoyosource.ktxui.views.Text
-import de.yoyosource.ktxui.views.VStack
+import de.yoyosource.ktxui.views.*
+import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
 
+var testText by Observer("Hello World")
+
 fun main() {
-    val screen = Screen {
+    var screen = Screen {
         VStack {
             Spacer()
             Text("Hello")
@@ -25,11 +27,45 @@ fun main() {
         }
     }
 
-    val image = BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB)
+    screen = Screen {
+        VStack {
+            Spacer()
+            HStack {
+                Spacer()
+                ZStack {
+                    HStack {
+                        Spacer()
+                        Text("Hello World")
+                        Spacer()
+                    }
+                    HStack {
+                        Spacer()
+                        Text("____________")
+                            .color(Color.RED)
+                        Spacer()
+                    }
+                }
+                Spacer()
+            }
+            HStack {
+                Spacer()
+                Text(::testText)
+                Spacer()
+            }
+            Spacer()
+        }
+    }
+
+    val image = BufferedImage(128, 128, BufferedImage.TYPE_INT_ARGB)
     val g = image.createGraphics() as Graphics2D
-    val drawable = Graphics2dDrawable(g, 100, 100)
+    val drawable = Graphics2dDrawable(g, 128, 128)
 
     drawable.draw(screen)
+    screen.addRedrawListener {
+        println("Redraw")
+        drawable.draw(screen)
+    }
+    testText = "Hello World 2"
 
     ImageIO.write(image, "png", File("test.png"))
 }
