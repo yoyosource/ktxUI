@@ -3,17 +3,19 @@ package de.yoyosource.ktxui
 import kotlin.reflect.KProperty0
 import kotlin.reflect.jvm.isAccessible
 
-class Option<T : Any>(private var value: T) {
+class ViewOption<T : Any>(value: T) {
 
     private var removeObserver: () -> Unit = {}
+    private var value: () -> T = { value }
 
     fun get(): T {
-        return value
+        return value()
     }
 
     fun <V : View> set(self: V, value: T): V {
         removeObserver()
-        this.value = value
+        removeObserver = {}
+        this.value = { value }
         return self
     }
 
@@ -24,7 +26,7 @@ class Option<T : Any>(private var value: T) {
         val delegate = value.apply {
             this.isAccessible = true
         }.getDelegate()
-        this@Option.value = value.get()
+        this@ViewOption.value = { value.get() }
         if (delegate is Observer<*>) {
             val observer: (Any) -> Unit = {
                 self.redraw()

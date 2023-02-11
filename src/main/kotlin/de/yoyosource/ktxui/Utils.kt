@@ -1,5 +1,23 @@
 package de.yoyosource.ktxui
 
+import java.util.*
+import kotlin.reflect.KProperty0
+import kotlin.reflect.jvm.isAccessible
+
+fun <T, V: View> observableInit(property : KProperty0<T>, viewCreator: (() -> T) -> V): V {
+    if (property.isLateinit) throw IllegalArgumentException("Lateinit properties are not supported")
+    val delegate = property.apply {
+        this.isAccessible = true
+    }.getDelegate()
+    val view = viewCreator { property.get() }
+    if (delegate is Observer<*>) {
+        delegate.addObserver {
+            view.redraw()
+        }
+    }
+    return view
+}
+
 enum class Orientation {
     HORIZONTAL,
     VERTICAL
@@ -12,11 +30,13 @@ enum class Side {
     RIGHT
 }
 
-class ViewState
+class ViewState {
+    var sizeMap: MutableMap<View, Element> = IdentityHashMap()
+}
 
-class Size(width: Int, height: Int) {
+class Element(x: Int, y: Int) {
 
-    var width: Int = width
+    var x: Int = x
         set(value) {
             field = value
             if (field < 0) {
@@ -24,7 +44,7 @@ class Size(width: Int, height: Int) {
             }
         }
 
-    var height: Int = height
+    var y: Int = y
         set(value) {
             field = value
             if (field < 0) {
@@ -32,42 +52,53 @@ class Size(width: Int, height: Int) {
             }
         }
 
-    fun component1() = width
-    fun component2() = height
+    operator fun component1() = x
+    operator fun component2() = y
 
-    operator fun plus(other: Size): Size {
-        width += other.width
-        height += other.height
+    operator fun plus(other: Element): Element {
+        x += other.x
+        y += other.y
         return this
     }
 
-    operator fun minus(other: Size): Size {
-        width -= other.width
-        height -= other.height
+    operator fun minus(other: Element): Element {
+        x -= other.x
+        y -= other.y
         return this
     }
 
-    fun copy(width: Int = this.width, height: Int = this.height): Size {
-        return Size(width, height)
+    fun copy(width: Int = this.x, height: Int = this.y): Element {
+        return Element(width, height)
     }
 
     override fun toString(): String {
-        return "Size(width=$width, height=$height)"
+        return "Size(x=$x, y=$y)"
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is Size) return false
+        if (other !is Element) return false
 
-        if (width != other.width) return false
-        if (height != other.height) return false
+        if (x != other.x) return false
+        if (y != other.y) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        var result = width.hashCode()
-        result = 31 * result + height.hashCode()
+        var result = x.hashCode()
+        result = 31 * result + y.hashCode()
         return result
+    }
+}
+
+class SpacerCalculation(size: Int, count: Int) {
+    private val delta: Float = if (count > 0) size.toFloat() / count else 0f
+    private var current: Float = 0f
+
+    fun next(): Int {
+        val temp = current
+        current += delta
+        return current.toInt() - temp.toInt()
     }
 }
