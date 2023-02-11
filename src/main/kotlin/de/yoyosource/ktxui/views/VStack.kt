@@ -26,7 +26,7 @@ class VStack internal constructor() : OrientedViewContainer(Orientation.VERTICAL
         val spacers = children.filterIsInstance<Spacer>()
         val splitSize = spacers.size + min(spacers(Orientation.VERTICAL) - spacers.size, 1)
 
-        // println("Spacer: ${spacers.size}   Splitting: $splitSize   Size: $currentSize   Screen: $screenSize")
+        // println("Spacer: ${spacers.size}   Splitting: $splitSize   Size: $currentSize   Screen: $screenSize   SpacerSize: $spacerSize")
         var spacerCalculation = SpacerCalculation(spacerSize.y, splitSize)
         spacers.forEach {
             it.size(drawableData, screenSize.copy(height = spacerCalculation.next()), viewState)
@@ -36,13 +36,13 @@ class VStack internal constructor() : OrientedViewContainer(Orientation.VERTICAL
             .filter { it.spacers(Orientation.VERTICAL) > 0 }
             .toSet()
         val componentSplitSize: Int = spacerSize.y / if (splitSize == 0) 1 else splitSize
-        spacerCalculation = SpacerCalculation(spacerSize.y, views.size)
+        spacerCalculation = SpacerCalculation(componentSplitSize, views.size)
         // println("Other Views sizes: $componentSplitSize   Components: ${views.size}")
         children.forEach {
             if (viewState.sizeMap.containsKey(it)) {
                 return@forEach
             }
-            val current = it.size(drawableData)
+            val current = it.size(drawableData).copy()
             current.x = screenSize.x
             if (views.contains(it)) {
                 current.y = current.y + spacerCalculation.next()

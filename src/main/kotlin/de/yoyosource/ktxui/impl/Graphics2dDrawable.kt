@@ -20,6 +20,11 @@ class Graphics2dDrawable(private val g: Graphics2D, private val width: Int, priv
     }
 
     override fun getTextSize(text: String, font: Font): Element {
+        if (text.isEmpty()) {
+            val textLayout = TextLayout(" ", font, g.fontRenderContext)
+            return Element(0, textLayout.ascent.toInt() + textLayout.descent.toInt())
+        }
+
         val textLayout = TextLayout(text, font, g.fontRenderContext)
         return Element(textLayout.advance.toInt(), textLayout.ascent.toInt() + textLayout.descent.toInt())
     }
@@ -30,6 +35,11 @@ class Graphics2dDrawable(private val g: Graphics2D, private val width: Int, priv
     }
 
     override fun drawText(text: String, font: Font, color: Color, location: Element): Int {
+        if (text.isEmpty()) {
+            val textLayout = TextLayout(" ", font, g.fontRenderContext)
+            return textLayout.ascent.toInt() + textLayout.descent.toInt()
+        }
+
         g.font = font
         g.color = color
         val textLayout = TextLayout(text, font, g.fontRenderContext)

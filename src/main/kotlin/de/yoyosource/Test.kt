@@ -1,9 +1,10 @@
 package de.yoyosource
 
 import de.yoyosource.ktxui.Screen
-import de.yoyosource.ktxui.Side
 import de.yoyosource.ktxui.impl.Graphics2dDrawable
-import de.yoyosource.ktxui.views.*
+import de.yoyosource.ktxui.views.Spacer
+import de.yoyosource.ktxui.views.Text
+import de.yoyosource.ktxui.views.VStack
 import java.awt.Graphics2D
 import java.awt.image.BufferedImage
 import java.io.File
@@ -13,20 +14,13 @@ fun main() {
     val screen = Screen {
         VStack {
             Spacer()
-            HStack {
-                Padding {
-                    ZStack {
-                        Text("Hello")
-                        Text("Hugo")
-                    }
-                }
-                    .padding(Side.LEFT, 10)
+            Text("Hello")
+            VStack {
                 Spacer()
-                Padding {
-                    Text("World")
-                }
-                    .padding(Side.RIGHT, 10)
+                Text("Hello\n\nWorld")
+                Spacer()
             }
+            Text("World")
             Spacer()
         }
     }
