@@ -39,6 +39,16 @@ abstract class ViewContainer : View() {
         return this
     }
 
+    open fun swap(old: View, new: View) {
+        if (this.children.contains(old)) {
+            this.children[this.children.indexOf(old)] = new
+            new.parent = this
+            old.parent = null
+        } else {
+            throw IllegalStateException("Child not found")
+        }
+    }
+
     override fun spacers(orientation: Orientation): Int {
         return children.sumOf { it.spacers(orientation) }
     }
@@ -56,6 +66,16 @@ abstract class SingleViewContainer : ViewContainer() {
         this@SingleViewContainer.child = this
         this.parent = this@SingleViewContainer
         return this
+    }
+
+    override fun swap(old: View, new: View) {
+        if (this.child == old) {
+            this.child = new
+            new.parent = this
+            old.parent = null
+        } else {
+            throw IllegalStateException("Child not found")
+        }
     }
 
     override fun spacers(orientation: Orientation): Int {

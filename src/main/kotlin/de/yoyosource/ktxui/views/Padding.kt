@@ -54,7 +54,7 @@ class Padding internal constructor() : SingleViewContainer() {
     }
 
     override fun size(drawableData: DrawableData, screenSize: Element, viewState: ViewState) {
-        super.size(drawableData, screenSize, viewState)
+        val size = size(drawableData)
         child?.let {
             it.size(
                 drawableData,
@@ -62,6 +62,7 @@ class Padding internal constructor() : SingleViewContainer() {
                 viewState
             )
         }
+        viewState.sizeMap[this] = size
     }
 
     override fun draw(drawable: Drawable, viewState: ViewState, location: Element) {
@@ -71,3 +72,24 @@ class Padding internal constructor() : SingleViewContainer() {
         location + viewState.sizeMap[this]!!
     }
 }
+
+private fun <V: ViewElement> V.padding(mutator: Padding.() -> Unit): V {
+    val parent = this.parent!!
+    if (parent is Padding) {
+        parent.mutator()
+        return this
+    }
+    parent.swap(this, Padding().apply {
+        +this@padding
+        this.mutator()
+    })
+    return this
+}
+
+fun <V: ViewElement> V.padding(padding: Int) = padding { padding(padding) }
+
+fun <V: ViewElement> V.padding(padding: KProperty0<Int>) = padding { padding(padding) }
+
+fun <V: ViewElement> V.padding(side: Side, padding: Int) = padding { padding(side, padding) }
+
+fun <V: ViewElement> V.padding(side: Side, padding: KProperty0<Int>) = padding { padding(side, padding) }

@@ -7,6 +7,7 @@ import java.awt.Font
 import java.awt.Graphics2D
 import java.awt.RenderingHints
 import java.awt.font.TextLayout
+import java.awt.image.BufferedImage
 
 class Graphics2dDrawable(private val g: Graphics2D, private val width: Int, private val height: Int): Drawable() {
 
@@ -34,6 +35,11 @@ class Graphics2dDrawable(private val g: Graphics2D, private val width: Int, priv
         g.fillRect(0, 0, width, height)
     }
 
+    override fun drawRectangle(location: Element, size: Element, color: Color) {
+        g.color = color
+        g.fillRect(location.x, location.y, size.x, size.y)
+    }
+
     override fun drawText(text: String, font: Font, color: Color, location: Element): Int {
         if (text.isEmpty()) {
             val textLayout = TextLayout(" ", font, g.fontRenderContext)
@@ -45,5 +51,9 @@ class Graphics2dDrawable(private val g: Graphics2D, private val width: Int, priv
         val textLayout = TextLayout(text, font, g.fontRenderContext)
         textLayout.draw(g, location.x.toFloat(), location.y.toFloat() + textLayout.ascent)
         return textLayout.ascent.toInt()
+    }
+
+    override fun drawImage(bufferedImage: BufferedImage, location: Element) {
+        g.drawImage(bufferedImage, location.x, location.y, null)
     }
 }

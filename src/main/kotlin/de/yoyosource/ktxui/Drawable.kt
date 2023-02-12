@@ -2,6 +2,7 @@ package de.yoyosource.ktxui
 
 import java.awt.Color
 import java.awt.Font
+import java.awt.image.BufferedImage
 
 interface DrawableData {
     fun getSize(): Element
@@ -20,5 +21,9 @@ abstract class Drawable : DrawableData {
 
     internal abstract fun fillBackground(color: Color)
 
+    abstract fun drawRectangle(location: Element, size: Element, color: Color)
+
     abstract fun drawText(text: String, font: Font, color: Color, location: Element): Int
+
+    abstract fun drawImage(bufferedImage: BufferedImage, location: Element)
 }

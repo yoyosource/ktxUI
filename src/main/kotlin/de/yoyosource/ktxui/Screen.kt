@@ -6,19 +6,18 @@ fun Screen(builder: SingleViewContainer.() -> Unit): Screen {
 
 class Screen internal constructor() : SingleViewContainer() {
 
-    private var redraw = mutableSetOf<() -> Unit>()
+    private var redraw = mutableSetOf<(View) -> Unit>()
 
-    fun addRedrawListener(redraw: () -> Unit) {
+    fun addRedrawListener(redraw: (View) -> Unit) {
         this.redraw.add(redraw)
     }
 
-    fun removeRedrawListener(redraw: () -> Unit) {
+    fun removeRedrawListener(redraw: (View) -> Unit) {
         this.redraw.remove(redraw)
     }
 
     override fun redraw(view: View) {
-        println(view)
-        redraw.forEach { it() }
+        redraw.forEach { it(view) }
     }
 
     override fun size(drawableData: DrawableData): Element {
