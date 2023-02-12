@@ -11,6 +11,8 @@ var testInt by Observer(0)
 var testText by Observer(::testInt) { "x$it" }
 var testInt2 by Observer(::testInt) { it / 100 + 12 }
 
+var angle by Observer(0.0)
+
 fun main() {
     var screen = Screen {
         VStack {
@@ -73,7 +75,67 @@ fun main() {
         }.padding(5)
     }
 
+    screen = Screen {
+        HCenter {
+            VCenter {
+                ZStack {
+                    Rotate {
+                        VStack {
+                            Divider(100)
+                        }
+                    }.angle(0.0)
+                    Rotate {
+                        VStack {
+                            Divider(100)
+                        }
+                    }.angle(45.0)
+                    Rotate {
+                        VStack {
+                            Divider(100)
+                        }
+                    }.angle(90.0)
+                    Rotate {
+                        VStack {
+                            Divider(100)
+                        }
+                    }.angle(135.0)
+                    Rotate {
+                        VStack {
+                            Divider(100)
+                        }
+                    }.angle(180.0)
+                    Rotate {
+                        VStack {
+                            Divider(100)
+                        }
+                    }.angle(225.0)
+                    Rotate {
+                        VStack {
+                            Divider(100)
+                        }
+                    }.angle(270.0)
+                    Rotate {
+                        VStack {
+                            Divider(100)
+                        }
+                    }.angle(315.0)
+
+                    Rotate {
+                        VStack {
+                            Divider(100)
+                        }
+                    }.angle(::angle)
+                }
+            }
+        }
+    }
+
     KtxUIFrame(screen)
+
+    delayedAnimation(5000) {
+        linearAnimation(::angle, Double.MAX_VALUE)
+            .start()
+    }.start()
 
     /*
     animation {
@@ -87,6 +149,7 @@ fun main() {
     }.start()
      */
 
+    /*
     delayedAnimation(5000) {
         val current = linearAnimation(::testInt, 1000)
             .start()
@@ -102,6 +165,7 @@ fun main() {
             }.start()
         }
     }.start()
+     */
 
     /*
     val image = BufferedImage(128, 128, BufferedImage.TYPE_INT_ARGB)

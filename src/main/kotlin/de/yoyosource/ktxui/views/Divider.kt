@@ -4,15 +4,15 @@ import de.yoyosource.ktxui.*
 import java.awt.Color
 import kotlin.reflect.KProperty0
 
-fun ViewContainer.Divider(): Divider {
+fun OrientedViewContainer.Divider(): Divider {
     return +de.yoyosource.ktxui.views.Divider()
 }
 
-fun ViewContainer.Divider(length: Int): Divider {
+fun OrientedViewContainer.Divider(length: Int): Divider {
     return +Divider(ViewOption(length))
 }
 
-fun ViewContainer.Divider(length: KProperty0<Int>): Divider {
+fun OrientedViewContainer.Divider(length: KProperty0<Int>): Divider {
     return (+Divider(ViewOption(0))).length(length)
 }
 
@@ -87,6 +87,7 @@ class Divider internal constructor(private val length: ViewOption<Int>? = null) 
     override fun draw(drawable: Drawable, viewState: ViewState, location: Element) {
         val size = viewState.sizeMap[this]!!
         drawable.drawRectangle(location, size, color.get())
+        drawable.drawRectangle(location, Element(1, 1), Color.CYAN)
         location + size
     }
 }

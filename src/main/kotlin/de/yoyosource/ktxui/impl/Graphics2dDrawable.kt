@@ -35,9 +35,33 @@ class Graphics2dDrawable(private val g: Graphics2D, private val width: Int, priv
         g.fillRect(0, 0, width, height)
     }
 
+    override fun rotate(angle: Double, translated: () -> Unit) {
+        g.rotate(angle)
+        translated()
+        g.rotate(-angle)
+    }
+
+    override fun translate(location: Element, translated: () -> Unit) {
+        g.translate(location.x, location.y)
+        translated()
+        g.translate(-location.x, -location.y)
+    }
+
     override fun drawRectangle(location: Element, size: Element, color: Color) {
         g.color = color
-        g.fillRect(location.x, location.y, size.x, size.y)
+        var x = location.x
+        var y = location.y
+        var width = size.x
+        var height = size.y
+        if (width < 0) {
+            x += width
+            width *= -1
+        }
+        if (height < 0) {
+            y += height
+            height *= -1
+        }
+        g.fillRect(x, y, width, height)
     }
 
     override fun drawText(text: String, font: Font, color: Color, location: Element): Int {

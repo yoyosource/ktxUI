@@ -12,6 +12,7 @@ import java.awt.Graphics2D
 import java.awt.event.ComponentAdapter
 import java.awt.event.ComponentEvent
 import javax.swing.JFrame
+import kotlin.system.exitProcess
 
 class KtxUIFrame(private val screen: Screen) {
 

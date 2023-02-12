@@ -1,6 +1,8 @@
 package de.yoyosource.ktxui
 
 import java.util.*
+import kotlin.math.absoluteValue
+import kotlin.math.roundToInt
 import kotlin.reflect.KProperty0
 import kotlin.reflect.jvm.isAccessible
 
@@ -36,21 +38,10 @@ class ViewState {
 
 class Element(x: Int, y: Int) {
 
-    var x: Int = x
-        set(value) {
-            field = value
-            if (field < 0) {
-                field = 0
-            }
-        }
+    constructor(x: Double, y: Double) : this(x.roundToInt(), y.roundToInt())
 
+    var x: Int = x
     var y: Int = y
-        set(value) {
-            field = value
-            if (field < 0) {
-                field = 0
-            }
-        }
 
     operator fun component1() = x
     operator fun component2() = y
@@ -64,6 +55,36 @@ class Element(x: Int, y: Int) {
     operator fun minus(other: Element): Element {
         x -= other.x
         y -= other.y
+        return this
+    }
+
+    operator fun unaryMinus(): Element {
+        x = -x
+        y = -y
+        return this
+    }
+
+    operator fun times(other: Element): Element {
+        x *= other.x
+        y *= other.y
+        return this
+    }
+
+    operator fun times(other: Int): Element {
+        x *= other
+        y *= other
+        return this
+    }
+
+    operator fun div(other: Element): Element {
+        x /= other.x
+        y /= other.y
+        return this
+    }
+
+    operator fun div(other: Int): Element {
+        x /= other
+        y /= other
         return this
     }
 

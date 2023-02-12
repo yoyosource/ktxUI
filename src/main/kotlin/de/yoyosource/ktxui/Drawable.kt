@@ -21,6 +21,10 @@ abstract class Drawable : DrawableData {
 
     internal abstract fun fillBackground(color: Color)
 
+    abstract fun rotate(angle: Double, translated: () -> Unit)
+
+    abstract fun translate(location: Element, translated: () -> Unit)
+
     abstract fun drawRectangle(location: Element, size: Element, color: Color)
 
     abstract fun drawText(text: String, font: Font, color: Color, location: Element): Int
