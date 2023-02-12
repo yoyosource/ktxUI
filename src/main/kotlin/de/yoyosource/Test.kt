@@ -2,15 +2,14 @@ package de.yoyosource
 
 import de.yoyosource.ktxui.Observer
 import de.yoyosource.ktxui.Screen
-import de.yoyosource.ktxui.impl.Graphics2dDrawable
+import de.yoyosource.ktxui.animation.delayedAnimation
+import de.yoyosource.ktxui.animation.linearAnimation
 import de.yoyosource.ktxui.views.*
 import java.awt.Color
-import java.awt.Graphics2D
-import java.awt.image.BufferedImage
-import java.io.File
-import javax.imageio.ImageIO
 
-var testText by Observer("Hello World")
+var testInt by Observer(0)
+var testText by Observer(::testInt) { "x$it" }
+var testInt2 by Observer(::testInt) { it / 100 + 12 }
 
 fun main() {
     var screen = Screen {
@@ -35,8 +34,7 @@ fun main() {
                         Text("Hello World")
                     }
                     HCenter {
-                        Text("____________")
-                            .color(Color.RED)
+                        Text("____________").color(Color.RED)
                     }
                 }
             }
@@ -46,16 +44,77 @@ fun main() {
         }
     }
 
+    screen = Screen {
+        Padding {
+            HCenter {
+                VStack {
+                    HCenter {
+                        VStack {
+                            Divider(5)
+                        }
+                    }
+                    HCenter {
+                        Divider(::testInt)
+                    }
+                    HCenter {
+                        VStack {
+                            Divider(5)
+                        }
+                    }
+                    HRight {
+                        Text(::testText)
+                            .size(::testInt2)
+                    }
+                    HCenter {
+                        Image("/test.png")
+                    }
+                }
+            }
+        }.padding(5)
+    }
+
+    KtxUIFrame(screen)
+
+    /*
+    animation {
+        delayedAnimation(5000)
+        loop {
+            linearAnimation(::testInt, 1000)
+            delayedAnimation(1000)
+            linearAnimation(::testInt, 0)
+            delayedAnimation(1000)
+        }
+    }.start()
+     */
+
+    delayedAnimation(5000) {
+        val current = linearAnimation(::testInt, 1000)
+            .start()
+        current.onFinish {
+            delayedAnimation(1000) {
+                linearAnimation(::testInt, 0)
+                    .start()
+                    .onFinish {
+                        delayedAnimation(1000) {
+                            current.start()
+                        }.start()
+                    }
+            }.start()
+        }
+    }.start()
+
+    /*
     val image = BufferedImage(128, 128, BufferedImage.TYPE_INT_ARGB)
     val g = image.createGraphics() as Graphics2D
     val drawable = Graphics2dDrawable(g, 128, 128)
 
     drawable.draw(screen)
     screen.addRedrawListener {
-        println("Redraw")
+        println("Redraw because of $it")
         drawable.draw(screen)
     }
-    testText = "Hello World 2"
+    testInt = 64
 
     ImageIO.write(image, "png", File("test.png"))
+     */
 }
