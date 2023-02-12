@@ -79,46 +79,48 @@ fun main() {
         HCenter {
             VCenter {
                 ZStack {
-                    Rotate {
-                        VStack {
-                            Divider(100)
-                        }
-                    }.angle(0.0)
-                    Rotate {
-                        VStack {
-                            Divider(100)
-                        }
-                    }.angle(45.0)
-                    Rotate {
-                        VStack {
-                            Divider(100)
-                        }
-                    }.angle(90.0)
-                    Rotate {
-                        VStack {
-                            Divider(100)
-                        }
-                    }.angle(135.0)
-                    Rotate {
-                        VStack {
-                            Divider(100)
-                        }
-                    }.angle(180.0)
-                    Rotate {
-                        VStack {
-                            Divider(100)
-                        }
-                    }.angle(225.0)
-                    Rotate {
-                        VStack {
-                            Divider(100)
-                        }
-                    }.angle(270.0)
-                    Rotate {
-                        VStack {
-                            Divider(100)
-                        }
-                    }.angle(315.0)
+                    if (false) {
+                        Rotate {
+                            VStack {
+                                Divider(100)
+                            }
+                        }.angle(0.0)
+                        Rotate {
+                            VStack {
+                                Divider(100)
+                            }
+                        }.angle(45.0)
+                        Rotate {
+                            VStack {
+                                Divider(100)
+                            }
+                        }.angle(90.0)
+                        Rotate {
+                            VStack {
+                                Divider(100)
+                            }
+                        }.angle(135.0)
+                        Rotate {
+                            VStack {
+                                Divider(100)
+                            }
+                        }.angle(180.0)
+                        Rotate {
+                            VStack {
+                                Divider(100)
+                            }
+                        }.angle(225.0)
+                        Rotate {
+                            VStack {
+                                Divider(100)
+                            }
+                        }.angle(270.0)
+                        Rotate {
+                            VStack {
+                                Divider(100)
+                            }
+                        }.angle(315.0)
+                    }
 
                     Rotate {
                         VStack {

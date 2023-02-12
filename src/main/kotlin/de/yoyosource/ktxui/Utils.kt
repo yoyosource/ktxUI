@@ -92,6 +92,12 @@ class Element(x: Int, y: Int) {
         return Element(width, height)
     }
 
+    fun abs(): Element {
+        x = x.absoluteValue
+        y = y.absoluteValue
+        return this
+    }
+
     override fun toString(): String {
         return "Size(x=$x, y=$y)"
     }

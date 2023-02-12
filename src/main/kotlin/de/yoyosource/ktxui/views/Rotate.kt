@@ -55,17 +55,18 @@ class Rotate : SingleViewContainer() {
     }
 
     override fun size(drawableData: DrawableData): Element {
-        return endPoint(child?.size(drawableData) ?: Element(0, 0), angle.get())
+        return endPoint(child?.size(drawableData) ?: Element(0, 0), angle.get()).abs()
     }
 
     override fun size(drawableData: DrawableData, screenSize: Element, viewState: ViewState) {
-        val size = size(drawableData)
+        val size = endPoint(child?.size(drawableData) ?: Element(0, 0), angle.get())
+        // println(size)
         // val size = endPoint(screenSize, angle.get())
         child?.let {
-            it.size(drawableData, size.copy(), viewState)
+            it.size(drawableData, size.copy().abs(), viewState)
         }
         viewState.sizeMap[this] = size
-        screenSize - size
+        screenSize - size.copy().abs()
     }
 
     override fun draw(drawable: Drawable, viewState: ViewState, location: Element) {
