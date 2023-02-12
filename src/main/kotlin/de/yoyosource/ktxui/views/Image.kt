@@ -9,7 +9,7 @@ fun ViewContainer.Image(image: String): Image {
     if (!image.startsWith("/")) {
         throw IllegalArgumentException("Image path must start with /")
     }
-    return ImageIO.read(Image::class.java.getResourceAsStream(image)).let { return +Image { it } }
+    ImageIO.read(Image::class.java.getResourceAsStream(image)).let { return +Image { it } }
 }
 
 fun ViewContainer.Image(image: BufferedImage): Image {

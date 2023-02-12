@@ -15,7 +15,7 @@ fun OrientedViewContainer.Spacer(length: KProperty0<Int>): Spacer {
     return (+Spacer(ViewOption(0))).length(length)
 }
 
-class Spacer internal constructor(private val length: ViewOption<Int>? = null) : View() {
+class Spacer internal constructor(private val length: ViewOption<Int>? = null) : ViewElement() {
 
     fun length(length: Int) = apply {
         this.length?.set(this, length)

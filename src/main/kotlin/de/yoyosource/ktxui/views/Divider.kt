@@ -16,7 +16,7 @@ fun OrientedViewContainer.Divider(length: KProperty0<Int>): Divider {
     return (+Divider(ViewOption(0))).length(length)
 }
 
-class Divider internal constructor(private val length: ViewOption<Int>? = null) : View() {
+class Divider internal constructor(private val length: ViewOption<Int>? = null) : ViewElement() {
 
     private var color = ViewOption(Color.BLACK)
     private var width = ViewOption(1)
@@ -39,11 +39,11 @@ class Divider internal constructor(private val length: ViewOption<Int>? = null) 
         this.color.set(this, color)
     }
 
-    fun width(width: Int) = apply {
+    fun thickness(width: Int) = apply {
         this.width.set(this, width)
     }
 
-    fun width(width: KProperty0<Int>) = apply {
+    fun thickness(width: KProperty0<Int>) = apply {
         this.width.set(this, width)
     }
 
