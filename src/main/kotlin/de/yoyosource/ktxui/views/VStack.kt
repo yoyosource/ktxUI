@@ -8,7 +8,7 @@ fun ViewContainer.VStack(builder: OrientedViewContainer.() -> Unit) {
     (+VStack()).builder()
 }
 
-fun ViewContainer.VLeft(builder: OrientedViewContainer.() -> Unit) {
+fun ViewContainer.VTop(builder: OrientedViewContainer.() -> Unit) {
     VStack {
         builder()
         Spacer()
@@ -23,7 +23,7 @@ fun ViewContainer.VCenter(builder: OrientedViewContainer.() -> Unit) {
     }
 }
 
-fun ViewContainer.VRight(builder: OrientedViewContainer.() -> Unit) {
+fun ViewContainer.VBottom(builder: OrientedViewContainer.() -> Unit) {
     VStack {
         Spacer()
         builder()
