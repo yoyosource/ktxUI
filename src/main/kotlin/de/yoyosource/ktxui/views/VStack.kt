@@ -8,6 +8,28 @@ fun ViewContainer.VStack(builder: OrientedViewContainer.() -> Unit) {
     (+VStack()).builder()
 }
 
+fun ViewContainer.VLeft(builder: OrientedViewContainer.() -> Unit) {
+    VStack {
+        builder()
+        Spacer()
+    }
+}
+
+fun ViewContainer.VCenter(builder: OrientedViewContainer.() -> Unit) {
+    VStack {
+        Spacer()
+        builder()
+        Spacer()
+    }
+}
+
+fun ViewContainer.VRight(builder: OrientedViewContainer.() -> Unit) {
+    VStack {
+        Spacer()
+        builder()
+    }
+}
+
 class VStack internal constructor() : OrientedViewContainer(Orientation.VERTICAL) {
     override fun size(drawableData: DrawableData): Element {
         val size = Element(0, 0)

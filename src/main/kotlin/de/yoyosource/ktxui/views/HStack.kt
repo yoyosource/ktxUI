@@ -8,6 +8,28 @@ fun ViewContainer.HStack(builder: OrientedViewContainer.() -> Unit) {
     (+HStack()).builder()
 }
 
+fun ViewContainer.HLeft(builder: OrientedViewContainer.() -> Unit) {
+    HStack {
+        builder()
+        Spacer()
+    }
+}
+
+fun ViewContainer.HCenter(builder: OrientedViewContainer.() -> Unit) {
+    HStack {
+        Spacer()
+        builder()
+        Spacer()
+    }
+}
+
+fun ViewContainer.HRight(builder: OrientedViewContainer.() -> Unit) {
+    HStack {
+        Spacer()
+        builder()
+    }
+}
+
 class HStack internal constructor() : OrientedViewContainer(Orientation.HORIZONTAL) {
     override fun size(drawableData: DrawableData): Element {
         val size = Element(0, 0)

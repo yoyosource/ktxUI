@@ -28,31 +28,21 @@ fun main() {
     }
 
     screen = Screen {
-        VStack {
-            Spacer()
-            HStack {
-                Spacer()
+        VCenter {
+            HCenter {
                 ZStack {
-                    HStack {
-                        Spacer()
+                    HCenter {
                         Text("Hello World")
-                        Spacer()
                     }
-                    HStack {
-                        Spacer()
+                    HCenter {
                         Text("____________")
                             .color(Color.RED)
-                        Spacer()
                     }
                 }
-                Spacer()
             }
-            HStack {
-                Spacer()
+            HCenter {
                 Text(::testText)
-                Spacer()
             }
-            Spacer()
         }
     }
 
