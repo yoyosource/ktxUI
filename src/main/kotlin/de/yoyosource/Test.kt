@@ -28,7 +28,7 @@ fun main() {
     }
 
     screen = Screen {
-        VCenter {
+        VBottom {
             HCenter {
                 ZStack {
                     HCenter {

@@ -8,8 +8,8 @@ abstract class View {
 
     internal var parent: ViewContainer? = null
 
-    open fun redraw() {
-        parent?.redraw()
+    open fun redraw(view: View = this) {
+        parent?.redraw(view)
     }
 
     abstract fun size(drawableData: DrawableData): Element

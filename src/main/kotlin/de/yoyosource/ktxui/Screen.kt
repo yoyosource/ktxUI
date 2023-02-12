@@ -16,7 +16,8 @@ class Screen internal constructor() : SingleViewContainer() {
         this.redraw.remove(redraw)
     }
 
-    override fun redraw() {
+    override fun redraw(view: View) {
+        println(view)
         redraw.forEach { it() }
     }
 
