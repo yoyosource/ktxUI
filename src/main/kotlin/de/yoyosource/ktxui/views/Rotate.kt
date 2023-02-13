@@ -1,6 +1,7 @@
 package de.yoyosource.ktxui.views
 
 import de.yoyosource.ktxui.*
+import java.awt.Color
 import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.reflect.KProperty0
@@ -30,6 +31,7 @@ class Rotate : SingleViewContainer() {
         return Element(x, y)
     }
 
+    /*
     private fun rotate(size: Element, angle: Double): Element {
         val halfSize = size.copy() / 2
         val angle = Math.toRadians(angle)
@@ -53,20 +55,20 @@ class Rotate : SingleViewContainer() {
 
         return Element(maxX - minX, maxY - minY)
     }
+     */
 
     override fun size(drawableData: DrawableData): Element {
         return endPoint(child?.size(drawableData) ?: Element(0, 0), angle.get()).abs()
     }
 
     override fun size(drawableData: DrawableData, screenSize: Element, viewState: ViewState) {
-        val size = endPoint(child?.size(drawableData) ?: Element(0, 0), angle.get())
+        // val size = endPoint(child?.size(drawableData) ?: Element(0, 0), angle.get())
         // println(size)
         // val size = endPoint(screenSize, angle.get())
         child?.let {
-            it.size(drawableData, size.copy().abs(), viewState)
+            it.size(drawableData, screenSize, viewState)
         }
-        viewState.sizeMap[this] = size
-        screenSize - size.copy().abs()
+        viewState.sizeMap[this] = endPoint(child?.size(drawableData) ?: Element(0, 0), angle.get())
     }
 
     override fun draw(drawable: Drawable, viewState: ViewState, location: Element) {
@@ -74,6 +76,7 @@ class Rotate : SingleViewContainer() {
         val size = viewState.sizeMap[this]!!
         val halfSize = size.copy() / 2
         drawable.translate(location.copy() + (endPoint(size, -angle) / 2) - halfSize) {
+            drawable.drawRectangle(Element(0, 0), size, Color(100, 100, 100, 50))
             drawable.rotate(Math.toRadians(angle)) {
                 val newLocation = Element(0, 0)
                 child?.let {
@@ -81,6 +84,7 @@ class Rotate : SingleViewContainer() {
                 }
                 location + newLocation
             }
+            drawable.drawRectangle(Element(0, 0), Element(1, 1), Color.RED)
         }
     }
 }
