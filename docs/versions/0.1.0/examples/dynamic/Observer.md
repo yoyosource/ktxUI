@@ -40,3 +40,10 @@ var area by Observer(::a, ::b) { a, b -> a * b }
 ```
 
 If you have more than 5 properties the rest will be passed as a vararg Array and the lambda will be called with a List of all passed property values.
+
+### Example 3
+```kotlin
+var a by Observer(3)
+var b by Observer(4)
+var area by Observer(::a, ::b) { a * b }
+```
