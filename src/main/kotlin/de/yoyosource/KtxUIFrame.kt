@@ -65,16 +65,16 @@ class KtxUIFrame(private val screen: Screen) {
         }
         Thread {
             while (true) {
-                canvas.repaint()
+                if (redraw) {
+                    redraw = false
+                    canvas.repaint()
+                }
                 Thread.sleep(1000 / 60)
             }
         }.start()
     }
 
     private fun redraw(g: Graphics2D) {
-        if (!redraw) return
-        redraw = false
-
         drawable = Graphics2dDrawable(g, width, height)
         var currentViewState = viewState
         if (currentViewState == null) {
