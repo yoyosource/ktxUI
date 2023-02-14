@@ -27,6 +27,7 @@
 <ul>
 <li><a href="examples/other/Padding.html">Padding</a></li>
 <li><a href="examples/other/Rotate.html">Rotate</a></li>
+<li><a href="examples/other/Conditional">Rotate</a></li>
 </ul>
 </details>
 <div style="margin-top: 1em"></div>

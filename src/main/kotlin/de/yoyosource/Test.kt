@@ -11,7 +11,17 @@ var testInt by Observer(0)
 var testText by Observer(::testInt) { "x$it" }
 var testInt2 by Observer(::testInt) { it / 100 + 12 }
 
+var colorProperty by Observer(::testInt) {
+    if (it > 50) {
+        Color.RED
+    } else {
+        Color.BLACK
+    }
+}
+
 var angle by Observer(0.0)
+
+val True by Observer(true)
 
 fun main() {
     var screen = Screen {
@@ -66,15 +76,17 @@ fun main() {
                     HRight {
                         Text(::testText)
                             .size(::testInt2)
+                            .color(::colorProperty)
                     }
-                    HCenter {
+                    /*HCenter {
                         Image("/test.png")
-                    }
+                    }*/
                 }
             }
         }.padding(5)
     }
 
+    /*
     screen = Screen {
         HCenter {
             VCenter {
@@ -130,12 +142,21 @@ fun main() {
         }
     }
 
+    screen = Screen {
+        Conditional(::True, inverted = true) {
+            Text("Hello World")
+        }
+    }
+     */
+
     KtxUIFrame(screen)
 
+    /*
     delayedAnimation(5000) {
         linearAnimation(::angle, Double.MAX_VALUE)
             .start()
     }.start()
+     */
 
     /*
     animation {
@@ -149,7 +170,6 @@ fun main() {
     }.start()
      */
 
-    /*
     delayedAnimation(5000) {
         val current = linearAnimation(::testInt, 1000)
             .start()
@@ -165,7 +185,6 @@ fun main() {
             }.start()
         }
     }.start()
-     */
 
     /*
     val image = BufferedImage(128, 128, BufferedImage.TYPE_INT_ARGB)
