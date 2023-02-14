@@ -12,13 +12,13 @@ import java.awt.Graphics2D
 import java.awt.event.ComponentAdapter
 import java.awt.event.ComponentEvent
 import javax.swing.JFrame
-import kotlin.system.exitProcess
 
 class KtxUIFrame(private val screen: Screen) {
 
     private val jFrame = JFrame()
     private lateinit var drawable: Drawable
     private var viewState: ViewState? = null
+    private var redraw = true
 
     private var width = 0
     private var height = 0
@@ -55,6 +55,7 @@ class KtxUIFrame(private val screen: Screen) {
             if (viewState == null) {
                 return@addRedrawListener
             }
+            redraw = true
             val previousSize = viewState!!.sizeMap[it]
             val newSize = it.size(drawable)
             if (previousSize != newSize) {
@@ -71,6 +72,9 @@ class KtxUIFrame(private val screen: Screen) {
     }
 
     private fun redraw(g: Graphics2D) {
+        if (!redraw) return
+        redraw = false
+
         drawable = Graphics2dDrawable(g, width, height)
         var currentViewState = viewState
         if (currentViewState == null) {

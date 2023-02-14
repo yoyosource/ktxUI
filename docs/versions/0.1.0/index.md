@@ -18,6 +18,7 @@
 <li><a href="examples/layout/HStack.html">HStack</a></li>
 <li><a href="examples/layout/ZStack.html">ZStack</a></li>
 <li><a href="examples/layout/Spacer.html">Spacer</a></li>
+<li><a href="examples/layout/AbsoluteSize.html">Spacer</a></li>
 </ul>
 </details>
 <div style="margin-top: 1em"></div>
