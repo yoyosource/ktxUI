@@ -5,6 +5,26 @@ import kotlin.reflect.KProperty
 import kotlin.reflect.KProperty0
 import kotlin.reflect.jvm.isAccessible
 
+val True by Observer(true)
+val False by Observer(false)
+val Zero by Observer(0)
+val ZeroLong by Observer(0L)
+val ZeroFloat by Observer(0f)
+val ZeroDouble by Observer(0.0)
+val EmptyString by Observer("")
+
+private var _time by Observer(0L)
+val Time by Observer(::_time) { it }
+val TimeSeconds by Observer(::_time) { it / 1000.0 }
+
+private var _deltaTimeTemp = System.currentTimeMillis()
+val TimeDelta by Observer(::_time) {
+    val delta = it - _deltaTimeTemp
+    _deltaTimeTemp = it
+    delta
+}
+val TimeDeltaSeconds by Observer(::TimeDelta) { it / 1000.0 }
+
 interface Observer<T : Any> : ReadWriteProperty<Any?, T> {
     fun addObserver(observer: (T) -> Unit)
     fun removeObserver(observer: (T) -> Unit)
@@ -21,6 +41,15 @@ interface Observer<T : Any> : ReadWriteProperty<Any?, T> {
 
         operator fun <S : Any, T : Any> invoke(source: KProperty0<S>, delegate: (S) -> T): Observer<T> {
             return DelegateObserver(source, delegate)
+        }
+
+        init {
+            Thread {
+                while (true) {
+                    Thread.sleep(1000 / 60)
+                    _time = System.currentTimeMillis()
+                }
+            }.start()
         }
     }
 }
