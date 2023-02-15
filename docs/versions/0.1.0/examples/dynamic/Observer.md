@@ -45,5 +45,5 @@ If you have more than 5 properties the rest will be passed as a vararg Array and
 ```kotlin
 var a by Observer(3)
 var b by Observer(4)
-var area by Observer(::a, ::b) { a * b }
+var area by Observer(::a, ::b) { _, _ -> a * b }
 ```
