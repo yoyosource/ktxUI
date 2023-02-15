@@ -11,6 +11,7 @@ fun main() {
         Padding {
             Text("Hello World")
                 .padding(10)
+                .padding(20)
         }.padding(10)
     }
 

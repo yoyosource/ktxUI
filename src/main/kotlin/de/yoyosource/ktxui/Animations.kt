@@ -2,9 +2,9 @@ package de.yoyosource.ktxui
 
 abstract class Animation {
 
-    private var finishCallback: () -> Unit = {}
+    private var finishCallback: (Animation) -> Unit = {}
 
-    fun onFinish(callback: () -> Unit) = apply {
+    fun onFinish(callback: (Animation) -> Unit) = apply {
         finishCallback = callback
     }
 
@@ -16,7 +16,7 @@ abstract class Animation {
 
     fun stop() = apply {
         AnimationManager.removeAnimation(this)
-        finishCallback()
+        finishCallback(this)
     }
 }
 

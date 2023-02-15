@@ -43,7 +43,8 @@ class KtxUIFrame(private val screen: Screen) {
         canvas.isFocusable = true
         canvas.requestFocus()
 
-        canvas.setSize(4 * 100, 3 * 100)
+        // canvas.setSize(4 * 100, 3 * 100)
+        canvas.setSize(896, 512)
         width = canvas.width
         height = canvas.height
         jFrame.setSize(width, height)

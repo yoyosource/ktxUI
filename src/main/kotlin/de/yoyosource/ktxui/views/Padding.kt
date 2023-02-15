@@ -79,10 +79,12 @@ private fun <V: ViewElement> V.padding(mutator: Padding.() -> Unit): V {
         parent.mutator()
         return this
     }
-    parent.swap(this, Padding().apply {
+    val padding = Padding()
+    parent.swap(this, padding)
+    padding.apply {
         +this@padding
         this.mutator()
-    })
+    }
     return this
 }
 
