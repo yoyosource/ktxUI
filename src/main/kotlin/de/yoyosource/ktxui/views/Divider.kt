@@ -19,7 +19,7 @@ fun OrientedViewContainer.Divider(length: KProperty0<Int>): Divider {
 class Divider internal constructor(private val length: ViewOption<Int>? = null) : ViewElement() {
 
     private var color = ViewOption(Color.BLACK)
-    private var width = ViewOption(1)
+    private var thickness = ViewOption(1)
 
     fun length(length: Int) = apply {
         if (this.length == null) throw IllegalArgumentException("Length is not set")
@@ -40,25 +40,25 @@ class Divider internal constructor(private val length: ViewOption<Int>? = null) 
     }
 
     fun thickness(width: Int) = apply {
-        this.width.set(this, width)
+        this.thickness.set(this, width)
     }
 
     fun thickness(width: KProperty0<Int>) = apply {
-        this.width.set(this, width)
+        this.thickness.set(this, width)
     }
 
     override fun size(drawableData: DrawableData): Element {
         if (length == null) {
             return if ((parent as OrientedViewContainer).orientation == Orientation.VERTICAL) {
-                Element(0, width.get())
+                Element(0, thickness.get())
             } else {
-                Element(width.get(), 0)
+                Element(thickness.get(), 0)
             }
         }
         return if ((parent as OrientedViewContainer).orientation == Orientation.VERTICAL) {
-            Element(length.get(), width.get())
+            Element(length.get(), thickness.get())
         } else {
-            Element(width.get(), length.get())
+            Element(thickness.get(), length.get())
         }
     }
 
@@ -66,18 +66,18 @@ class Divider internal constructor(private val length: ViewOption<Int>? = null) 
         if (length == null) {
             val current = screenSize.copy()
             if ((parent as OrientedViewContainer).orientation == Orientation.VERTICAL) {
-                current.x = width.get()
+                current.y = thickness.get()
             } else {
-                current.y = width.get()
+                current.x = thickness.get()
             }
             viewState.sizeMap[this] = current
         } else {
             val current = Element(0, 0)
             if ((parent as OrientedViewContainer).orientation == Orientation.VERTICAL) {
                 current.x = length.get()
-                current.y = width.get()
+                current.y = thickness.get()
             } else {
-                current.x = width.get()
+                current.x = thickness.get()
                 current.y = length.get()
             }
             viewState.sizeMap[this] = current
@@ -87,7 +87,6 @@ class Divider internal constructor(private val length: ViewOption<Int>? = null) 
     override fun draw(drawable: Drawable, viewState: ViewState, location: Element) {
         val size = viewState.sizeMap[this]!!
         drawable.drawRectangle(location, size, color.get())
-        drawable.drawRectangle(location, Element(1, 1), Color.CYAN)
         location + size
     }
 }
