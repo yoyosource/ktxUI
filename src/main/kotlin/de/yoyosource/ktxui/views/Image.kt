@@ -5,13 +5,6 @@ import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 import kotlin.reflect.KProperty0
 
-fun ViewContainer.Image(image: String): Image {
-    if (!image.startsWith("/")) {
-        throw IllegalArgumentException("Image path must start with /")
-    }
-    ImageIO.read(Image::class.java.getResourceAsStream(image)).let { return +ImageImpl { it } }
-}
-
 fun ViewContainer.Image(image: BufferedImage): Image {
     return +ImageImpl { image }
 }
@@ -21,6 +14,18 @@ fun ViewContainer.Image(image: KProperty0<BufferedImage>): Image {
 }
 
 sealed interface Image: ViewAPI {
+}
+
+fun ImageJarResource(path: String): Resource<BufferedImage> {
+    return JarResource(path, ImageIO::read)
+}
+
+fun ImageFileResource(path: String): Resource<BufferedImage> {
+    return FileResource(path, ImageIO::read)
+}
+
+fun ImageNetworkResource(url: String): Resource<BufferedImage> {
+    return NetworkResource(url, ImageIO::read)
 }
 
 private class ImageImpl constructor(val image: () -> BufferedImage): ViewElement(), Image {
