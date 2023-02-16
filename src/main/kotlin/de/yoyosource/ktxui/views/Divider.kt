@@ -5,45 +5,54 @@ import java.awt.Color
 import kotlin.reflect.KProperty0
 
 fun OrientedViewContainer.Divider(): Divider {
-    return +de.yoyosource.ktxui.views.Divider()
+    return +DividerImpl()
 }
 
 fun OrientedViewContainer.Divider(length: Int): Divider {
-    return +Divider(ViewOption(length))
+    return +DividerImpl(ViewOption(length))
 }
 
 fun OrientedViewContainer.Divider(length: KProperty0<Int>): Divider {
-    return (+Divider(ViewOption(0))).length(length)
+    return (+DividerImpl(ViewOption(0))).length(length)
 }
 
-class Divider internal constructor(private val length: ViewOption<Int>? = null) : ViewElement() {
+sealed interface Divider: ViewAPI {
+    fun length(length: Int): Divider
+    fun length(length: KProperty0<Int>): Divider
+    fun color(color: Color): Divider
+    fun color(color: KProperty0<Color>): Divider
+    fun thickness(width: Int): Divider
+    fun thickness(width: KProperty0<Int>): Divider
+}
+
+private class DividerImpl constructor(private val length: ViewOption<Int>? = null) : ViewElement(), Divider {
 
     private var color = ViewOption(Color.BLACK)
     private var thickness = ViewOption(1)
 
-    fun length(length: Int) = apply {
+    override fun length(length: Int) = apply {
         if (this.length == null) throw IllegalArgumentException("Length is not set")
         this.length.set(this, length)
     }
 
-    fun length(length: KProperty0<Int>) = apply {
+    override fun length(length: KProperty0<Int>) = apply {
         if (this.length == null) throw IllegalArgumentException("Length is not set")
         this.length.set(this, length)
     }
 
-    fun color(color: Color) = apply {
+    override fun color(color: Color) = apply {
         this.color.set(this, color)
     }
 
-    fun color(color: KProperty0<Color>) = apply {
+    override fun color(color: KProperty0<Color>) = apply {
         this.color.set(this, color)
     }
 
-    fun thickness(width: Int) = apply {
+    override fun thickness(width: Int) = apply {
         this.thickness.set(this, width)
     }
 
-    fun thickness(width: KProperty0<Int>) = apply {
+    override fun thickness(width: KProperty0<Int>) = apply {
         this.thickness.set(this, width)
     }
 

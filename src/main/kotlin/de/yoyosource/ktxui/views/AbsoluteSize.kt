@@ -30,7 +30,7 @@ fun ViewContainer.AbsoluteSize(width: KProperty0<Int>, height: KProperty0<Int>, 
     }
 }
 
-class AbsoluteSize internal constructor(private val width: ViewOption<Int>, private val height: ViewOption<Int>) : SingleViewContainer() {
+private class AbsoluteSize constructor(private val width: ViewOption<Int>, private val height: ViewOption<Int>) : SingleViewContainer() {
 
     override fun size(drawableData: DrawableData): Element {
         return Element(width.get(), height.get())

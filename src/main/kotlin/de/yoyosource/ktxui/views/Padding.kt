@@ -4,31 +4,38 @@ import de.yoyosource.ktxui.*
 import kotlin.reflect.KProperty0
 
 fun ViewContainer.Padding(builder: SingleViewContainer.() -> Unit): Padding {
-    return (+Padding()).apply(builder)
+    return (+PaddingImpl()).apply(builder)
 }
 
-class Padding internal constructor() : SingleViewContainer() {
+sealed interface Padding {
+    fun padding(padding: Int): Padding
+    fun padding(padding: KProperty0<Int>): Padding
+    fun padding(side: Side, padding: Int): Padding
+    fun padding(side: Side, padding: KProperty0<Int>): Padding
+}
+
+private class PaddingImpl : SingleViewContainer(), Padding {
 
     private var top: ViewOption<Int> = ViewOption(0)
     private var bottom: ViewOption<Int> = ViewOption(0)
     private var left: ViewOption<Int> = ViewOption(0)
     private var right: ViewOption<Int> = ViewOption(0)
 
-    fun padding(padding: Int) = apply {
+    override fun padding(padding: Int) = apply {
         top.set(this, padding)
         bottom.set(this, padding)
         left.set(this, padding)
         right.set(this, padding)
     }
 
-    fun padding(padding: KProperty0<Int>) = apply {
+    override fun padding(padding: KProperty0<Int>) = apply {
         top.set(this, padding)
         bottom.set(this, padding)
         left.set(this, padding)
         right.set(this, padding)
     }
 
-    fun padding(side: Side, padding: Int) = apply {
+    override fun padding(side: Side, padding: Int) = apply {
         when (side) {
             Side.TOP -> top.set(this, padding)
             Side.BOTTOM -> bottom.set(this, padding)
@@ -37,7 +44,7 @@ class Padding internal constructor() : SingleViewContainer() {
         }
     }
 
-    fun padding(side: Side, padding: KProperty0<Int>) = apply {
+    override fun padding(side: Side, padding: KProperty0<Int>) = apply {
         when (side) {
             Side.TOP -> top.set(this, padding)
             Side.BOTTOM -> bottom.set(this, padding)
@@ -73,13 +80,14 @@ class Padding internal constructor() : SingleViewContainer() {
     }
 }
 
-private fun <V: ViewElement> V.padding(mutator: Padding.() -> Unit): V {
+private fun <V: ViewAPI> V.padding(mutator: Padding.() -> Unit): V {
+    if (this !is View) return this
     val parent = this.parent!!
     if (parent is Padding) {
         parent.mutator()
         return this
     }
-    val padding = Padding()
+    val padding = PaddingImpl()
     parent.swap(this, padding)
     padding.apply {
         +this@padding
@@ -88,10 +96,10 @@ private fun <V: ViewElement> V.padding(mutator: Padding.() -> Unit): V {
     return this
 }
 
-fun <V: ViewElement> V.padding(padding: Int) = padding { padding(padding) }
+fun <V: ViewAPI> V.padding(padding: Int) = padding { padding(padding) }
 
-fun <V: ViewElement> V.padding(padding: KProperty0<Int>) = padding { padding(padding) }
+fun <V: ViewAPI> V.padding(padding: KProperty0<Int>) = padding { padding(padding) }
 
-fun <V: ViewElement> V.padding(side: Side, padding: Int) = padding { padding(side, padding) }
+fun <V: ViewAPI> V.padding(side: Side, padding: Int) = padding { padding(side, padding) }
 
-fun <V: ViewElement> V.padding(side: Side, padding: KProperty0<Int>) = padding { padding(side, padding) }
+fun <V: ViewAPI> V.padding(side: Side, padding: KProperty0<Int>) = padding { padding(side, padding) }

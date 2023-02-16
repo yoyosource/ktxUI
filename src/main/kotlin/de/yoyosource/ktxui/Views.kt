@@ -25,6 +25,8 @@ abstract class View {
     abstract fun draw(drawable: Drawable, viewState: ViewState, location: Element)
 }
 
+interface ViewAPI
+
 abstract class ViewElement : View()
 
 abstract class ViewContainer : View() {

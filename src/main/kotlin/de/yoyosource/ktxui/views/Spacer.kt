@@ -4,24 +4,29 @@ import de.yoyosource.ktxui.*
 import kotlin.reflect.KProperty0
 
 fun OrientedViewContainer.Spacer() {
-    +de.yoyosource.ktxui.views.Spacer()
+    +SpacerImpl()
 }
 
 fun OrientedViewContainer.Spacer(length: Int): Spacer {
-    return +Spacer(ViewOption(length))
+    return +SpacerImpl(ViewOption(length))
 }
 
 fun OrientedViewContainer.Spacer(length: KProperty0<Int>): Spacer {
-    return (+Spacer(ViewOption(0))).length(length)
+    return (+SpacerImpl(ViewOption(0))).length(length)
 }
 
-class Spacer internal constructor(private val length: ViewOption<Int>? = null) : ViewElement() {
+sealed interface Spacer: ViewAPI {
+    fun length(length: Int): Spacer
+    fun length(length: KProperty0<Int>): Spacer
+}
 
-    fun length(length: Int) = apply {
+private class SpacerImpl constructor(private val length: ViewOption<Int>? = null) : ViewElement(), Spacer {
+
+    override fun length(length: Int) = apply {
         this.length?.set(this, length)
     }
 
-    fun length(length: KProperty0<Int>) = apply {
+    override fun length(length: KProperty0<Int>) = apply {
         this.length?.set(this, length)
     }
 

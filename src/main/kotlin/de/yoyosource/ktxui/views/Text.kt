@@ -7,14 +7,27 @@ import kotlin.math.max
 import kotlin.reflect.KProperty0
 
 fun ViewContainer.Text(text: String): Text {
-    return +Text { text }
+    return +TextImpl { text }
 }
 
 fun ViewContainer.Text(text: KProperty0<String>): Text {
-    return observableInit(text) { +Text(it) }
+    return observableInit(text) { +TextImpl(it) }
 }
 
-class Text internal constructor(val text: () -> String) : ViewElement() {
+sealed interface Text: ViewAPI {
+    fun color(color: Color): Text
+    fun color(color: KProperty0<Color>): Text
+    fun font(font: String): Text
+    fun font(font: KProperty0<String>): Text
+    fun style(style: Int): Text
+    fun style(style: KProperty0<Int>): Text
+    fun size(size: Int): Text
+    fun size(size: KProperty0<Int>): Text
+    fun alignment(alignment: TextAlignment): Text
+    fun alignment(alignment: KProperty0<TextAlignment>): Text
+}
+
+private class TextImpl constructor(val text: () -> String) : ViewElement(), Text {
 
     private var fontName: ViewOption<String> = ViewOption(Font.MONOSPACED)
     private var fontStyle: ViewOption<Int> = ViewOption(Font.PLAIN)
@@ -30,25 +43,25 @@ class Text internal constructor(val text: () -> String) : ViewElement() {
             fontSize.set(this, value.size)
         }
 
-    fun color(color: Color) = this.color.set(this, color)
+    override fun color(color: Color) = this.color.set(this, color)
 
-    fun color(color: KProperty0<Color>) = this.color.set(this, color)
+    override fun color(color: KProperty0<Color>) = this.color.set(this, color)
 
-    fun font(font: String) = this.fontName.set(this, font)
+    override fun font(font: String) = this.fontName.set(this, font)
 
-    fun font(font: KProperty0<String>) = this.fontName.set(this, font)
+    override fun font(font: KProperty0<String>) = this.fontName.set(this, font)
 
-    fun style(style: Int) = this.fontStyle.set(this, style)
+    override fun style(style: Int) = this.fontStyle.set(this, style)
 
-    fun style(style: KProperty0<Int>) = this.fontStyle.set(this, style)
+    override fun style(style: KProperty0<Int>) = this.fontStyle.set(this, style)
 
-    fun size(size: Int) = this.fontSize.set(this, size)
+    override fun size(size: Int) = this.fontSize.set(this, size)
 
-    fun size(size: KProperty0<Int>) = this.fontSize.set(this, size)
+    override fun size(size: KProperty0<Int>) = this.fontSize.set(this, size)
 
-    fun alignment(alignment: TextAlignment) = this.alignment.set(this, alignment)
+    override fun alignment(alignment: TextAlignment) = this.alignment.set(this, alignment)
 
-    fun alignment(alignment: KProperty0<TextAlignment>) = this.alignment.set(this, alignment)
+    override fun alignment(alignment: KProperty0<TextAlignment>) = this.alignment.set(this, alignment)
 
     override fun size(drawableData: DrawableData): Element {
         val size = Element(0, 0)

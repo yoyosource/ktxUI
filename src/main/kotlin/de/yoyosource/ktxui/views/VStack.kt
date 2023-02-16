@@ -30,7 +30,7 @@ fun ViewContainer.VBottom(builder: OrientedViewContainer.() -> Unit) {
     }
 }
 
-class VStack internal constructor() : OrientedViewContainer(Orientation.VERTICAL) {
+private class VStack constructor() : OrientedViewContainer(Orientation.VERTICAL) {
     override fun size(drawableData: DrawableData): Element {
         val size = Element(0, 0)
         children.forEach {
@@ -45,7 +45,7 @@ class VStack internal constructor() : OrientedViewContainer(Orientation.VERTICAL
         val currentSize = size(drawableData)
         val spacerSize = screenSize.copy() - currentSize
 
-        val spacers = children.filterIsInstance<Spacer>()
+        val spacers = children.filterIsInstance<Spacer>().map { it as View }
         val splitSize = spacers.size + min(spacers(Orientation.VERTICAL) - spacers.size, 1)
 
         // println("Spacer: ${spacers.size}   Splitting: $splitSize   Size: $currentSize   Screen: $screenSize   SpacerSize: $spacerSize")

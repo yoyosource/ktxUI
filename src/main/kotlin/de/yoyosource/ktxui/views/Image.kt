@@ -9,18 +9,21 @@ fun ViewContainer.Image(image: String): Image {
     if (!image.startsWith("/")) {
         throw IllegalArgumentException("Image path must start with /")
     }
-    ImageIO.read(Image::class.java.getResourceAsStream(image)).let { return +Image { it } }
+    ImageIO.read(Image::class.java.getResourceAsStream(image)).let { return +ImageImpl { it } }
 }
 
 fun ViewContainer.Image(image: BufferedImage): Image {
-    return +Image { image }
+    return +ImageImpl { image }
 }
 
 fun ViewContainer.Image(image: KProperty0<BufferedImage>): Image {
-    return observableInit(image) { +Image(it) }
+    return observableInit(image) { +ImageImpl(it) }
 }
 
-class Image internal constructor(val image: () -> BufferedImage): ViewElement() {
+sealed interface Image: ViewAPI {
+}
+
+private class ImageImpl constructor(val image: () -> BufferedImage): ViewElement(), Image {
 
     override fun size(drawableData: DrawableData): Element {
         return image().let { Element(it.width, it.height) }

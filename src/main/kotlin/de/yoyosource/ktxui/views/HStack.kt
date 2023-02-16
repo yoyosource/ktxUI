@@ -30,7 +30,7 @@ fun ViewContainer.HRight(builder: OrientedViewContainer.() -> Unit) {
     }
 }
 
-class HStack internal constructor() : OrientedViewContainer(Orientation.HORIZONTAL) {
+private class HStack constructor() : OrientedViewContainer(Orientation.HORIZONTAL) {
     override fun size(drawableData: DrawableData): Element {
         val size = Element(0, 0)
         children.forEach {
@@ -45,7 +45,7 @@ class HStack internal constructor() : OrientedViewContainer(Orientation.HORIZONT
         val currentSize = size(drawableData)
         val spacerSize = screenSize.copy() - currentSize
 
-        val spacers = children.filterIsInstance<Spacer>()
+        val spacers = children.filterIsInstance<Spacer>().map { it as View }
         val splitSize = spacers.size + min(spacers(Orientation.HORIZONTAL) - spacers.size, 1)
 
         // println("Spacer: ${spacers.size}   Splitting: $splitSize   Size: $currentSize   Screen: $screenSize   SpacerSize: $spacerSize")

@@ -6,18 +6,23 @@ import kotlin.math.sin
 import kotlin.reflect.KProperty0
 
 fun ViewContainer.Rotate(builder: SingleViewContainer.() -> Unit): Rotate {
-    return (+Rotate()).apply(builder)
+    return (+RotateImpl()).apply(builder)
 }
 
-class Rotate : SingleViewContainer() {
+sealed interface Rotate {
+    fun angle(angle: Double): Rotate
+    fun angle(angle: KProperty0<Double>): Rotate
+}
+
+private class RotateImpl : SingleViewContainer(), Rotate {
 
     private var angle: ViewOption<Double> = ViewOption(0.0)
 
-    fun angle(angle: Double) = apply {
+    override fun angle(angle: Double) = apply {
         this.angle.set(this, angle)
     }
 
-    fun angle(angle: KProperty0<Double>) = apply {
+    override fun angle(angle: KProperty0<Double>) = apply {
         this.angle.set(this, angle)
     }
 

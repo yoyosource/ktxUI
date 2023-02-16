@@ -7,7 +7,7 @@ fun ViewContainer.ZStack(builder: ViewContainer.() -> Unit) {
     (+ZStack()).builder()
 }
 
-class ZStack internal constructor() : ViewContainer() {
+private class ZStack constructor() : ViewContainer() {
     override fun size(drawableData: DrawableData): Element {
         val size = Element(0, 0)
         children.forEach {
