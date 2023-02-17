@@ -3,7 +3,10 @@ package de.yoyosource.test
 import de.yoyosource.KtxUIFrame
 import de.yoyosource.ktxui.Observer
 import de.yoyosource.ktxui.Screen
-import de.yoyosource.ktxui.animation.DelayedAnimation
+import de.yoyosource.ktxui.animation.animation
+import de.yoyosource.ktxui.animation.delay
+import de.yoyosource.ktxui.animation.dynamicSet
+import de.yoyosource.ktxui.animation.loop
 import de.yoyosource.ktxui.views.Conditional
 import de.yoyosource.ktxui.views.Text
 import de.yoyosource.ktxui.views.VStack
@@ -24,8 +27,10 @@ fun main() {
 
     KtxUIFrame(screen)
 
-    DelayedAnimation(100) {
-        bool = !bool
-        it.start()
+    animation {
+        loop {
+            dynamicSet(::bool) { !bool }
+            delay(1000)
+        }
     }.start()
 }

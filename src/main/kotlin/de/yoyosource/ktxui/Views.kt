@@ -1,9 +1,9 @@
 package de.yoyosource.ktxui
 
 @DslMarker
-annotation class KtxUiDsl
+annotation class KtxUIDsl
 
-@KtxUiDsl
+@KtxUIDsl
 abstract class View {
 
     internal var parent: ViewContainer? = null

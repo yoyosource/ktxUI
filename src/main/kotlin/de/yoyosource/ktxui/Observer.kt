@@ -122,13 +122,13 @@ class ValueObserver<T : Any> : ObserverImpl<T> {
 }
 
 class DelegateObserver<T : Any> : ObserverImpl<T> {
-    private lateinit var value: T
+    private var value: T
 
     constructor(vararg sources: KProperty0<Any>, delegate: (List<Any>) -> T) {
-        val valueCreator = {
-            value = delegate(sources.map { it.get() })
+        val valueCreator = lambda@{
+            return@lambda delegate(sources.map { it.get() })
         }
-        valueCreator()
+        value = valueCreator()
         sources.forEach {
             val sourceProperty = it.apply {
                 isAccessible = true
@@ -138,7 +138,9 @@ class DelegateObserver<T : Any> : ObserverImpl<T> {
             }
 
             sourceProperty.addObserver {
-                valueCreator()
+                val newValue = valueCreator()
+                if (value == newValue) return@addObserver
+                value = newValue
                 notifyObservers(value)
             }
         }
