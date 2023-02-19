@@ -2,7 +2,7 @@ package de.yoyosource.ktxui.impl
 
 import de.yoyosource.ktxui.DebugMode
 import de.yoyosource.ktxui.Drawable
-import de.yoyosource.ktxui.Element
+import de.yoyosource.ktxui.utils.Element
 import java.awt.Color
 import java.awt.Font
 import java.awt.Graphics2D
@@ -89,7 +89,7 @@ class Graphics2dDrawable(private val g: Graphics2D, private val width: Int, priv
         g.font = font
         g.color = color
         val textLayout = TextLayout(text, font, g.fontRenderContext)
-        textLayout.draw(g, location.x.toFloat(), location.y.toFloat())
+        textLayout.draw(g, location.x.toFloat(), location.y.toFloat() + textLayout.ascent + textLayout.descent + textLayout.leading)
         return ceil(textLayout.ascent + textLayout.descent + textLayout.leading).toInt()
     }
 

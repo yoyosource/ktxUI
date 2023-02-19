@@ -1,9 +1,9 @@
 package de.yoyosource.ktxui.views
 
 import de.yoyosource.ktxui.DrawableData
-import de.yoyosource.ktxui.Element
+import de.yoyosource.ktxui.utils.Element
 import de.yoyosource.ktxui.ViewContainer
-import de.yoyosource.ktxui.ViewState
+import de.yoyosource.ktxui.utils.ViewState
 import kotlin.math.max
 
 fun ViewContainer.ZStack(builder: ViewContainer.() -> Unit) {

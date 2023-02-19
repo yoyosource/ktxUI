@@ -2,12 +2,17 @@ package de.yoyosource
 
 import de.yoyosource.ktxui.*
 import de.yoyosource.ktxui.impl.Graphics2dDrawable
+import de.yoyosource.ktxui.utils.Element
+import de.yoyosource.ktxui.utils.ViewState
+import de.yoyosource.ktxui.views.Screen
 import java.awt.Canvas
 import java.awt.Color
 import java.awt.Graphics
 import java.awt.Graphics2D
 import java.awt.event.ComponentAdapter
 import java.awt.event.ComponentEvent
+import java.awt.event.MouseAdapter
+import java.awt.event.MouseEvent
 import javax.swing.JFrame
 
 class KtxUIFrame(private val screen: Screen) {
@@ -29,10 +34,28 @@ class KtxUIFrame(private val screen: Screen) {
         }
         jFrame.addComponentListener(object: ComponentAdapter() {
             override fun componentResized(e: ComponentEvent?) {
-                width = jFrame.width
-                height = jFrame.height
+                width = canvas.width
+                height = canvas.height
                 viewState = null
                 jFrame.repaint()
+            }
+        })
+
+        canvas.addMouseListener(object: MouseAdapter() {
+            override fun mouseClicked(e: MouseEvent?) {
+                val viewState = viewState ?: return
+                e ?: return
+                val viewElement = viewState[e.x, e.y] ?: return
+                println("Mouse clicked $viewElement")
+            }
+        })
+
+        canvas.addMouseMotionListener(object: MouseAdapter() {
+            override fun mouseMoved(e: MouseEvent?) {
+                val viewState = viewState ?: return
+                e ?: return
+                val viewElement = viewState[e.x, e.y] ?: return
+                println("Mouse hovered $viewElement")
             }
         })
 
@@ -87,6 +110,8 @@ class KtxUIFrame(private val screen: Screen) {
         }
         drawable.fillBackground(Color.WHITE)
         currentViewState.order.forEach {
+            val (location, size) = currentViewState[it]
+            drawable.drawRectangle(location.copy() - Element(1, 1), size.copy() + Element(2, 2), Color(50, 50, 50, 50))
             it.draw(drawable, currentViewState)
         }
         viewState = currentViewState

@@ -1,4 +1,9 @@
-package de.yoyosource.ktxui
+package de.yoyosource.ktxui.views
+
+import de.yoyosource.ktxui.*
+import de.yoyosource.ktxui.utils.Element
+import de.yoyosource.ktxui.utils.Orientation
+import de.yoyosource.ktxui.utils.ViewState
 
 fun Screen(builder: SingleViewContainer.() -> Unit): Screen {
     return Screen().apply(builder)

@@ -2,7 +2,7 @@ package de.yoyosource.test
 
 import de.yoyosource.KtxUIFrame
 import de.yoyosource.ktxui.Observer
-import de.yoyosource.ktxui.Screen
+import de.yoyosource.ktxui.views.Screen
 import de.yoyosource.ktxui.animation.animation
 import de.yoyosource.ktxui.animation.delay
 import de.yoyosource.ktxui.animation.dynamicSet

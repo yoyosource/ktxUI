@@ -1,5 +1,8 @@
-package de.yoyosource.ktxui
+package de.yoyosource.ktxui.utils
 
+import de.yoyosource.ktxui.Observer
+import de.yoyosource.ktxui.View
+import de.yoyosource.ktxui.ViewElement
 import kotlin.math.roundToInt
 import kotlin.reflect.KProperty0
 import kotlin.reflect.jvm.isAccessible
@@ -18,18 +21,6 @@ fun <T, V: View> observableInit(property : KProperty0<T>, viewCreator: (() -> T)
     return view
 }
 
-enum class Orientation {
-    HORIZONTAL,
-    VERTICAL
-}
-
-enum class Side {
-    TOP,
-    BOTTOM,
-    LEFT,
-    RIGHT
-}
-
 class ViewState {
     var order: MutableList<ViewElement> = mutableListOf()
     var positions: MutableMap<ViewElement, Element> = mutableMapOf()
@@ -45,6 +36,16 @@ class ViewState {
 
     operator fun get(view: ViewElement): Pair<Element, Element> {
         return Pair(positions[view]!!, sizes[view]!!)
+    }
+
+    operator fun get(x: Int, y: Int): ViewElement? {
+        order.asReversed().forEach {
+            val (location, size) = this[it]
+            if (x in location.x until location.x + size.x && y in location.y until location.y + size.y) {
+                return it
+            }
+        }
+        return null
     }
 }
 

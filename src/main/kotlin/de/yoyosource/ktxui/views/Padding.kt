@@ -1,6 +1,9 @@
 package de.yoyosource.ktxui.views
 
 import de.yoyosource.ktxui.*
+import de.yoyosource.ktxui.utils.Element
+import de.yoyosource.ktxui.utils.Side
+import de.yoyosource.ktxui.utils.ViewState
 import kotlin.reflect.KProperty0
 
 fun ViewContainer.Padding(builder: SingleViewContainer.() -> Unit): Padding {

@@ -1,5 +1,9 @@
 package de.yoyosource.ktxui
 
+import de.yoyosource.ktxui.utils.Element
+import de.yoyosource.ktxui.utils.Orientation
+import de.yoyosource.ktxui.utils.ViewState
+
 @DslMarker
 annotation class KtxUIDsl
 
