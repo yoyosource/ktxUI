@@ -5,11 +5,12 @@ import de.yoyosource.ktxui.DebugMode
 import de.yoyosource.ktxui.Observer
 import de.yoyosource.ktxui.ViewContainer
 import de.yoyosource.ktxui.views.*
+import de.yoyosource.ktxui.views.events.Button
 import java.awt.Color
 
-var mainMenu by Observer(false)
+var mainMenu by Observer(true)
 var gameMenu by Observer(false)
-var wallMenu by Observer(true)
+var wallMenu by Observer(false)
 
 private val backgroundColor = Color.PINK
 
@@ -29,15 +30,21 @@ fun main() {
     }
 
     val frame = KtxUIFrame(screen)
-    frame.enableDebug(DebugMode.SIZE)
+    if (false) {
+        frame.enableDebug(DebugMode.SIZE)
+    }
 }
 
 fun ViewContainer.MainMenu() {
     HCenter {
         VCenter {
-            Tile(backgroundColor) {
-                Text("--- 1 ---")
-                    .size(20)
+            Button {
+                Tile(backgroundColor) {
+                    Text("--- 1 ---")
+                        .size(20)
+                }
+            }.onClick { viewPosX, viewPosY, relativeX, relativeY, x, y ->
+                println("Clicked on $viewPosX, $viewPosY, $relativeX, $relativeY, $x, $y")
             }
             Spacer()
             Tile(backgroundColor) {

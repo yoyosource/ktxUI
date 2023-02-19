@@ -3,6 +3,10 @@ package de.yoyosource.ktxui.utils
 import de.yoyosource.ktxui.DrawableView
 import de.yoyosource.ktxui.Observer
 import de.yoyosource.ktxui.View
+import de.yoyosource.ktxui.views.events.Button
+import de.yoyosource.ktxui.views.events.Drag
+import de.yoyosource.ktxui.views.events.Hover
+import de.yoyosource.ktxui.views.events.Scroll
 import kotlin.math.roundToInt
 import kotlin.reflect.KProperty0
 import kotlin.reflect.jvm.isAccessible
@@ -46,6 +50,45 @@ class ViewState {
             }
         }
         return null
+    }
+
+    private inline fun <reified T> walk(view: DrawableView, action: (T) -> Unit) {
+        var view = view as View
+        while (view.parent != null) {
+            view = view.parent!!
+            if (view is T) {
+                action(view)
+                return
+            }
+        }
+    }
+
+    fun click(view: DrawableView, x: Int, y: Int) {
+        walk<Button>(view) {
+            val (viewPosX, viewPosY) = positions[it as DrawableView]!!
+            it.click(viewPosX, viewPosY, x - viewPosX, y - viewPosY, x, y)
+        }
+    }
+
+    fun hover(view: DrawableView, x: Int, y: Int) {
+        walk<Hover>(view) {
+            val (viewPosX, viewPosY) = positions[it as DrawableView]!!
+            it.hover(viewPosX, viewPosY, x - viewPosX, y - viewPosY, x, y)
+        }
+    }
+
+    fun drag(view: DrawableView, x: Int, y: Int) {
+        walk<Drag>(view) {
+            val (viewPosX, viewPosY) = positions[it as DrawableView]!!
+            it.drag(viewPosX, viewPosY, x - viewPosX, y - viewPosY, x, y)
+        }
+    }
+
+    fun scroll(view: DrawableView, x: Int, y: Int, wheelRotation: Double) {
+        walk<Scroll>(view) {
+            val (viewPosX, viewPosY) = positions[it as DrawableView]!!
+            it.scroll(viewPosX, viewPosY, x - viewPosX, y - viewPosY, x, y, wheelRotation)
+        }
     }
 }
 

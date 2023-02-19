@@ -11,10 +11,7 @@ import java.awt.Canvas
 import java.awt.Color
 import java.awt.Graphics
 import java.awt.Graphics2D
-import java.awt.event.ComponentAdapter
-import java.awt.event.ComponentEvent
-import java.awt.event.MouseAdapter
-import java.awt.event.MouseEvent
+import java.awt.event.*
 import javax.swing.JFrame
 
 class KtxUIFrame(private val screen: Screen) {
@@ -50,7 +47,7 @@ class KtxUIFrame(private val screen: Screen) {
                 val viewState = viewState ?: return
                 e ?: return
                 val viewElement = viewState[e.x, e.y] ?: return
-                println("Mouse clicked $viewElement")
+                viewState.click(viewElement, e.x, e.y)
             }
         })
 
@@ -59,7 +56,23 @@ class KtxUIFrame(private val screen: Screen) {
                 val viewState = viewState ?: return
                 e ?: return
                 val viewElement = viewState[e.x, e.y] ?: return
-                println("Mouse hovered $viewElement")
+                viewState.hover(viewElement, e.x, e.y)
+            }
+
+            override fun mouseDragged(e: MouseEvent?) {
+                val viewState = viewState ?: return
+                e ?: return
+                val viewElement = viewState[e.x, e.y] ?: return
+                viewState.drag(viewElement, e.x, e.y)
+            }
+        })
+
+        canvas.addMouseWheelListener(object: MouseAdapter() {
+            override fun mouseWheelMoved(e: MouseWheelEvent?) {
+                val viewState = viewState ?: return
+                e ?: return
+                val viewElement = viewState[e.x, e.y] ?: return
+                viewState.scroll(viewElement, e.x, e.y, e.preciseWheelRotation)
             }
         })
 
