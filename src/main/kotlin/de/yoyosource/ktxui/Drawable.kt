@@ -4,30 +4,32 @@ import java.awt.Color
 import java.awt.Font
 import java.awt.image.BufferedImage
 
+enum class DebugMode {
+    SIZE,
+    DRAW
+}
+
 interface DrawableData {
+
+    fun enableDebug(debugMode: DebugMode)
+    fun disableDebug(debugMode: DebugMode)
+    fun debug(debugMode: DebugMode, log: String)
+
     fun getSize(): Element
     fun getTextSize(text: String, font: Font): Element
 }
 
-abstract class Drawable : DrawableData {
+interface Drawable : DrawableData {
 
-    fun draw(screen: Screen, viewState: ViewState = ViewState()) {
-        val (width, height) = getSize()
+    fun fillBackground(color: Color)
 
-        screen.size(this, Element(width, height), viewState)
-        fillBackground(Color.WHITE)
-        screen.draw(this, viewState, Element(0, 0))
-    }
+    fun rotate(angle: Double, translated: () -> Unit)
 
-    internal abstract fun fillBackground(color: Color)
+    fun translate(location: Element, translated: () -> Unit)
 
-    abstract fun rotate(angle: Double, translated: () -> Unit)
+    fun drawRectangle(location: Element, size: Element, color: Color)
 
-    abstract fun translate(location: Element, translated: () -> Unit)
+    fun drawText(text: String, font: Font, color: Color, location: Element): Int
 
-    abstract fun drawRectangle(location: Element, size: Element, color: Color)
-
-    abstract fun drawText(text: String, font: Font, color: Color, location: Element): Int
-
-    abstract fun drawImage(bufferedImage: BufferedImage, location: Element)
+    fun drawImage(bufferedImage: BufferedImage, location: Element)
 }

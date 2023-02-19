@@ -1,7 +1,5 @@
 package de.yoyosource.ktxui
 
-import java.util.*
-import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 import kotlin.reflect.KProperty0
 import kotlin.reflect.jvm.isAccessible
@@ -33,7 +31,21 @@ enum class Side {
 }
 
 class ViewState {
-    var sizeMap: MutableMap<View, Element> = IdentityHashMap()
+    var order: MutableList<ViewElement> = mutableListOf()
+    var positions: MutableMap<ViewElement, Element> = mutableMapOf()
+    var sizes: MutableMap<ViewElement, Element> = mutableMapOf()
+
+    fun set(view: ViewElement, location: Element, size: Element) {
+        if (!(positions.containsKey(view) && sizes.containsKey(view))) {
+            order.add(view)
+        }
+        positions[view] = location.copy()
+        this.sizes[view] = size.copy()
+    }
+
+    operator fun get(view: ViewElement): Pair<Element, Element> {
+        return Pair(positions[view]!!, sizes[view]!!)
+    }
 }
 
 class Element(x: Int, y: Int) {

@@ -34,8 +34,7 @@ private class ImageImpl constructor(val image: () -> BufferedImage): ViewElement
         return image().let { Element(it.width, it.height) }
     }
 
-    override fun draw(drawable: Drawable, viewState: ViewState, location: Element) {
-        drawable.drawImage(image(), location)
-        location + viewState.sizeMap[this]!!
+    override fun draw(drawable: Drawable, viewState: ViewState) {
+        drawable.drawImage(image(), viewState[this].first)
     }
 }

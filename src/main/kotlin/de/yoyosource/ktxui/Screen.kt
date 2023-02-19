@@ -28,11 +28,7 @@ class Screen internal constructor() : SingleViewContainer() {
         throw IllegalStateException("Screen has no spacers")
     }
 
-    override fun size(drawableData: DrawableData, screenSize: Element, viewState: ViewState) {
-        child?.size(drawableData, screenSize, viewState)
-    }
-
-    override fun draw(drawable: Drawable, viewState: ViewState, location: Element) {
-        child?.draw(drawable, viewState, location)
+    override fun size(drawableData: DrawableData, screenSize: Element, location: Element, viewState: ViewState) {
+        child?.size(drawableData, screenSize, location, viewState)
     }
 }

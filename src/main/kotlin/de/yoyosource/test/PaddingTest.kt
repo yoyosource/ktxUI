@@ -9,9 +9,11 @@ import de.yoyosource.ktxui.views.padding
 fun main() {
     val screen = Screen {
         Padding {
-            Text("Hello World")
-                .padding(10)
-                .padding(20)
+            Padding {
+                Text("Hello World")
+                    .padding(10)
+                    .padding(20)
+            }
         }.padding(10)
     }
 

@@ -20,7 +20,7 @@ sealed interface Spacer: ViewAPI {
     fun length(length: KProperty0<Int>): Spacer
 }
 
-private class SpacerImpl constructor(private val length: ViewOption<Int>? = null) : ViewElement(), Spacer {
+private class SpacerImpl constructor(private val length: ViewOption<Int>? = null) : View(), Spacer {
 
     override fun length(length: Int) = apply {
         this.length?.set(this, length)
@@ -41,7 +41,7 @@ private class SpacerImpl constructor(private val length: ViewOption<Int>? = null
         }
     }
 
-    override fun size(drawableData: DrawableData, screenSize: Element, viewState: ViewState) {
+    override fun size(drawableData: DrawableData, screenSize: Element, location: Element, viewState: ViewState) {
         if (length == null) {
             val current = screenSize.copy()
             if ((parent as OrientedViewContainer).orientation == Orientation.HORIZONTAL) {
@@ -49,7 +49,8 @@ private class SpacerImpl constructor(private val length: ViewOption<Int>? = null
             } else {
                 current.x = 0
             }
-            viewState.sizeMap[this] = current
+            drawableData.debug(DebugMode.SIZE, "$this $current ${(parent as OrientedViewContainer).orientation}")
+            location + current
         } else {
             val current = Element(0, 0)
             if ((parent as OrientedViewContainer).orientation == Orientation.HORIZONTAL) {
@@ -57,7 +58,8 @@ private class SpacerImpl constructor(private val length: ViewOption<Int>? = null
             } else {
                 current.y = length.get()
             }
-            viewState.sizeMap[this] = current
+            drawableData.debug(DebugMode.SIZE, "$this $current ${(parent as OrientedViewContainer).orientation}")
+            location + current
         }
     }
 
@@ -67,9 +69,5 @@ private class SpacerImpl constructor(private val length: ViewOption<Int>? = null
         } else {
             0
         }
-    }
-
-    override fun draw(drawable: Drawable, viewState: ViewState, location: Element) {
-        location + viewState.sizeMap[this]!!
     }
 }
