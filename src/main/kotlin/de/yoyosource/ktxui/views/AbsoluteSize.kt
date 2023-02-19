@@ -36,13 +36,12 @@ private class AbsoluteSize constructor(private val width: ViewOption<Int>, priva
         return Element(width.get(), height.get())
     }
 
-    override fun spacers(orientation: Orientation): Int {
-        return 0
+    override fun size(drawableData: DrawableData, screenSize: Element, location: Element, viewState: ViewState) {
+        child?.size(drawableData, Element(width.get(), height.get()), location.copy(), viewState)
+        location + Element(width.get(), height.get())
     }
 
-    override fun draw(drawable: Drawable, viewState: ViewState, location: Element) {
-        val size = viewState.sizeMap[this]!!
-        child!!.draw(drawable, viewState, location.copy())
-        location + size
+    override fun spacers(orientation: Orientation): Int {
+        return 0
     }
 }

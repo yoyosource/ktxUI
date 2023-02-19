@@ -60,23 +60,10 @@ private class PaddingImpl : SingleViewContainer(), Padding {
         } ?: return Element(0, 0)
     }
 
-    override fun size(drawableData: DrawableData, screenSize: Element, viewState: ViewState) {
-        val size = size(drawableData)
-        child?.let {
-            it.size(
-                drawableData,
-                screenSize.copy() - Element(left.get() + right.get(), top.get() + bottom.get()),
-                viewState
-            )
-        }
-        viewState.sizeMap[this] = size
-    }
-
-    override fun draw(drawable: Drawable, viewState: ViewState, location: Element) {
-        child?.let {
-            it.draw(drawable, viewState, location.copy() + Element(left.get(), top.get()))
-        }
-        location + viewState.sizeMap[this]!!
+    override fun size(drawableData: DrawableData, screenSize: Element, location: Element, viewState: ViewState) {
+        drawableData.debug(DebugMode.SIZE, "$this $location _ $screenSize [${left.get()} ${right.get()} ${top.get()} ${bottom.get()}]")
+        child!!.size(drawableData, screenSize.copy() - Element(left.get() + right.get(), top.get() + bottom.get()), location.copy() + Element(left.get(), top.get()), viewState)
+        location + screenSize
     }
 }
 

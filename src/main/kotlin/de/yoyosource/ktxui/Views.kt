@@ -13,21 +13,24 @@ abstract class View {
     }
 
     abstract fun size(drawableData: DrawableData): Element
-    open fun size(drawableData: DrawableData, screenSize: Element, viewState: ViewState) {
-        val size = size(drawableData)
-        viewState.sizeMap[this] = size
-        screenSize - size
-    }
+    abstract fun size(drawableData: DrawableData, screenSize: Element, location: Element, viewState: ViewState)
 
     open fun spacers(orientation: Orientation): Int {
         return 0
     }
-    abstract fun draw(drawable: Drawable, viewState: ViewState, location: Element)
 }
 
 interface ViewAPI
 
-abstract class ViewElement : View()
+abstract class ViewElement : View() {
+    override fun size(drawableData: DrawableData, screenSize: Element, location: Element, viewState: ViewState) {
+        val size = size(drawableData)
+        viewState.set(this, location, size)
+        location + size
+    }
+
+    abstract fun draw(drawable: Drawable, viewState: ViewState)
+}
 
 abstract class ViewContainer : View() {
     internal val children: MutableList<View> = mutableListOf()

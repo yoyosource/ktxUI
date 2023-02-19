@@ -36,11 +36,11 @@ private class RelativePosition constructor(private val x: ViewOption<Int>, priva
         return Element(0, 0)
     }
 
-    override fun spacers(orientation: Orientation): Int {
-        return 0
+    override fun size(drawableData: DrawableData, screenSize: Element, location: Element, viewState: ViewState) {
+        child?.size(drawableData, screenSize.copy(), location.copy() + Element(x.get(), y.get()), viewState)
     }
 
-    override fun draw(drawable: Drawable, viewState: ViewState, location: Element) {
-        child!!.draw(drawable, viewState, Element(x.get(), y.get()) + location)
+    override fun spacers(orientation: Orientation): Int {
+        return 0
     }
 }

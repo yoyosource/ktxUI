@@ -31,17 +31,17 @@ private class Conditional constructor(private val value: ViewOption<Boolean>, pr
         return Element(0, 0)
     }
 
+    override fun size(drawableData: DrawableData, screenSize: Element, location: Element, viewState: ViewState) {
+        if (value.get() != inverted) {
+            child!!.size(drawableData, screenSize.copy(), location.copy(), viewState)
+            location + screenSize
+        }
+    }
+
     override fun spacers(orientation: Orientation): Int {
         if (value.get() != inverted) {
             return child!!.spacers(orientation)
         }
         return 0
-    }
-
-    override fun draw(drawable: Drawable, viewState: ViewState, location: Element) {
-        if (value.get() != inverted) {
-            child!!.draw(drawable, viewState, location.copy())
-        }
-        location + viewState.sizeMap[this]!!
     }
 }

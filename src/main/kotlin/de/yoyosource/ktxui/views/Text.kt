@@ -73,7 +73,14 @@ private class TextImpl constructor(val text: () -> String) : ViewElement(), Text
         return size
     }
 
-    override fun draw(drawable: Drawable, viewState: ViewState, location: Element) {
+    override fun size(drawableData: DrawableData, screenSize: Element, location: Element, viewState: ViewState) {
+        val size = size(drawableData)
+        drawableData.debug(DebugMode.SIZE, "$this $location $size $screenSize [${fontName.get()} ${fontStyle.get()} ${fontSize.get()} ${color.get()} ${alignment.get()}]")
+        viewState.set(this, location, size)
+        location + size
+    }
+
+    override fun draw(drawable: Drawable, viewState: ViewState) {
         val strings = mutableListOf<String>()
         split(text()) { strings.add(it) }
 
@@ -81,16 +88,20 @@ private class TextImpl constructor(val text: () -> String) : ViewElement(), Text
         val widths = if (textAlignment == TextAlignment.LEFT) Array(strings.size) { 0 }.toList() else strings.map {
             drawable.getTextSize(it, font).x
         }
-        val maxWidth = widths.max() ?: 0
+        val maxWidth by lazy {
+            widths.max()
+        }
 
-        val current = location.copy()
+        val current = viewState[this].first.copy()
         strings.forEachIndexed { index, s ->
             val x = when (textAlignment) {
                 TextAlignment.CENTER -> current.x + (maxWidth - widths[index]) / 2
                 TextAlignment.RIGHT -> current.x + maxWidth - widths[index]
                 else -> current.x
             }
+            drawable.debug(DebugMode.DRAW, "$this '$s' $current")
             current.y += drawable.drawText(s, font, color.get(), Element(x, current.y))
+            drawable.debug(DebugMode.DRAW, "$this '$s' $current")
         }
     }
 

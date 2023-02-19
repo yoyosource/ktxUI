@@ -71,7 +71,7 @@ private class DividerImpl constructor(private val length: ViewOption<Int>? = nul
         }
     }
 
-    override fun size(drawableData: DrawableData, screenSize: Element, viewState: ViewState) {
+    override fun size(drawableData: DrawableData, screenSize: Element, location: Element, viewState: ViewState) {
         if (length == null) {
             val current = screenSize.copy()
             if ((parent as OrientedViewContainer).orientation == Orientation.VERTICAL) {
@@ -79,7 +79,7 @@ private class DividerImpl constructor(private val length: ViewOption<Int>? = nul
             } else {
                 current.x = thickness.get()
             }
-            viewState.sizeMap[this] = current
+            viewState.set(this, location.copy(), current)
         } else {
             val current = Element(0, 0)
             if ((parent as OrientedViewContainer).orientation == Orientation.VERTICAL) {
@@ -89,13 +89,13 @@ private class DividerImpl constructor(private val length: ViewOption<Int>? = nul
                 current.x = thickness.get()
                 current.y = length.get()
             }
-            viewState.sizeMap[this] = current
+            viewState.set(this, location.copy(), current)
         }
+        location + viewState.sizes[this]!!
     }
 
-    override fun draw(drawable: Drawable, viewState: ViewState, location: Element) {
-        val size = viewState.sizeMap[this]!!
+    override fun draw(drawable: Drawable, viewState: ViewState) {
+        val (location, size) = viewState[this]
         drawable.drawRectangle(location, size, color.get())
-        location + size
     }
 }

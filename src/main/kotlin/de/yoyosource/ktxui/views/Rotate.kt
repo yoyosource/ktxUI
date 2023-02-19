@@ -5,6 +5,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.reflect.KProperty0
 
+/*
 fun ViewContainer.Rotate(builder: SingleViewContainer.() -> Unit): Rotate {
     return (+RotateImpl()).apply(builder)
 }
@@ -88,3 +89,4 @@ private class RotateImpl : SingleViewContainer(), Rotate {
         }
     }
 }
+ */

@@ -30,7 +30,7 @@ fun ViewContainer.HRight(builder: OrientedViewContainer.() -> Unit) {
     }
 }
 
-private class HStack constructor() : OrientedViewContainer(Orientation.HORIZONTAL) {
+private class HStack : OrientedViewContainer(Orientation.HORIZONTAL) {
     override fun size(drawableData: DrawableData): Element {
         val size = Element(0, 0)
         children.forEach {
@@ -41,45 +41,37 @@ private class HStack constructor() : OrientedViewContainer(Orientation.HORIZONTA
         return size
     }
 
-    override fun size(drawableData: DrawableData, screenSize: Element, viewState: ViewState) {
+    override fun size(drawableData: DrawableData, screenSize: Element, location: Element, viewState: ViewState) {
         val currentSize = size(drawableData)
         val spacerSize = screenSize.copy() - currentSize
 
         val spacers = children.filterIsInstance<Spacer>().map { it as View }
         val splitSize = spacers.size + min(spacers(Orientation.HORIZONTAL) - spacers.size, 1)
 
-        // println("Spacer: ${spacers.size}   Splitting: $splitSize   Size: $currentSize   Screen: $screenSize   SpacerSize: $spacerSize")
-        var spacerCalculation = SpacerCalculation(spacerSize.x, splitSize)
-        spacers.forEach {
-            it.size(drawableData, screenSize.copy(width = spacerCalculation.next()), viewState)
-        }
-
-        val views = children.filterNot { viewState.sizeMap.containsKey(it) }
+        val views = children.filterNot { it is Spacer }
             .filter { it.spacers(Orientation.HORIZONTAL) > 0 }
             .toSet()
         val componentSplitSize: Int = spacerSize.x / if (splitSize == 0) 1 else splitSize
-        spacerCalculation = SpacerCalculation(componentSplitSize, views.size)
-        // println("Other Views sizes: $componentSplitSize   Components: ${views.size}")
+        val spacerCalculation = SpacerCalculation(spacerSize.x, splitSize)
+        val innerSpacerCalculation = SpacerCalculation(componentSplitSize, views.size)
+        drawableData.debug(DebugMode.SIZE, "Spacer: ${spacers.size}   Splitting: $splitSize   Size: $currentSize   Screen: $screenSize   SpacerSize: $spacerSize")
+        drawableData.debug(DebugMode.SIZE, "Other Views sizes: $componentSplitSize   Components: ${views.size}")
+        val currentLocation = location.copy()
         children.forEach {
-            if (viewState.sizeMap.containsKey(it)) {
+            if (it is Spacer) {
+                val size = screenSize.copy(width = spacerCalculation.next())
+                it.size(drawableData, size, currentLocation, viewState)
+                currentLocation.y = location.y
                 return@forEach
             }
             val current = it.size(drawableData).copy()
             current.y = screenSize.y
             if (views.contains(it)) {
-                current.x = current.x + spacerCalculation.next()
+                current.x = current.x + innerSpacerCalculation.next()
             }
-            it.size(drawableData, current, viewState)
+            it.size(drawableData, current, currentLocation, viewState)
+            currentLocation.y = location.y
         }
-        viewState.sizeMap[this] = screenSize
-    }
-
-    override fun draw(drawable: Drawable, viewState: ViewState, location: Element) {
-        val current = location.copy()
-        children.forEach {
-            it.draw(drawable, viewState, current.copy())
-            current.x += viewState.sizeMap[it]!!.x
-        }
-        location + viewState.sizeMap[this]!!
+        location.x = currentLocation.x
     }
 }

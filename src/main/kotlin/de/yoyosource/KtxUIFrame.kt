@@ -1,9 +1,6 @@
 package de.yoyosource
 
-import de.yoyosource.ktxui.Drawable
-import de.yoyosource.ktxui.Element
-import de.yoyosource.ktxui.Screen
-import de.yoyosource.ktxui.ViewState
+import de.yoyosource.ktxui.*
 import de.yoyosource.ktxui.impl.Graphics2dDrawable
 import java.awt.Canvas
 import java.awt.Color
@@ -57,10 +54,14 @@ class KtxUIFrame(private val screen: Screen) {
                 return@addRedrawListener
             }
             redraw = true
-            val previousSize = viewState!!.sizeMap[it]
-            val newSize = it.size(drawable)
-            if (previousSize != newSize) {
-                // println("Redraw because of size change: $previousSize -> $newSize for $it")
+            if (it is ViewElement) {
+                val previousSize = viewState!!.sizes[it]
+                val newSize = it.size(drawable)
+                if (previousSize != newSize) {
+                    // println("Redraw because of size change: $previousSize -> $newSize for $it")
+                    viewState = null
+                }
+            } else {
                 viewState = null
             }
         }
@@ -82,10 +83,12 @@ class KtxUIFrame(private val screen: Screen) {
             currentViewState = ViewState()
             val (width, height) = drawable.getSize()
 
-            screen.size(drawable, Element(width, height), currentViewState)
+            screen.size(drawable, Element(width, height), Element(0, 0), currentViewState)
         }
         drawable.fillBackground(Color.WHITE)
-        screen.draw(drawable, currentViewState, Element(0, 0))
+        currentViewState.order.forEach {
+            it.draw(drawable, currentViewState)
+        }
         viewState = currentViewState
     }
 }
