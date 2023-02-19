@@ -2,8 +2,10 @@ package de.yoyosource
 
 import de.yoyosource.ktxui.Observer
 import de.yoyosource.ktxui.Screen
-import de.yoyosource.ktxui.animation.delayedAnimation
-import de.yoyosource.ktxui.animation.linearAnimation
+import de.yoyosource.ktxui.animation.animation
+import de.yoyosource.ktxui.animation.delay
+import de.yoyosource.ktxui.animation.loop
+import de.yoyosource.ktxui.animation.set
 import de.yoyosource.ktxui.views.*
 import java.awt.Color
 
@@ -151,6 +153,16 @@ fun main() {
 
     KtxUIFrame(screen)
 
+    animation {
+        delay(5000)
+        loop {
+            set(::testInt, 1000)
+            delay(1000)
+            set(::testInt, 0)
+            delay(1000)
+        }
+    }
+
     /*
     delayedAnimation(5000) {
         linearAnimation(::angle, Double.MAX_VALUE)
@@ -170,6 +182,7 @@ fun main() {
     }.start()
      */
 
+    /*
     delayedAnimation(5000) {
         val current = linearAnimation(::testInt, 1000)
             .start()
@@ -185,6 +198,7 @@ fun main() {
             }.start()
         }
     }.start()
+     */
 
     /*
     val image = BufferedImage(128, 128, BufferedImage.TYPE_INT_ARGB)
