@@ -19,11 +19,17 @@ fun OrientedViewContainer.Spacer(length: KProperty0<Int>): Spacer {
 }
 
 sealed interface Spacer: ViewAPI {
+    fun isDynamic(): Boolean
+
     fun length(length: Int): Spacer
     fun length(length: KProperty0<Int>): Spacer
 }
 
 private class SpacerImpl constructor(private val length: ViewOption<Int>? = null) : View(), Spacer {
+
+    override fun isDynamic(): Boolean {
+        return length == null
+    }
 
     override fun length(length: Int) = apply {
         this.length?.set(this, length)
@@ -67,6 +73,9 @@ private class SpacerImpl constructor(private val length: ViewOption<Int>? = null
     }
 
     override fun spacers(orientation: Orientation): Int {
+        if (length != null) {
+            return 0
+        }
         return if ((parent as OrientedViewContainer).orientation == orientation) {
             1
         } else {

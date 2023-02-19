@@ -7,13 +7,15 @@ import java.awt.image.BufferedImage
 
 enum class DebugMode {
     SIZE,
-    DRAW
+    DRAW,
+    DRAW_CLICKABLE,
 }
 
 interface DrawableData {
 
     fun enableDebug(debugMode: DebugMode)
     fun disableDebug(debugMode: DebugMode)
+    fun isDebugEnabled(debugMode: DebugMode): Boolean
     fun debug(debugMode: DebugMode, log: String)
 
     fun getSize(): Element

@@ -79,7 +79,6 @@ private class TextImpl constructor(val text: () -> String) : ViewElement(), Text
     override fun size(drawableData: DrawableData, screenSize: Element, location: Element, viewState: ViewState) {
         val size = size(drawableData)
         drawableData.debug(DebugMode.SIZE, "$this $location $size $screenSize [${fontName.get()} ${fontStyle.get()} ${fontSize.get()} ${color.get()} ${alignment.get()}]")
-        println("$location $size")
         viewState.set(this, location, size)
         location + size
     }

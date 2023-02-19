@@ -28,6 +28,10 @@ class Graphics2dDrawable(private val g: Graphics2D, private val width: Int, priv
         enableDebugModes.remove(debugMode)
     }
 
+    override fun isDebugEnabled(debugMode: DebugMode): Boolean {
+        return enableDebugModes.contains(debugMode)
+    }
+
     override fun debug(debugMode: DebugMode, log: String) {
         if (enableDebugModes.contains(debugMode)) println("$debugMode $log")
     }

@@ -70,7 +70,7 @@ private class PaddingImpl : SingleViewContainer(), Padding {
     }
 }
 
-private fun <V: ViewAPI> V.padding(mutator: Padding.() -> Unit): V {
+private fun <V: ViewAPI> V.surround(mutator: Padding.() -> Unit): V {
     if (this !is View) return this
     val parent = this.parent!!
     if (parent is Padding) {
@@ -80,16 +80,16 @@ private fun <V: ViewAPI> V.padding(mutator: Padding.() -> Unit): V {
     val padding = PaddingImpl()
     parent.swap(this, padding)
     padding.apply {
-        +this@padding
+        +this@surround
         this.mutator()
     }
     return this
 }
 
-fun <V: ViewAPI> V.padding(padding: Int) = padding { padding(padding) }
+fun <V: ViewAPI> V.padding(padding: Int) = surround { padding(padding) }
 
-fun <V: ViewAPI> V.padding(padding: KProperty0<Int>) = padding { padding(padding) }
+fun <V: ViewAPI> V.padding(padding: KProperty0<Int>) = surround { padding(padding) }
 
-fun <V: ViewAPI> V.padding(side: Side, padding: Int) = padding { padding(side, padding) }
+fun <V: ViewAPI> V.padding(side: Side, padding: Int) = surround { padding(side, padding) }
 
-fun <V: ViewAPI> V.padding(side: Side, padding: KProperty0<Int>) = padding { padding(side, padding) }
+fun <V: ViewAPI> V.padding(side: Side, padding: KProperty0<Int>) = surround { padding(side, padding) }

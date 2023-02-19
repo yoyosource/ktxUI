@@ -1,6 +1,8 @@
 package de.yoyosource
 
-import de.yoyosource.ktxui.*
+import de.yoyosource.ktxui.DebugMode
+import de.yoyosource.ktxui.Drawable
+import de.yoyosource.ktxui.ViewElement
 import de.yoyosource.ktxui.impl.Graphics2dDrawable
 import de.yoyosource.ktxui.utils.Element
 import de.yoyosource.ktxui.utils.ViewState
@@ -16,6 +18,8 @@ import java.awt.event.MouseEvent
 import javax.swing.JFrame
 
 class KtxUIFrame(private val screen: Screen) {
+
+    private val debugModes: MutableSet<DebugMode> = mutableSetOf()
 
     private val jFrame = JFrame()
     private lateinit var drawable: Drawable
@@ -101,6 +105,9 @@ class KtxUIFrame(private val screen: Screen) {
 
     private fun redraw(g: Graphics2D) {
         drawable = Graphics2dDrawable(g, width, height)
+        debugModes.forEach {
+            drawable.enableDebug(it)
+        }
         var currentViewState = viewState
         if (currentViewState == null) {
             currentViewState = ViewState()
@@ -110,10 +117,20 @@ class KtxUIFrame(private val screen: Screen) {
         }
         drawable.fillBackground(Color.WHITE)
         currentViewState.order.forEach {
-            val (location, size) = currentViewState[it]
-            drawable.drawRectangle(location.copy() - Element(1, 1), size.copy() + Element(2, 2), Color(50, 50, 50, 50))
+            if (debugModes.contains(DebugMode.DRAW_CLICKABLE)) {
+                val (location, size) = currentViewState[it]
+                drawable.drawRectangle(location.copy() - Element(1, 1), size.copy() + Element(2, 2), Color(50, 50, 50, 50))
+            }
             it.draw(drawable, currentViewState)
         }
         viewState = currentViewState
+    }
+
+    fun enableDebug(debugMode: DebugMode) {
+        debugModes.add(debugMode)
+    }
+
+    fun disableDebug(debugMode: DebugMode) {
+        debugModes.remove(debugMode)
     }
 }

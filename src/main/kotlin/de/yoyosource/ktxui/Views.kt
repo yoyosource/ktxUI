@@ -24,16 +24,18 @@ abstract class View {
     }
 }
 
+interface DrawableView {
+    fun draw(drawable: Drawable, viewState: ViewState)
+}
+
 interface ViewAPI
 
-abstract class ViewElement : View() {
+abstract class ViewElement : View(), DrawableView {
     override fun size(drawableData: DrawableData, screenSize: Element, location: Element, viewState: ViewState) {
         val size = size(drawableData)
         viewState.set(this, location, size)
         location + size
     }
-
-    abstract fun draw(drawable: Drawable, viewState: ViewState)
 }
 
 abstract class ViewContainer : View() {
@@ -91,3 +93,5 @@ abstract class SingleViewContainer : ViewContainer() {
         return child?.spacers(orientation) ?: 0
     }
 }
+
+abstract class DrawableSingleViewContainer : SingleViewContainer(), DrawableView

@@ -1,5 +1,6 @@
 package de.yoyosource.ktxui
 
+import de.yoyosource.ktxui.observer.MutableCollectionObservable
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 import kotlin.reflect.KProperty0
@@ -109,6 +110,9 @@ class ValueObserver<T : Any> : ObserverImpl<T> {
 
     constructor(value: T) {
         this.value = value
+        if (value is MutableCollectionObservable<*, *>) {
+            value.addObserver { notifyObservers(value) }
+        }
     }
 
     override fun getValue(thisRef: Any?, property: KProperty<*>): T {

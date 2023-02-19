@@ -49,7 +49,9 @@ private class HStack : OrientedViewContainer(Orientation.HORIZONTAL) {
         val currentSize = size(drawableData)
         val spacerSize = screenSize.copy() - currentSize
 
-        val spacers = children.filterIsInstance<Spacer>().map { it as View }
+        val spacers = children.filterIsInstance<Spacer>()
+            .filter { it.isDynamic() }
+            .map { it as View }
         val splitSize = spacers.size + min(spacers(Orientation.HORIZONTAL) - spacers.size, 1)
 
         val views = children.filterNot { it is Spacer }
@@ -62,10 +64,11 @@ private class HStack : OrientedViewContainer(Orientation.HORIZONTAL) {
         drawableData.debug(DebugMode.SIZE, "Other Views sizes: $componentSplitSize   Components: ${views.size}")
         val currentLocation = location.copy()
         children.forEach {
-            if (it is Spacer) {
+            if (it is Spacer && it.isDynamic()) {
                 val size = screenSize.copy(width = spacerCalculation.next())
                 it.size(drawableData, size, currentLocation, viewState)
                 currentLocation.y = location.y
+                drawableData.debug(DebugMode.SIZE, "HStack: $it $currentLocation")
                 return@forEach
             }
             val current = it.size(drawableData).copy()
@@ -75,7 +78,9 @@ private class HStack : OrientedViewContainer(Orientation.HORIZONTAL) {
             }
             it.size(drawableData, current, currentLocation, viewState)
             currentLocation.y = location.y
+            drawableData.debug(DebugMode.SIZE, "HStack: $it $currentLocation")
         }
         location.x = currentLocation.x
+        location.y += currentSize.y
     }
 }

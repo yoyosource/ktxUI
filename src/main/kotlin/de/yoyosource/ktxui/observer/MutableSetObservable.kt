@@ -1,22 +1,22 @@
 package de.yoyosource.ktxui.observer
 
-fun <T> MutableSet<T>.asObservable(): MutableSetObservable<T> {
+fun <E, L : MutableSet<E>> L.asObservable(): MutableSetObservable<E, L> {
     return MutableSetObservable(this)
 }
 
-class MutableSetObservable<E>(private val inner: MutableSet<E>) : MutableSet<E> {
+class MutableSetObservable<E, L : MutableSet<E>>(private val inner: L) : MutableSet<E>, MutableCollectionObservable<E, L> {
 
-    private val observers = mutableListOf<(Set<E>) -> Unit>()
+    private val observers = mutableListOf<(L) -> Unit>()
 
     private fun notifyObservers() {
         observers.forEach { it(inner) }
     }
 
-    fun addObserver(observer: (Set<E>) -> Unit) {
+    override fun addObserver(observer: (L) -> Unit) {
         observers.add(observer)
     }
 
-    fun removeObserver(observer: (Set<E>) -> Unit) {
+    override fun removeObserver(observer: (L) -> Unit) {
         observers.remove(observer)
     }
 

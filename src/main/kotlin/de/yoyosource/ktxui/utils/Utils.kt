@@ -1,8 +1,8 @@
 package de.yoyosource.ktxui.utils
 
+import de.yoyosource.ktxui.DrawableView
 import de.yoyosource.ktxui.Observer
 import de.yoyosource.ktxui.View
-import de.yoyosource.ktxui.ViewElement
 import kotlin.math.roundToInt
 import kotlin.reflect.KProperty0
 import kotlin.reflect.jvm.isAccessible
@@ -22,11 +22,11 @@ fun <T, V: View> observableInit(property : KProperty0<T>, viewCreator: (() -> T)
 }
 
 class ViewState {
-    var order: MutableList<ViewElement> = mutableListOf()
-    var positions: MutableMap<ViewElement, Element> = mutableMapOf()
-    var sizes: MutableMap<ViewElement, Element> = mutableMapOf()
+    var order: MutableList<DrawableView> = mutableListOf()
+    var positions: MutableMap<DrawableView, Element> = mutableMapOf()
+    var sizes: MutableMap<DrawableView, Element> = mutableMapOf()
 
-    fun set(view: ViewElement, location: Element, size: Element) {
+    fun set(view: DrawableView, location: Element, size: Element) {
         if (!(positions.containsKey(view) && sizes.containsKey(view))) {
             order.add(view)
         }
@@ -34,11 +34,11 @@ class ViewState {
         this.sizes[view] = size.copy()
     }
 
-    operator fun get(view: ViewElement): Pair<Element, Element> {
+    operator fun get(view: DrawableView): Pair<Element, Element> {
         return Pair(positions[view]!!, sizes[view]!!)
     }
 
-    operator fun get(x: Int, y: Int): ViewElement? {
+    operator fun get(x: Int, y: Int): DrawableView? {
         order.asReversed().forEach {
             val (location, size) = this[it]
             if (x in location.x until location.x + size.x && y in location.y until location.y + size.y) {
