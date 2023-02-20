@@ -77,7 +77,7 @@ class KtxUIFrame(private val screen: Screen) {
             }
         })
 
-        jFrame.addKeyListener(object: KeyAdapter() {
+        canvas.addKeyListener(object: KeyAdapter() {
             private fun modifier(e: KeyEvent): Set<ModifierKey> {
                 val modifiers = mutableSetOf<ModifierKey>()
                 if (e.isAltDown) {
