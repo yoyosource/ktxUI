@@ -39,3 +39,13 @@ private class ButtonImpl : DrawableSingleViewContainer(), Button {
         return this
     }
 }
+
+fun <V : ViewAPI> V.onClick(action: (viewPosX: Int, viewPosY: Int, relativeX: Int, relativeY: Int, x: Int, y: Int) -> Unit): V {
+    this as View
+    val self = this
+    val event = ButtonImpl()
+    parent!!.swap(this, event)
+    event.apply { +self }
+    event.onDrag(action)
+    return this
+}

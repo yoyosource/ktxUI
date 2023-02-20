@@ -8,27 +8,27 @@ import de.yoyosource.ktxui.utils.ViewState
 import kotlin.math.max
 import kotlin.math.min
 
-fun ViewContainer.HStack(builder: OrientedViewContainer.() -> Unit) {
-    (+HStack()).builder()
+fun ViewContainer.HStack(builder: OrientedViewContainer.() -> Unit): ViewAPI {
+    return (+HStack()).apply(builder)
 }
 
-fun ViewContainer.HLeft(builder: OrientedViewContainer.() -> Unit) {
-    HStack {
+fun ViewContainer.HLeft(builder: OrientedViewContainer.() -> Unit): ViewAPI {
+    return HStack {
         builder()
         Spacer()
     }
 }
 
-fun ViewContainer.HCenter(builder: OrientedViewContainer.() -> Unit) {
-    HStack {
+fun ViewContainer.HCenter(builder: OrientedViewContainer.() -> Unit): ViewAPI {
+    return HStack {
         Spacer()
         builder()
         Spacer()
     }
 }
 
-fun ViewContainer.HRight(builder: OrientedViewContainer.() -> Unit) {
-    HStack {
+fun ViewContainer.HRight(builder: OrientedViewContainer.() -> Unit): ViewAPI {
+    return HStack {
         Spacer()
         builder()
     }

@@ -51,6 +51,10 @@ class ViewState {
 
     private inline fun <reified T> walk(view: DrawableView, action: (T) -> Unit) {
         var view = view as View
+        if (view is T) { // This is not intended
+            action(view)
+            return
+        }
         while (view.parent != null) {
             view = view.parent!!
             if (view is T) {

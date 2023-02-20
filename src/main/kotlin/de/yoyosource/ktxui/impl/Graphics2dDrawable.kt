@@ -69,19 +69,22 @@ class Graphics2dDrawable(private val g: Graphics2D, private val width: Int, priv
 
     override fun drawRectangle(location: Element, size: Element, color: Color) {
         g.color = color
-        var x = location.x
-        var y = location.y
-        var width = size.x
-        var height = size.y
-        if (width < 0) {
-            x += width
-            width *= -1
-        }
-        if (height < 0) {
-            y += height
-            height *= -1
-        }
-        g.fillRect(x, y, width, height)
+        g.fillRect(location.x, location.y, size.x, size.y)
+    }
+
+    override fun drawRoundedRectangle(location: Element, size: Element, color: Color, arcWidth: Int, arcHeight: Int) {
+        g.color = color
+        g.fillRoundRect(location.x, location.y, size.x, size.y, arcWidth, arcHeight)
+    }
+
+    override fun drawCircle(location: Element, radius: Int, color: Color) {
+        g.color = color
+        g.fillOval(location.x, location.y, radius * 2, radius * 2)
+    }
+
+    override fun drawOval(location: Element, width: Int, height: Int, color: Color) {
+        g.color = color
+        g.fillOval(location.x, location.y, width, height)
     }
 
     override fun drawText(text: String, font: Font, color: Color, location: Element): Int {

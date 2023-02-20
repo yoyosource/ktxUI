@@ -32,6 +32,12 @@ interface Drawable : DrawableData {
 
     fun drawRectangle(location: Element, size: Element, color: Color)
 
+    fun drawRoundedRectangle(location: Element, size: Element, color: Color, arcWidth: Int, arcHeight: Int)
+
+    fun drawCircle(location: Element, radius: Int, color: Color)
+
+    fun drawOval(location: Element, width: Int, height: Int, color: Color)
+
     fun drawText(text: String, font: Font, color: Color, location: Element): Int
 
     fun drawImage(bufferedImage: BufferedImage, location: Element)

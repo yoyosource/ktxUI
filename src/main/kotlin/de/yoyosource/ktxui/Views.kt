@@ -8,7 +8,7 @@ import de.yoyosource.ktxui.utils.ViewState
 annotation class KtxUIDsl
 
 @KtxUIDsl
-abstract class View {
+abstract class View : ViewAPI {
 
     internal var parent: ViewContainer? = null
 
@@ -41,7 +41,7 @@ abstract class ViewElement : View(), DrawableView {
 abstract class ViewContainer : View() {
     internal val children: MutableList<View> = mutableListOf()
 
-    open operator fun <T: View> T.unaryPlus(): T {
+    open operator fun <T : View> T.unaryPlus(): T {
         if (this@ViewContainer.children.contains(this)) {
             throw IllegalStateException("Child already set")
         }
@@ -70,7 +70,7 @@ abstract class OrientedViewContainer(open val orientation: Orientation) : ViewCo
 abstract class SingleViewContainer : ViewContainer() {
     internal var child: View? = null
 
-    override operator fun <T: View> T.unaryPlus(): T {
+    override operator fun <T : View> T.unaryPlus(): T {
         if (this@SingleViewContainer.child != null) {
             throw IllegalStateException("Child already set")
         }

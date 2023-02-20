@@ -90,29 +90,34 @@ interface Observer<T : Any> : ReadWriteProperty<Any?, T> {
 abstract class ObserverImpl<T : Any> : Observer<T> {
     private var observers = mutableSetOf<(T) -> Unit>()
 
+    internal var addCallback: () -> Unit = {}
+    internal var removeCallback: () -> Unit = {}
+
     internal fun notifyObservers(value: T) {
         observers.forEach { it(value) }
     }
 
     override fun addObserver(observer: (T) -> Unit) {
         observers.add(observer)
+        addCallback()
     }
 
     override fun removeObserver(observer: (T) -> Unit) {
         observers.remove(observer)
+        removeCallback()
     }
 }
 
 class ValueObserver<T : Any> : ObserverImpl<T> {
     private lateinit var value: T
 
+    private var observer: (Any) -> Unit = { _ -> }
+
     constructor()
 
     constructor(value: T) {
         this.value = value
-        if (value is MutableCollectionObservable<*, *>) {
-            value.addObserver { notifyObservers(value) }
-        }
+        initCallbacks()
     }
 
     override fun getValue(thisRef: Any?, property: KProperty<*>): T {
@@ -120,8 +125,32 @@ class ValueObserver<T : Any> : ObserverImpl<T> {
     }
 
     override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
+        removeCallback()
         this.value = value
+        initCallbacks()
         notifyObservers(value)
+    }
+
+    private fun initCallbacks() {
+        if (value is MutableCollectionObservable<*, *>) {
+            addCallback = {
+                val value = value
+                if (value is MutableCollectionObservable<*, *>) {
+                    observer = { notifyObservers(it as T) }
+                    value.addObserver(observer)
+                }
+            }
+            removeCallback = {
+                val value = value
+                if (value is MutableCollectionObservable<*, *>) {
+                    value.removeObserver(observer)
+                }
+                observer = { _ -> }
+            }
+        } else {
+            addCallback = {}
+            removeCallback = {}
+        }
     }
 }
 

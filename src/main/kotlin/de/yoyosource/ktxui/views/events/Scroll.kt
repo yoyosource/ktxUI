@@ -39,3 +39,13 @@ private class ScrollImpl : DrawableSingleViewContainer(), Scroll {
         return this
     }
 }
+
+fun <V : ViewAPI> V.onScroll(action: (viewPosX: Int, viewPosY: Int, relativeX: Int, relativeY: Int, x: Int, y: Int, wheelRotation: Double) -> Unit): V {
+    this as View
+    val self = this
+    val event = ScrollImpl()
+    parent!!.swap(this, event)
+    event.apply { +self }
+    event.onScroll(action)
+    return this
+}

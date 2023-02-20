@@ -2,6 +2,7 @@ package de.yoyosource
 
 import de.yoyosource.ktxui.DebugMode
 import de.yoyosource.ktxui.Drawable
+import de.yoyosource.ktxui.DrawableView
 import de.yoyosource.ktxui.ViewElement
 import de.yoyosource.ktxui.impl.Graphics2dDrawable
 import de.yoyosource.ktxui.utils.Element
@@ -58,13 +59,21 @@ class KtxUIFrame(private val screen: Screen) {
                 e ?: return
                 val viewElement = viewState[e.x, e.y] ?: return
                 viewState.hover(viewElement, e.x, e.y)
+                view = null
             }
+
+            private var view: DrawableView? = null
 
             override fun mouseDragged(e: MouseEvent?) {
                 val viewState = viewState ?: return
                 e ?: return
-                val viewElement = viewState[e.x, e.y] ?: return
-                viewState.drag(viewElement, e.x, e.y)
+                if (view != null) {
+                    viewState.drag(view!!, e.x, e.y)
+                } else {
+                    val viewElement = viewState[e.x, e.y] ?: return
+                    viewState.drag(viewElement, e.x, e.y)
+                    view = viewElement
+                }
             }
         })
 

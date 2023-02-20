@@ -1,10 +1,7 @@
 package de.yoyosource.ktxui.views.events
 
 import de.yoyosource.ktxui.*
-import de.yoyosource.ktxui.utils.Either
-import de.yoyosource.ktxui.utils.Element
-import de.yoyosource.ktxui.utils.ModifierKey
-import de.yoyosource.ktxui.utils.ViewState
+import de.yoyosource.ktxui.utils.*
 import kotlin.reflect.KProperty0
 
 fun ViewContainer.Keyboard(): Keyboard {
@@ -17,27 +14,9 @@ fun ViewContainer.Keybind(builder: KeybindBuilder.() -> Unit): Keyboard {
     val modifier = if (keybindBuilder.modifier == null) null else ViewOption(setOf<ModifierKey>())
     val ignoreCase = if (keybindBuilder.ignoreCase == null) null else ViewOption(false)
     return (+KeyboardImpl(keyChar, modifier, ignoreCase)).also {
-        if (keyChar != null) {
-            if (keybindBuilder.keyChar!!.isLeft) {
-                keyChar.set(it, keybindBuilder.keyChar!!.left()!!)
-            } else {
-                keyChar.set(it, keybindBuilder.keyChar!!.right()!!)
-            }
-        }
-        if (modifier != null) {
-            if (keybindBuilder.modifier!!.isLeft) {
-                modifier.set(it, keybindBuilder.modifier!!.left()!!)
-            } else {
-                modifier.set(it, keybindBuilder.modifier!!.right()!!)
-            }
-        }
-        if (ignoreCase != null) {
-            if (keybindBuilder.ignoreCase!!.isLeft) {
-                ignoreCase.set(it, keybindBuilder.ignoreCase!!.left()!!)
-            } else {
-                ignoreCase.set(it, keybindBuilder.ignoreCase!!.right()!!)
-            }
-        }
+        keyChar?.set(it, keybindBuilder.keyChar!!)
+        modifier?.set(it, keybindBuilder.modifier!!)
+        ignoreCase?.set(it, keybindBuilder.ignoreCase!!)
     }
 }
 

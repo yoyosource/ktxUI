@@ -1,5 +1,7 @@
-package de.yoyosource.ktxui
+package de.yoyosource.ktxui.utils
 
+import de.yoyosource.ktxui.Observer
+import de.yoyosource.ktxui.View
 import kotlin.reflect.KProperty0
 import kotlin.reflect.jvm.isAccessible
 
@@ -35,5 +37,12 @@ class ViewOption<T : Any>(value: T) {
             removeObserver = { delegate.removeObserver(observer) }
         }
         return self
+    }
+
+    fun <V: View> set(self: V, value: Either<T, KProperty0<T>>): V {
+        return when (value) {
+            is Either.Left -> set(self, value.value)
+            is Either.Right -> set(self, value.value)
+        }
     }
 }

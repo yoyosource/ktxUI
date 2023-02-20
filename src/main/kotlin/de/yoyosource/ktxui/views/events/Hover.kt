@@ -39,3 +39,13 @@ private class HoverImpl : DrawableSingleViewContainer(), Hover {
         return this
     }
 }
+
+fun <V : ViewAPI> V.onHover(action: (viewPosX: Int, viewPosY: Int, relativeX: Int, relativeY: Int, x: Int, y: Int) -> Unit): V {
+    this as View
+    val self = this
+    val event = HoverImpl()
+    parent!!.swap(this, event)
+    event.apply { +self }
+    event.onHover(action)
+    return this
+}
