@@ -58,6 +58,7 @@ private class VStack : OrientedViewContainer(Orientation.VERTICAL) {
             .filter { it.spacers(Orientation.VERTICAL) > 0 }
             .toSet()
         val componentSplitSize: Int = spacerSize.y / if (splitSize == 0) 1 else splitSize
+
         val spacerCalculation = SpacerCalculation(spacerSize.y, splitSize)
         val innerSpacerCalculation = SpacerCalculation(componentSplitSize, views.size)
         drawableData.debug(DebugMode.SIZE, "Spacer: ${spacers.size}   Splitting: $splitSize   Size: $currentSize   Screen: $screenSize   SpacerSize: $spacerSize")

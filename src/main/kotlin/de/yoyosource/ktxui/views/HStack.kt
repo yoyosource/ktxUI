@@ -58,6 +58,7 @@ private class HStack : OrientedViewContainer(Orientation.HORIZONTAL) {
             .filter { it.spacers(Orientation.HORIZONTAL) > 0 }
             .toSet()
         val componentSplitSize: Int = spacerSize.x / if (splitSize == 0) 1 else splitSize
+
         val spacerCalculation = SpacerCalculation(spacerSize.x, splitSize)
         val innerSpacerCalculation = SpacerCalculation(componentSplitSize, views.size)
         drawableData.debug(DebugMode.SIZE, "Spacer: ${spacers.size}   Splitting: $splitSize   Size: $currentSize   Screen: $screenSize   SpacerSize: $spacerSize")

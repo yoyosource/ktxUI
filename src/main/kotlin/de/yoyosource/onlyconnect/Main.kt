@@ -38,13 +38,9 @@ fun main() {
 fun ViewContainer.MainMenu() {
     HCenter {
         VCenter {
-            Button {
-                Tile(backgroundColor) {
-                    Text("--- 1 ---")
-                        .size(20)
-                }
-            }.onClick { viewPosX, viewPosY, relativeX, relativeY, x, y ->
-                println("Clicked on $viewPosX, $viewPosY, $relativeX, $relativeY, $x, $y")
+            Tile(backgroundColor) {
+                Text("--- 1 ---")
+                    .size(20)
             }
             Spacer()
             Tile(backgroundColor) {
@@ -209,12 +205,14 @@ fun ViewContainer.GameTile(backgroundColor: Color, builder: ViewContainer.() -> 
     }
 }
 
-fun ViewContainer.Tile(backgroundColor: Color, builder: ViewContainer.() -> Unit) {
-    AbsoluteSize(225, 225) {
-        Background(backgroundColor) {
-            HCenter {
-                VCenter {
-                    builder()
+fun ViewContainer.Tile(backgroundColor: Color, builder: ViewContainer.() -> Unit): Button {
+    return Button {
+        AbsoluteSize(225, 225) {
+            Background(backgroundColor) {
+                HCenter {
+                    VCenter {
+                        builder()
+                    }
                 }
             }
         }

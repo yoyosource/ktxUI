@@ -5,6 +5,7 @@ import de.yoyosource.ktxui.Drawable
 import de.yoyosource.ktxui.ViewElement
 import de.yoyosource.ktxui.impl.Graphics2dDrawable
 import de.yoyosource.ktxui.utils.Element
+import de.yoyosource.ktxui.utils.ModifierKey
 import de.yoyosource.ktxui.utils.ViewState
 import de.yoyosource.ktxui.views.Screen
 import java.awt.Canvas
@@ -73,6 +74,37 @@ class KtxUIFrame(private val screen: Screen) {
                 e ?: return
                 val viewElement = viewState[e.x, e.y] ?: return
                 viewState.scroll(viewElement, e.x, e.y, e.preciseWheelRotation)
+            }
+        })
+
+        jFrame.addKeyListener(object: KeyAdapter() {
+            private fun modifier(e: KeyEvent): Set<ModifierKey> {
+                val modifiers = mutableSetOf<ModifierKey>()
+                if (e.isAltDown) {
+                    modifiers.add(ModifierKey.ALT)
+                }
+                if (e.isControlDown) {
+                    modifiers.add(ModifierKey.CONTROL)
+                }
+                if (e.isShiftDown) {
+                    modifiers.add(ModifierKey.SHIFT)
+                }
+                if (e.isMetaDown) {
+                    modifiers.add(ModifierKey.META)
+                }
+                return modifiers
+            }
+
+            override fun keyTyped(e: KeyEvent?) {
+                viewState?.type(e!!.keyCode, e.keyChar, modifier(e))
+            }
+
+            override fun keyPressed(e: KeyEvent?) {
+                viewState?.press(e!!.keyCode, e.keyChar, modifier(e))
+            }
+
+            override fun keyReleased(e: KeyEvent?) {
+                viewState?.release(e!!.keyCode, e.keyChar, modifier(e))
             }
         })
 

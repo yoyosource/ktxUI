@@ -3,10 +3,7 @@ package de.yoyosource.ktxui.utils
 import de.yoyosource.ktxui.DrawableView
 import de.yoyosource.ktxui.Observer
 import de.yoyosource.ktxui.View
-import de.yoyosource.ktxui.views.events.Button
-import de.yoyosource.ktxui.views.events.Drag
-import de.yoyosource.ktxui.views.events.Hover
-import de.yoyosource.ktxui.views.events.Scroll
+import de.yoyosource.ktxui.views.events.*
 import kotlin.math.roundToInt
 import kotlin.reflect.KProperty0
 import kotlin.reflect.jvm.isAccessible
@@ -89,6 +86,21 @@ class ViewState {
             val (viewPosX, viewPosY) = positions[it as DrawableView]!!
             it.scroll(viewPosX, viewPosY, x - viewPosX, y - viewPosY, x, y, wheelRotation)
         }
+    }
+
+    fun press(keyCode: Int, keyChar: Char, modifier: Set<ModifierKey>) {
+        order.filterIsInstance<Keyboard>()
+            .forEach { it.press(keyCode, keyChar, modifier) }
+    }
+
+    fun release(keyCode: Int, keyChar: Char, modifier: Set<ModifierKey>) {
+        order.filterIsInstance<Keyboard>()
+            .forEach { it.release(keyCode, keyChar, modifier) }
+    }
+
+    fun type(keyCode: Int, keyChar: Char, modifier: Set<ModifierKey>) {
+        order.filterIsInstance<Keyboard>()
+            .forEach { it.type(keyCode, keyChar, modifier) }
     }
 }
 
