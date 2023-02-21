@@ -1,0 +1,154 @@
+{
+  "meta": {
+    "fileEnding": "json"
+  },
+  "parser": {
+    "JsonParser": {
+      "type": "oneof"
+    },
+    "JsonString": {
+      "type": "sequence",
+      "elements": [
+        {
+          "type": "literal",
+          "value": "\"",
+          "ignore": true
+        },
+        {
+          "type": "regex",
+          "value": "[^\"\\\\]*"
+        },
+        {
+          "type": "literal",
+          "value": "\"",
+          "ignore": true
+        }
+      ]
+    },
+    "JsonNumber": {
+      "type": "regex",
+      "value": "-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?"
+    },
+    "JsonBoolean": {
+      "type": "oneof",
+      "elements": [
+        {
+          "type": "literal",
+          "value": "true"
+        },
+        {
+          "type": "literal",
+          "value": "false"
+        }
+      ]
+    },
+    "JsonNull": {
+      "type": "literal",
+      "value": "null"
+    },
+    "JsonArray": {
+      "type": "oneof",
+      "elements": [
+        {
+          "type": "sequence",
+          "elements": [
+            {
+              "type": "literal",
+              "value": "[",
+              "ignore": true
+            },
+            {
+              "type": "literal",
+              "value": "]",
+              "ignore": true
+            }
+          ]
+        },
+        {
+          "type": "sequence",
+          "elements": [
+            {
+              "type": "literal",
+              "value": "[",
+              "ignore": true
+            },
+            {
+              "type": "repeat",
+              "elements": [
+                {
+                  "type": "JsonParser"
+                },
+                {
+                  "type": "literal",
+                  "value": ",",
+                  "ignore": true
+                }
+              ]
+            },
+            {
+              "type": "_literal",
+              "value": "]",
+              "ignore": true
+            }
+          ]
+        }
+      ]
+    },
+    "JsonObject": {
+      "type": "oneof",
+      "elements": [
+        {
+          "type": "sequence",
+          "elements": [
+            {
+              "type": "literal",
+              "value": "{",
+              "ignore": true
+            },
+            {
+              "type": "literal",
+              "value": "}",
+              "ignore": true
+            }
+          ]
+        },
+        {
+          "type": "sequence",
+          "elements": [
+            {
+              "type": "literal",
+              "value": "{",
+              "ignore": true
+            },
+            {
+              "type": "repeat",
+              "elements": [
+                {
+                  "type": "JsonString"
+                },
+                {
+                  "type": "literal",
+                  "value": ":",
+                  "ignore": true
+                },
+                {
+                  "type": "JsonParser"
+                },
+                {
+                  "type": "literal",
+                  "value": ",",
+                  "ignore": true
+                }
+              ]
+            },
+            {
+              "type": "literal",
+              "value": "}",
+              "ignore": true
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

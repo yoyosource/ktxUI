@@ -46,6 +46,6 @@ fun <V : ViewAPI> V.onClick(action: (viewPosX: Int, viewPosY: Int, relativeX: In
     val event = ButtonImpl()
     parent!!.swap(this, event)
     event.apply { +self }
-    event.onDrag(action)
+    event.onClick(action)
     return this
 }

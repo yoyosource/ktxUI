@@ -1,11 +1,11 @@
-package de.yoyosource.test
+package de.yoyosource.examples
 
 import de.yoyosource.KtxUIFrame
 import de.yoyosource.ktxui.Observer
 import de.yoyosource.ktxui.views.*
-import de.yoyosource.ktxui.views.events.*
-import de.yoyosource.ktxui.views.shapes.Circle
-import java.awt.Color
+import de.yoyosource.ktxui.views.events.onClick
+import de.yoyosource.ktxui.views.events.onDrag
+import de.yoyosource.ktxui.views.events.onHover
 
 private var posX by Observer(0)
 private var posY by Observer(0)
