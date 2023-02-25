@@ -72,7 +72,7 @@ abstract class SingleViewContainer : ViewContainer() {
 
     override operator fun <T : View> T.unaryPlus(): T {
         if (this@SingleViewContainer.child != null) {
-            throw IllegalStateException("Child already set")
+            throw IllegalStateException("SingleViewContainer can only contain one view")
         }
         this@SingleViewContainer.child = this
         this.parent = this@SingleViewContainer
@@ -93,5 +93,3 @@ abstract class SingleViewContainer : ViewContainer() {
         return child?.spacers(orientation) ?: 0
     }
 }
-
-abstract class DrawableSingleViewContainer : SingleViewContainer(), DrawableView

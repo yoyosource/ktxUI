@@ -6,6 +6,8 @@ import de.yoyosource.ktxui.views.*
 import de.yoyosource.ktxui.views.events.onClick
 import de.yoyosource.ktxui.views.events.onDrag
 import de.yoyosource.ktxui.views.events.onHover
+import de.yoyosource.ktxui.views.position.AbsolutePosition
+import de.yoyosource.ktxui.views.position.RelativePosition
 
 private var posX by Observer(0)
 private var posY by Observer(0)
@@ -19,28 +21,30 @@ private var image by ImageJarResource("/test.png")
 fun main() {
     val screen = Screen {
         AbsolutePosition(::posX, ::posY) {
-            AbsoluteSize(128, 128) {
-                ZStack {
-                    Image(::image)
-                    Conditional(::hovered) {
-                        RelativePosition(::relativePosX, ::relativePosY) {
-                            Text("Hello World")
-                        }
+            ZStack {
+                Image(::image)
+                Conditional(::hovered) {
+                    RelativePosition(::relativePosX, ::relativePosY) {
+                        Text("Hello World")
                     }
-                }.onClick { viewPosX, viewPosY, relativeX, relativeY, x, y ->
-                    println("Clicked")
-                }.onDrag { viewPosX, viewPosY, relativeX, relativeY, x, y ->
-                    posX -= relativePosX - relativeX
-                    posY -= relativePosY - relativeY
-                }.onHover { viewPosX, viewPosY, relativeX, relativeY, x, y ->
-                    hovered = true
-                    relativePosX = relativeX
-                    relativePosY = relativeY
                 }
+            }.onClick { viewPosX, viewPosY, relativeX, relativeY, x, y ->
+                println("Clicked")
+            }.onDrag { viewPosX, viewPosY, relativeX, relativeY, x, y ->
+                posX -= relativePosX - relativeX
+                posY -= relativePosY - relativeY
+            }.onHover { viewPosX, viewPosY, relativeX, relativeY, x, y ->
+                if (relativeX > 128 || relativeY > 128) {
+                    hovered = false
+                    return@onHover
+                }
+                hovered = true
+                relativePosX = relativeX
+                relativePosY = relativeY
             }
-        }.onHover { viewPosX, viewPosY, relativeX, relativeY, x, y ->
-            hovered = false
         }
+    }.onHoverNothing {
+        hovered = false
     }
 
     KtxUIFrame(screen)

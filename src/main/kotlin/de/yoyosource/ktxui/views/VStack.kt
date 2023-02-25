@@ -1,25 +1,22 @@
 package de.yoyosource.ktxui.views
 
 import de.yoyosource.ktxui.*
-import de.yoyosource.ktxui.utils.Element
-import de.yoyosource.ktxui.utils.Orientation
-import de.yoyosource.ktxui.utils.SpacerCalculation
-import de.yoyosource.ktxui.utils.ViewState
+import de.yoyosource.ktxui.utils.*
 import kotlin.math.max
 import kotlin.math.min
 
-fun ViewContainer.VStack(builder: OrientedViewContainer.() -> Unit): ViewAPI {
+fun ViewContainer.VStack(builder: OrientedViewBuilder): ViewAPI {
     return (+VStack()).apply(builder)
 }
 
-fun ViewContainer.VTop(builder: OrientedViewContainer.() -> Unit): ViewAPI {
+fun ViewContainer.VTop(builder: OrientedViewBuilder): ViewAPI {
     return VStack {
         builder()
         Spacer()
     }
 }
 
-fun ViewContainer.VCenter(builder: OrientedViewContainer.() -> Unit): ViewAPI {
+fun ViewContainer.VCenter(builder: OrientedViewBuilder): ViewAPI {
     return VStack {
         Spacer()
         builder()
@@ -27,7 +24,7 @@ fun ViewContainer.VCenter(builder: OrientedViewContainer.() -> Unit): ViewAPI {
     }
 }
 
-fun ViewContainer.VBottom(builder: OrientedViewContainer.() -> Unit): ViewAPI {
+fun ViewContainer.VBottom(builder: OrientedViewBuilder): ViewAPI {
     return VStack {
         Spacer()
         builder()

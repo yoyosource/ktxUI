@@ -2,18 +2,20 @@ package de.yoyosource.ktxui.views.events
 
 import de.yoyosource.ktxui.*
 import de.yoyosource.ktxui.utils.Element
+import de.yoyosource.ktxui.utils.Event
+import de.yoyosource.ktxui.utils.SingleViewBuilder
 import de.yoyosource.ktxui.utils.ViewState
 
-fun ViewContainer.Button(builder: SingleViewContainer.() -> Unit): Button {
+fun ViewContainer.Button(builder: SingleViewBuilder): Button {
     return (+ButtonImpl()).apply(builder)
 }
 
-sealed interface Button {
+sealed interface Button: Event {
     fun click(viewPosX: Int, viewPosY: Int, relativeX: Int, relativeY: Int, x: Int, y: Int)
     fun onClick(action: (viewPosX: Int, viewPosY: Int, relativeX: Int, relativeY: Int, x: Int, y: Int) -> Unit): Button
 }
 
-private class ButtonImpl : DrawableSingleViewContainer(), Button {
+private class ButtonImpl : SingleViewContainer(), Button {
 
     private var action: (Int, Int, Int, Int, Int, Int) -> Unit = { _, _, _, _, _, _ -> }
 
@@ -22,12 +24,8 @@ private class ButtonImpl : DrawableSingleViewContainer(), Button {
     }
 
     override fun size(drawableData: DrawableData, screenSize: Element, location: Element, viewState: ViewState) {
-        viewState.set(this, location, screenSize)
-        child?.size(drawableData, screenSize.copy(), location.copy(), viewState)
-        location + screenSize
-    }
-
-    override fun draw(drawable: Drawable, viewState: ViewState) {
+        viewState.set(this, location)
+        child?.size(drawableData, screenSize, location, viewState)
     }
 
     override fun click(viewPosX: Int, viewPosY: Int, relativeX: Int, relativeY: Int, x: Int, y: Int) {

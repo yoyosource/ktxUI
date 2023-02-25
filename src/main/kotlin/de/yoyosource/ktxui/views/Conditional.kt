@@ -1,10 +1,7 @@
 package de.yoyosource.ktxui.views
 
 import de.yoyosource.ktxui.*
-import de.yoyosource.ktxui.utils.Element
-import de.yoyosource.ktxui.utils.Orientation
-import de.yoyosource.ktxui.utils.ViewOption
-import de.yoyosource.ktxui.utils.ViewState
+import de.yoyosource.ktxui.utils.*
 import kotlin.reflect.KProperty0
 
 fun <V: ViewContainer> V.Conditional(value: Boolean, inverted: Boolean = false, builder: V.() -> Unit): ViewAPI {
@@ -14,7 +11,7 @@ fun <V: ViewContainer> V.Conditional(value: Boolean, inverted: Boolean = false, 
     return this
 }
 
-fun ViewContainer.Conditional(value: KProperty0<Boolean>, inverted: Boolean = false, builder: SingleViewContainer.() -> Unit): ViewAPI {
+fun ViewContainer.Conditional(value: KProperty0<Boolean>, inverted: Boolean = false, builder: SingleViewBuilder): ViewAPI {
     val _value = ViewOption(false)
     return (+Conditional(_value, inverted)).apply(builder).let {
         _value.set(it, value)

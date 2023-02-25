@@ -43,6 +43,7 @@ class ViewOption<T : Any>(value: T) {
         return when (value) {
             is Either.Left -> set(self, value.value)
             is Either.Right -> set(self, value.value)
+            else -> throw IllegalArgumentException("Either must be either Left or Right")
         }
     }
 }

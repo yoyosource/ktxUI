@@ -4,8 +4,12 @@ import de.yoyosource.KtxUIFrame
 import de.yoyosource.ktxui.DebugMode
 import de.yoyosource.ktxui.Observer
 import de.yoyosource.ktxui.ViewContainer
+import de.yoyosource.ktxui.utils.ViewBuilder
 import de.yoyosource.ktxui.views.*
 import de.yoyosource.ktxui.views.events.Button
+import de.yoyosource.ktxui.views.shapes.RoundedRectangle
+import de.yoyosource.ktxui.views.size.AbsoluteSize
+import de.yoyosource.ktxui.views.size.FitSize
 import java.awt.Color
 
 var mainMenu by Observer(true)
@@ -193,25 +197,37 @@ fun ViewContainer.WallMenu() {
     }
 }
 
-fun ViewContainer.GameTile(backgroundColor: Color, builder: ViewContainer.() -> Unit) {
+fun ViewContainer.GameTile(backgroundColor: Color, builder: ViewBuilder) {
     AbsoluteSize(400, 225) {
-        Background(backgroundColor) {
-            HCenter {
-                VCenter {
-                    builder()
+        FitSize { width, height ->
+            ZStack {
+                RoundedRectangle()
+                    .color(backgroundColor)
+                    .width(width)
+                    .height(height)
+                HCenter {
+                    VCenter {
+                        builder()
+                    }
                 }
             }
         }
     }
 }
 
-fun ViewContainer.Tile(backgroundColor: Color, builder: ViewContainer.() -> Unit): Button {
+fun ViewContainer.Tile(backgroundColor: Color, builder: ViewBuilder): Button {
     return Button {
         AbsoluteSize(225, 225) {
-            Background(backgroundColor) {
-                HCenter {
-                    VCenter {
-                        builder()
+            FitSize { width, height ->
+                ZStack {
+                    RoundedRectangle()
+                        .color(backgroundColor)
+                        .width(width)
+                        .height(height)
+                    HCenter {
+                        VCenter {
+                            builder()
+                        }
                     }
                 }
             }

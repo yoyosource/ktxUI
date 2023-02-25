@@ -95,7 +95,7 @@ private class DividerImpl constructor(private val length: ViewOption<Int>? = nul
             }
             viewState.set(this, location.copy(), current)
         }
-        location + viewState.sizes[this]!!
+        location + viewState[this].second
     }
 
     override fun draw(drawable: Drawable, viewState: ViewState) {

@@ -6,7 +6,7 @@ import kotlin.math.sin
 import kotlin.reflect.KProperty0
 
 /*
-fun ViewContainer.Rotate(builder: SingleViewContainer.() -> Unit): Rotate {
+fun ViewContainer.Rotate(builder: SingleViewBuilder): Rotate {
     return (+RotateImpl()).apply(builder)
 }
 

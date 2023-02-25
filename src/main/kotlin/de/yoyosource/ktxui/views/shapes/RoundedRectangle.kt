@@ -1,9 +1,6 @@
 package de.yoyosource.ktxui.views.shapes
 
-import de.yoyosource.ktxui.Drawable
-import de.yoyosource.ktxui.DrawableData
-import de.yoyosource.ktxui.ViewContainer
-import de.yoyosource.ktxui.ViewElement
+import de.yoyosource.ktxui.*
 import de.yoyosource.ktxui.utils.Element
 import de.yoyosource.ktxui.utils.ViewOption
 import de.yoyosource.ktxui.utils.ViewState
@@ -14,7 +11,7 @@ fun ViewContainer.RoundedRectangle(): RoundedRectangle {
     return +RoundedRectangleImpl()
 }
 
-sealed interface RoundedRectangle {
+sealed interface RoundedRectangle: ViewAPI {
     fun width(width: Int): RoundedRectangle
     fun width(width: KProperty0<Int>): RoundedRectangle
 

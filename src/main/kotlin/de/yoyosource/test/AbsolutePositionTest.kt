@@ -2,7 +2,7 @@ package de.yoyosource.test
 
 import de.yoyosource.KtxUIFrame
 import de.yoyosource.ktxui.views.Screen
-import de.yoyosource.ktxui.views.AbsolutePosition
+import de.yoyosource.ktxui.views.position.AbsolutePosition
 import de.yoyosource.ktxui.views.Text
 
 fun main() {

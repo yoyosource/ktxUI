@@ -1,31 +1,28 @@
-package de.yoyosource.ktxui.views
+package de.yoyosource.ktxui.views.position
 
 import de.yoyosource.ktxui.*
-import de.yoyosource.ktxui.utils.Element
-import de.yoyosource.ktxui.utils.Orientation
-import de.yoyosource.ktxui.utils.ViewOption
-import de.yoyosource.ktxui.utils.ViewState
+import de.yoyosource.ktxui.utils.*
 import kotlin.reflect.KProperty0
 
-fun ViewContainer.RelativePosition(x: Int, y: Int, builder: SingleViewContainer.() -> Unit): ViewAPI {
+fun ViewContainer.RelativePosition(x: Int, y: Int, builder: SingleViewBuilder): ViewAPI {
     return (+RelativePosition(ViewOption(x), ViewOption(y))).apply(builder)
 }
 
-fun ViewContainer.RelativePosition(x: KProperty0<Int>, y: Int, builder: SingleViewContainer.() -> Unit): ViewAPI {
+fun ViewContainer.RelativePosition(x: KProperty0<Int>, y: Int, builder: SingleViewBuilder): ViewAPI {
     val _x = ViewOption(0)
     return (+RelativePosition(_x, ViewOption(y))).apply(builder).let {
         _x.set(it, x)
     }
 }
 
-fun ViewContainer.RelativePosition(x: Int, y: KProperty0<Int>, builder: SingleViewContainer.() -> Unit): ViewAPI {
+fun ViewContainer.RelativePosition(x: Int, y: KProperty0<Int>, builder: SingleViewBuilder): ViewAPI {
     val _y = ViewOption(0)
     return (+RelativePosition(ViewOption(x), _y)).apply(builder).let {
         _y.set(it, y)
     }
 }
 
-fun ViewContainer.RelativePosition(x: KProperty0<Int>, y: KProperty0<Int>, builder: SingleViewContainer.() -> Unit): ViewAPI {
+fun ViewContainer.RelativePosition(x: KProperty0<Int>, y: KProperty0<Int>, builder: SingleViewBuilder): ViewAPI {
     val _x = ViewOption(0)
     val _y = ViewOption(0)
     return (+RelativePosition(_x, _y)).apply(builder).let {

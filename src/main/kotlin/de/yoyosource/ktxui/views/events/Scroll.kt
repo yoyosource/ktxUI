@@ -2,18 +2,20 @@ package de.yoyosource.ktxui.views.events
 
 import de.yoyosource.ktxui.*
 import de.yoyosource.ktxui.utils.Element
+import de.yoyosource.ktxui.utils.Event
+import de.yoyosource.ktxui.utils.SingleViewBuilder
 import de.yoyosource.ktxui.utils.ViewState
 
-fun ViewContainer.Scroll(builder: SingleViewContainer.() -> Unit): Scroll {
+fun ViewContainer.Scroll(builder: SingleViewBuilder): Scroll {
     return (+ScrollImpl()).apply(builder)
 }
 
-sealed interface Scroll {
+sealed interface Scroll: Event {
     fun scroll(viewPosX: Int, viewPosY: Int, relativeX: Int, relativeY: Int, x: Int, y: Int, wheelRotation: Double)
     fun onScroll(action: (viewPosX: Int, viewPosY: Int, relativeX: Int, relativeY: Int, x: Int, y: Int, wheelRotation: Double) -> Unit): Scroll
 }
 
-private class ScrollImpl : DrawableSingleViewContainer(), Scroll {
+private class ScrollImpl : SingleViewContainer(), Scroll {
 
     private var action: (Int, Int, Int, Int, Int, Int, Double) -> Unit = { _, _, _, _, _, _, _ -> }
 
@@ -22,12 +24,8 @@ private class ScrollImpl : DrawableSingleViewContainer(), Scroll {
     }
 
     override fun size(drawableData: DrawableData, screenSize: Element, location: Element, viewState: ViewState) {
-        viewState.set(this, location, screenSize)
-        child?.size(drawableData, screenSize.copy(), location.copy(), viewState)
-        location + screenSize
-    }
-
-    override fun draw(drawable: Drawable, viewState: ViewState) {
+        viewState.set(this, location)
+        child?.size(drawableData, screenSize, location, viewState)
     }
 
     override fun scroll(viewPosX: Int, viewPosY: Int, relativeX: Int, relativeY: Int, x: Int, y: Int, wheelRotation: Double) {

@@ -4,10 +4,11 @@ import de.yoyosource.ktxui.DrawableData
 import de.yoyosource.ktxui.ViewAPI
 import de.yoyosource.ktxui.utils.Element
 import de.yoyosource.ktxui.ViewContainer
+import de.yoyosource.ktxui.utils.ViewBuilder
 import de.yoyosource.ktxui.utils.ViewState
 import kotlin.math.max
 
-fun ViewContainer.ZStack(builder: ViewContainer.() -> Unit): ViewAPI {
+fun ViewContainer.ZStack(builder: ViewBuilder): ViewAPI {
     return (+ZStack()).apply(builder)
 }
 

@@ -48,7 +48,11 @@ class KtxUIFrame(private val screen: Screen) {
             override fun mouseClicked(e: MouseEvent?) {
                 val viewState = viewState ?: return
                 e ?: return
-                val viewElement = viewState[e.x, e.y] ?: return
+                val viewElement = viewState[e.x, e.y]
+                if (viewElement == null) {
+                    screen.clickNothing()
+                    return
+                }
                 viewState.click(viewElement, e.x, e.y)
             }
         })
@@ -57,7 +61,12 @@ class KtxUIFrame(private val screen: Screen) {
             override fun mouseMoved(e: MouseEvent?) {
                 val viewState = viewState ?: return
                 e ?: return
-                val viewElement = viewState[e.x, e.y] ?: return
+                val viewElement = viewState[e.x, e.y]
+                if (viewElement == null) {
+                    screen.hoverNothing()
+                    view = null
+                    return
+                }
                 viewState.hover(viewElement, e.x, e.y)
                 view = null
             }
@@ -70,7 +79,11 @@ class KtxUIFrame(private val screen: Screen) {
                 if (view != null) {
                     viewState.drag(view!!, e.x, e.y)
                 } else {
-                    val viewElement = viewState[e.x, e.y] ?: return
+                    val viewElement = viewState[e.x, e.y]
+                    if (viewElement == null) {
+                        screen.dragNothing()
+                        return
+                    }
                     viewState.drag(viewElement, e.x, e.y)
                     view = viewElement
                 }
@@ -81,7 +94,11 @@ class KtxUIFrame(private val screen: Screen) {
             override fun mouseWheelMoved(e: MouseWheelEvent?) {
                 val viewState = viewState ?: return
                 e ?: return
-                val viewElement = viewState[e.x, e.y] ?: return
+                val viewElement = viewState[e.x, e.y]
+                if (viewElement == null) {
+                    screen.scrollNothing()
+                    return
+                }
                 viewState.scroll(viewElement, e.x, e.y, e.preciseWheelRotation)
             }
         })
@@ -136,10 +153,9 @@ class KtxUIFrame(private val screen: Screen) {
             }
             redraw = true
             if (it is ViewElement) {
-                val previousSize = viewState!!.sizes[it]
+                val previousSize = viewState!![it].second
                 val newSize = it.size(drawable)
                 if (previousSize != newSize) {
-                    // println("Redraw because of size change: $previousSize -> $newSize for $it")
                     viewState = null
                 }
             } else {
@@ -170,7 +186,7 @@ class KtxUIFrame(private val screen: Screen) {
             screen.size(drawable, Element(width, height), Element(0, 0), currentViewState)
         }
         drawable.fillBackground(Color.WHITE)
-        currentViewState.order.forEach {
+        currentViewState.forEach {
             if (debugModes.contains(DebugMode.DRAW_CLICKABLE)) {
                 val (location, size) = currentViewState[it]
                 drawable.drawRectangle(location.copy() - Element(1, 1), size.copy() + Element(2, 2), Color(50, 50, 50, 50))

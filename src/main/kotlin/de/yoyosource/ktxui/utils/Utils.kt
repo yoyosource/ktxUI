@@ -23,9 +23,11 @@ fun <T, V: View> observableInit(property : KProperty0<T>, viewCreator: (() -> T)
 }
 
 class ViewState {
-    var order: MutableList<DrawableView> = mutableListOf()
-    var positions: MutableMap<DrawableView, Element> = mutableMapOf()
-    var sizes: MutableMap<DrawableView, Element> = mutableMapOf()
+    private var order: MutableList<DrawableView> = mutableListOf()
+    private var positions: MutableMap<DrawableView, Element> = mutableMapOf()
+    private var sizes: MutableMap<DrawableView, Element> = mutableMapOf()
+    private var eventPositions: MutableMap<Event, Element> = mutableMapOf()
+    private var keyboards: MutableSet<Keyboard> = mutableSetOf()
 
     fun set(view: DrawableView, location: Element, size: Element) {
         if (!(positions.containsKey(view) && sizes.containsKey(view))) {
@@ -33,6 +35,18 @@ class ViewState {
         }
         positions[view] = location.copy()
         this.sizes[view] = size.copy()
+    }
+
+    fun set(view: Event, location: Element) {
+        eventPositions[view] = location.copy()
+    }
+
+    fun set(keyboard: Keyboard) {
+        keyboards.add(keyboard)
+    }
+
+    fun forEach(action: (DrawableView) -> Unit) {
+        order.forEach(action)
     }
 
     operator fun get(view: DrawableView): Pair<Element, Element> {
@@ -51,10 +65,6 @@ class ViewState {
 
     private inline fun <reified T> walk(view: DrawableView, action: (T) -> Unit) {
         var view = view as View
-        if (view is T) { // This is not intended
-            action(view)
-            return
-        }
         while (view.parent != null) {
             view = view.parent!!
             if (view is T) {
@@ -66,45 +76,42 @@ class ViewState {
 
     fun click(view: DrawableView, x: Int, y: Int) {
         walk<Button>(view) {
-            val (viewPosX, viewPosY) = positions[it as DrawableView]!!
+            val (viewPosX, viewPosY) = eventPositions[it]!!
             it.click(viewPosX, viewPosY, x - viewPosX, y - viewPosY, x, y)
         }
     }
 
     fun hover(view: DrawableView, x: Int, y: Int) {
         walk<Hover>(view) {
-            val (viewPosX, viewPosY) = positions[it as DrawableView]!!
+            val (viewPosX, viewPosY) = eventPositions[it]!!
             it.hover(viewPosX, viewPosY, x - viewPosX, y - viewPosY, x, y)
         }
     }
 
     fun drag(view: DrawableView, x: Int, y: Int) {
         walk<Drag>(view) {
-            val (viewPosX, viewPosY) = positions[it as DrawableView]!!
+            val (viewPosX, viewPosY) = eventPositions[it]!!
             it.drag(viewPosX, viewPosY, x - viewPosX, y - viewPosY, x, y)
         }
     }
 
     fun scroll(view: DrawableView, x: Int, y: Int, wheelRotation: Double) {
         walk<Scroll>(view) {
-            val (viewPosX, viewPosY) = positions[it as DrawableView]!!
+            val (viewPosX, viewPosY) = eventPositions[it]!!
             it.scroll(viewPosX, viewPosY, x - viewPosX, y - viewPosY, x, y, wheelRotation)
         }
     }
 
     fun press(keyCode: Int, keyChar: Char, modifier: Set<ModifierKey>) {
-        order.filterIsInstance<Keyboard>()
-            .forEach { it.press(keyCode, keyChar, modifier) }
+        keyboards.forEach { it.press(keyCode, keyChar, modifier) }
     }
 
     fun release(keyCode: Int, keyChar: Char, modifier: Set<ModifierKey>) {
-        order.filterIsInstance<Keyboard>()
-            .forEach { it.release(keyCode, keyChar, modifier) }
+        keyboards.forEach { it.release(keyCode, keyChar, modifier) }
     }
 
     fun type(keyCode: Int, keyChar: Char, modifier: Set<ModifierKey>) {
-        order.filterIsInstance<Keyboard>()
-            .forEach { it.type(keyCode, keyChar, modifier) }
+        keyboards.forEach { it.type(keyCode, keyChar, modifier) }
     }
 }
 
