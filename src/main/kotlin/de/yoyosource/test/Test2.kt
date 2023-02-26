@@ -5,12 +5,11 @@ import de.yoyosource.ktxui.Observer
 import de.yoyosource.ktxui.animation.animation
 import de.yoyosource.ktxui.animation.delay
 import de.yoyosource.ktxui.animation.set
-import de.yoyosource.ktxui.utils.Side
-import de.yoyosource.ktxui.views.Screen
-import de.yoyosource.ktxui.views.Text
-import de.yoyosource.ktxui.views.ZStack
+import de.yoyosource.ktxui.api.data.Side
+import de.yoyosource.ktxui.api.views.Screen
+import de.yoyosource.ktxui.api.views.Text
+import de.yoyosource.ktxui.api.views.layout.ZStack
 import de.yoyosource.ktxui.views.combound.Tooltip
-import de.yoyosource.ktxui.views.padding
 import de.yoyosource.ktxui.views.shapes.RoundedRectangle
 import de.yoyosource.ktxui.views.size.FitSize
 import java.awt.Color

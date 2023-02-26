@@ -39,7 +39,7 @@ private class DragImpl : SingleViewContainer(), Drag {
 }
 
 fun <V : ViewAPI> V.onDrag(action: (viewPosX: Int, viewPosY: Int, relativeX: Int, relativeY: Int, x: Int, y: Int) -> Unit): V {
-    this as View
+    this as ViewBase
     val self = this
     val event = DragImpl()
     parent!!.swap(this, event)

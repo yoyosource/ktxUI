@@ -4,6 +4,10 @@ import de.yoyosource.KtxUIFrame
 import de.yoyosource.ktxui.DebugMode
 import de.yoyosource.ktxui.Observer
 import de.yoyosource.ktxui.ViewContainer
+import de.yoyosource.ktxui.api.views.Screen
+import de.yoyosource.ktxui.api.views.layout.Spacer
+import de.yoyosource.ktxui.api.views.Text
+import de.yoyosource.ktxui.api.views.layout.ZStack
 import de.yoyosource.ktxui.utils.ViewBuilder
 import de.yoyosource.ktxui.views.*
 import de.yoyosource.ktxui.views.events.Button
@@ -44,36 +48,36 @@ fun ViewContainer.MainMenu() {
         VCenter {
             Tile(backgroundColor) {
                 Text("--- 1 ---")
-                    .size(20)
+                    .weight(20)
             }
             Spacer()
             Tile(backgroundColor) {
                 Text("--- 2 ---")
-                    .size(20)
+                    .weight(20)
             }
         }
         Spacer()
         VCenter {
             Tile(backgroundColor) {
                 Text("--- 3 ---")
-                    .size(20)
+                    .weight(20)
             }
             Spacer()
             Tile(backgroundColor) {
                 Text("--- 4 ---")
-                    .size(20)
+                    .weight(20)
             }
         }
         Spacer()
         VCenter {
             Tile(backgroundColor) {
                 Text("--- 5 ---")
-                    .size(20)
+                    .weight(20)
             }
             Spacer()
             Tile(backgroundColor) {
                 Text("--- 6 ---")
-                    .size(20)
+                    .weight(20)
             }
         }
     }
@@ -84,22 +88,22 @@ fun ViewContainer.GameMenu() {
         HCenter {
             GameTile(backgroundColor) {
                 Text("--- 1 ---")
-                    .size(20)
+                    .weight(20)
             }
             Spacer(5)
             GameTile(backgroundColor) {
                 Text("--- 2 ---")
-                    .size(20)
+                    .weight(20)
             }
             Spacer(5)
             GameTile(backgroundColor) {
                 Text("--- 3 ---")
-                    .size(20)
+                    .weight(20)
             }
             Spacer(5)
             GameTile(backgroundColor) {
                 Text("--- 4 ---")
-                    .size(20)
+                    .weight(20)
             }
         }
     }
@@ -110,88 +114,88 @@ fun ViewContainer.WallMenu() {
         VCenter {
             Tile(backgroundColor) {
                 Text("--- 1 ---")
-                    .size(20)
+                    .weight(20)
             }
             Spacer(5)
             Tile(backgroundColor) {
                 Text("--- 2 ---")
-                    .size(20)
+                    .weight(20)
             }
             Spacer(5)
             Tile(backgroundColor) {
                 Text("--- 3 ---")
-                    .size(20)
+                    .weight(20)
             }
             Spacer(5)
             Tile(backgroundColor) {
                 Text("--- 4 ---")
-                    .size(20)
+                    .weight(20)
             }
         }
         Spacer(5)
         VCenter {
             Tile(backgroundColor) {
                 Text("--- 1 ---")
-                    .size(20)
+                    .weight(20)
             }
             Spacer(5)
             Tile(backgroundColor) {
                 Text("--- 2 ---")
-                    .size(20)
+                    .weight(20)
             }
             Spacer(5)
             Tile(backgroundColor) {
                 Text("--- 3 ---")
-                    .size(20)
+                    .weight(20)
             }
             Spacer(5)
             Tile(backgroundColor) {
                 Text("--- 4 ---")
-                    .size(20)
+                    .weight(20)
             }
         }
         Spacer(5)
         VCenter {
             Tile(backgroundColor) {
                 Text("--- 1 ---")
-                    .size(20)
+                    .weight(20)
             }
             Spacer(5)
             Tile(backgroundColor) {
                 Text("--- 2 ---")
-                    .size(20)
+                    .weight(20)
             }
             Spacer(5)
             Tile(backgroundColor) {
                 Text("--- 3 ---")
-                    .size(20)
+                    .weight(20)
             }
             Spacer(5)
             Tile(backgroundColor) {
                 Text("--- 4 ---")
-                    .size(20)
+                    .weight(20)
             }
         }
         Spacer(5)
         VCenter {
             Tile(backgroundColor) {
                 Text("--- 1 ---")
-                    .size(20)
+                    .weight(20)
             }
             Spacer(5)
             Tile(backgroundColor) {
                 Text("--- 2 ---")
-                    .size(20)
+                    .weight(20)
             }
             Spacer(5)
             Tile(backgroundColor) {
                 Text("--- 3 ---")
-                    .size(20)
+                    .weight(20)
             }
             Spacer(5)
             Tile(backgroundColor) {
                 Text("--- 4 ---")
-                    .size(20)
+                    .weight(20)
             }
         }
     }

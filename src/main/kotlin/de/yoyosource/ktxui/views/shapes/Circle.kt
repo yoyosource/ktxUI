@@ -19,7 +19,7 @@ sealed interface Circle: ViewAPI {
     fun color(color: KProperty0<Color>): Circle
 }
 
-private class CircleImpl : ViewElement(), Circle {
+private class CircleImpl : DrawableView(), Circle {
 
     private var radius = ViewOption(0)
     private var color = ViewOption(Color.BLACK)

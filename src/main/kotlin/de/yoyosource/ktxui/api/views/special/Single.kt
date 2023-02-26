@@ -1,12 +1,15 @@
-package de.yoyosource.ktxui.views.utils
+package de.yoyosource.ktxui.api.views.special
 
-import de.yoyosource.ktxui.*
+import de.yoyosource.ktxui.DrawableData
+import de.yoyosource.ktxui.SingleViewContainer
+import de.yoyosource.ktxui.ViewBase
+import de.yoyosource.ktxui.ViewContainer
 import de.yoyosource.ktxui.utils.Element
 import de.yoyosource.ktxui.utils.SingleViewBuilder
 import de.yoyosource.ktxui.utils.ViewState
 
-fun ViewContainer.Single(builder: SingleViewBuilder): ViewAPI {
-    return SingleImpl(this).apply(builder).child ?: Empty()
+fun ViewContainer.Single(builder: SingleViewBuilder) {
+    SingleImpl(this).apply(builder)
 }
 
 private class SingleImpl(private val viewContainer: ViewContainer): SingleViewContainer() {
@@ -20,7 +23,7 @@ private class SingleImpl(private val viewContainer: ViewContainer): SingleViewCo
         TODO()
     }
 
-    override fun <T : View> T.unaryPlus(): T {
+    override fun <T : ViewBase> T.unaryPlus(): T {
         if (this@SingleImpl.count > 0) {
             throw IllegalStateException("SingleViewContainer can only contain one view")
         }

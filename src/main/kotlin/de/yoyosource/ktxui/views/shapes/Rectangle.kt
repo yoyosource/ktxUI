@@ -22,7 +22,7 @@ sealed interface Rectangle: ViewAPI {
     fun color(color: KProperty0<Color>): Rectangle
 }
 
-private class RectangleImpl : ViewElement(), Rectangle {
+private class RectangleImpl : DrawableView(), Rectangle {
 
 
     private var width = ViewOption(0)

@@ -2,13 +2,13 @@ package de.yoyosource.ktxui.utils
 
 import de.yoyosource.ktxui.DrawableView
 import de.yoyosource.ktxui.Observer
-import de.yoyosource.ktxui.View
+import de.yoyosource.ktxui.ViewBase
 import de.yoyosource.ktxui.views.events.*
 import kotlin.math.roundToInt
 import kotlin.reflect.KProperty0
 import kotlin.reflect.jvm.isAccessible
 
-fun <T, V: View> observableInit(property : KProperty0<T>, viewCreator: (() -> T) -> V): V {
+fun <T, V: ViewBase> observableInit(property : KProperty0<T>, viewCreator: (() -> T) -> V): V {
     if (property.isLateinit) throw IllegalArgumentException("Lateinit properties are not supported")
     val delegate = property.apply {
         this.isAccessible = true
@@ -70,7 +70,7 @@ class ViewState {
     }
 
     private inline fun <reified T> walk(view: DrawableView, action: (T) -> Unit) {
-        var view = view as View
+        var view = view as ViewBase
         while (view.parent != null) {
             view = view.parent!!
             if (view is T) {

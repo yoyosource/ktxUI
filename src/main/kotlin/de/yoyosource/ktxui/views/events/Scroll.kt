@@ -39,7 +39,7 @@ private class ScrollImpl : SingleViewContainer(), Scroll {
 }
 
 fun <V : ViewAPI> V.onScroll(action: (viewPosX: Int, viewPosY: Int, relativeX: Int, relativeY: Int, x: Int, y: Int, wheelRotation: Double) -> Unit): V {
-    this as View
+    this as ViewBase
     val self = this
     val event = ScrollImpl()
     parent!!.swap(this, event)

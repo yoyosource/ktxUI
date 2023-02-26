@@ -22,7 +22,7 @@ sealed interface Oval: ViewAPI {
     fun color(color: KProperty0<Color>): Oval
 }
 
-private class OvalImpl : ViewElement(), Oval {
+private class OvalImpl : DrawableView(), Oval {
 
     private var width = ViewOption(0)
     private var height = ViewOption(0)

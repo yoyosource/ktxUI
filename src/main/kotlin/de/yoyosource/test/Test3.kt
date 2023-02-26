@@ -1,7 +1,12 @@
 package de.yoyosource.test
 
 import de.yoyosource.KtxUIFrame
-import de.yoyosource.ktxui.utils.Side
+import de.yoyosource.ktxui.api.views.Text
+import de.yoyosource.ktxui.api.data.TextAlignment
+import de.yoyosource.ktxui.api.data.Side
+import de.yoyosource.ktxui.api.data.black
+import de.yoyosource.ktxui.api.views.Screen
+import de.yoyosource.ktxui.api.views.layout.ZStack
 import de.yoyosource.ktxui.views.*
 import de.yoyosource.ktxui.views.events.onClick
 import de.yoyosource.ktxui.views.shapes.RoundedRectangle
@@ -27,8 +32,10 @@ fun main() {
                             AbsoluteSize(screenWidth, innerHeight) {
                                 HCenter {
                                     Text("Hello world")
+                                        .border(black)
                                         .padding(Side.TOP, 10)
                                         .padding(Side.BOTTOM, 15)
+                                        .alignment(TextAlignment.CENTER)
                                 }.use()
                             }
                         }

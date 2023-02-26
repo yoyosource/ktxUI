@@ -8,7 +8,7 @@ import kotlin.reflect.KProperty0
 fun <V: ViewAPI> ViewContainer.Size(builder: SingleViewContainer.(innerWidth: KProperty0<Int>, innerHeight: KProperty0<Int>, use: V.() -> V) -> Unit): ViewAPI {
     return (+SizeImpl()).apply {
         builder(this::width, this::height) {
-            this@apply.element = this as View
+            this@apply.element = this as ViewBase
             return@builder this
         }
     }
@@ -16,7 +16,7 @@ fun <V: ViewAPI> ViewContainer.Size(builder: SingleViewContainer.(innerWidth: KP
 
 private class SizeImpl : SingleViewContainer() {
 
-    var element: View? = null
+    var element: ViewBase? = null
     var width by Observer(0)
     var height by Observer(0)
 

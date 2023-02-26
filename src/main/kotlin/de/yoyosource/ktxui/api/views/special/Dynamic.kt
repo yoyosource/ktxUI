@@ -1,4 +1,4 @@
-package de.yoyosource.ktxui.views.utils
+package de.yoyosource.ktxui.api.views.special
 
 import de.yoyosource.ktxui.*
 import de.yoyosource.ktxui.utils.Element
@@ -7,11 +7,18 @@ import de.yoyosource.ktxui.utils.ViewState
 import kotlin.reflect.KProperty0
 import kotlin.reflect.jvm.isAccessible
 
-fun ViewContainer.Dynamic(value: KProperty0<SingleViewBuilder>): ViewAPI {
+fun ViewContainer.Dynamic(value: KProperty0<SingleViewBuilder>): Dynamic<*> {
     return +DynamicImpl(value)
 }
 
-private class DynamicImpl(private val value: KProperty0<SingleViewBuilder>): SingleViewContainer() {
+sealed interface Dynamic<S>: DynamicAPI<S, Dynamic<S>> where S: ViewBase
+
+sealed interface DynamicAPI<S, A>: ViewAPI<S, A> where S: ViewBase, A: DynamicAPI<S, A>
+
+private class DynamicImpl(private val value: KProperty0<SingleViewBuilder>): SingleViewContainer(), Dynamic<DynamicImpl> {
+
+    override val selfView: DynamicImpl = this
+    override val selfAPI: Dynamic<DynamicImpl> = this
 
     init {
         setView(value.get())

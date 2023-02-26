@@ -2,13 +2,13 @@ package de.yoyosource.test
 
 import de.yoyosource.KtxUIFrame
 import de.yoyosource.ktxui.Observer
-import de.yoyosource.ktxui.views.Screen
+import de.yoyosource.ktxui.api.views.Screen
 import de.yoyosource.ktxui.animation.animation
 import de.yoyosource.ktxui.animation.delay
 import de.yoyosource.ktxui.animation.dynamicSet
 import de.yoyosource.ktxui.animation.loop
 import de.yoyosource.ktxui.views.Conditional
-import de.yoyosource.ktxui.views.Text
+import de.yoyosource.ktxui.api.views.Text
 import de.yoyosource.ktxui.views.VStack
 
 var bool by Observer(true)

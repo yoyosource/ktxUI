@@ -1,14 +1,16 @@
 package de.yoyosource.ktxui.views.combound
 
 import de.yoyosource.ktxui.*
+import de.yoyosource.ktxui.api.views.layout.ZStack
+import de.yoyosource.ktxui.api.views.getScreen
 import de.yoyosource.ktxui.utils.Element
 import de.yoyosource.ktxui.utils.SingleViewBuilder
 import de.yoyosource.ktxui.utils.ViewState
 import de.yoyosource.ktxui.views.*
 import de.yoyosource.ktxui.views.events.onHover
 import de.yoyosource.ktxui.views.position.RelativePosition
-import de.yoyosource.ktxui.views.utils.Dynamic
-import de.yoyosource.ktxui.views.utils.Empty
+import de.yoyosource.ktxui.api.views.special.Dynamic
+import de.yoyosource.ktxui.api.views.special.Empty
 
 fun ViewContainer.Tooltip(builder: SingleViewBuilder): Tooltip {
     val tooltip = +TooltipImpl()

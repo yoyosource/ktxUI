@@ -1,8 +1,8 @@
-package de.yoyosource.ktxui.views
+package de.yoyosource.ktxui.api.views
 
 import de.yoyosource.ktxui.DrawableData
 import de.yoyosource.ktxui.SingleViewContainer
-import de.yoyosource.ktxui.View
+import de.yoyosource.ktxui.ViewBase
 import de.yoyosource.ktxui.utils.Element
 import de.yoyosource.ktxui.utils.Orientation
 import de.yoyosource.ktxui.utils.SingleViewBuilder
@@ -14,17 +14,17 @@ fun Screen(builder: SingleViewBuilder): Screen {
 
 class Screen internal constructor() : SingleViewContainer() {
 
-    private var redraw = mutableSetOf<(View) -> Unit>()
+    private var redraw = mutableSetOf<(ViewBase) -> Unit>()
 
-    fun addRedrawListener(redraw: (View) -> Unit) {
+    fun addRedrawListener(redraw: (ViewBase) -> Unit) {
         this.redraw.add(redraw)
     }
 
-    fun removeRedrawListener(redraw: (View) -> Unit) {
+    fun removeRedrawListener(redraw: (ViewBase) -> Unit) {
         this.redraw.remove(redraw)
     }
 
-    override fun redraw(view: View) {
+    override fun redraw(view: ViewBase) {
         redraw.forEach { it(view) }
     }
 
@@ -85,7 +85,7 @@ class Screen internal constructor() : SingleViewContainer() {
     }
 }
 
-fun View.getScreen(): Screen {
+fun ViewBase.getScreen(): Screen {
     var view = this
     while (view.parent != null) {
         view = view.parent!!

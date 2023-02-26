@@ -39,7 +39,7 @@ private class ButtonImpl : SingleViewContainer(), Button {
 }
 
 fun <V : ViewAPI> V.onClick(action: (viewPosX: Int, viewPosY: Int, relativeX: Int, relativeY: Int, x: Int, y: Int) -> Unit): V {
-    this as View
+    this as ViewBase
     val self = this
     val event = ButtonImpl()
     parent!!.swap(this, event)

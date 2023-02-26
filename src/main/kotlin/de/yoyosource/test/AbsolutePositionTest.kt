@@ -1,9 +1,9 @@
 package de.yoyosource.test
 
 import de.yoyosource.KtxUIFrame
-import de.yoyosource.ktxui.views.Screen
+import de.yoyosource.ktxui.api.views.Screen
 import de.yoyosource.ktxui.views.position.AbsolutePosition
-import de.yoyosource.ktxui.views.Text
+import de.yoyosource.ktxui.api.views.Text
 
 fun main() {
     val screen = Screen {

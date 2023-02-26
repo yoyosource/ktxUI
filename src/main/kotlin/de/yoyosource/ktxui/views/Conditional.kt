@@ -20,7 +20,7 @@ fun ViewContainer.Conditional(value: KProperty0<Boolean>, inverted: Boolean = fa
 
 private class Conditional constructor(private val value: ViewOption<Boolean>, private val inverted: Boolean): SingleViewContainer() {
 
-    override fun redraw(view: View) {
+    override fun redraw(view: ViewBase) {
         if (view == this || value.get() != inverted) {
             super.redraw(view)
         }

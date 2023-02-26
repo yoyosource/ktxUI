@@ -1,11 +1,14 @@
 package de.yoyosource
 
 import de.yoyosource.ktxui.Observer
-import de.yoyosource.ktxui.views.Screen
 import de.yoyosource.ktxui.animation.animation
 import de.yoyosource.ktxui.animation.delay
 import de.yoyosource.ktxui.animation.loop
 import de.yoyosource.ktxui.animation.set
+import de.yoyosource.ktxui.api.views.*
+import de.yoyosource.ktxui.api.views.layout.Divider
+import de.yoyosource.ktxui.api.views.layout.Spacer
+import de.yoyosource.ktxui.api.views.layout.ZStack
 import de.yoyosource.ktxui.views.*
 import java.awt.Color
 
@@ -48,7 +51,7 @@ fun main() {
                         Text("Hello World")
                     }
                     HCenter {
-                        Text("____________").color(Color.RED)
+                        Text("____________").foregroundColor(Color.RED)
                     }
                 }
             }
@@ -77,8 +80,8 @@ fun main() {
                     }
                     HRight {
                         Text(::testText)
-                            .size(::testInt2)
-                            .color(::colorProperty)
+                            .weight(::testInt2)
+                            .foregroundColor(::colorProperty)
                     }
                     /*HCenter {
                         Image("/test.png")

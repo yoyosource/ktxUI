@@ -7,12 +7,20 @@ import de.yoyosource.ktxui.utils.ViewState
 @DslMarker
 annotation class KtxUIDsl
 
+sealed interface View
+
+// This is equivalent to `protocols` from Swift
+interface ViewAPI<S, A> : View where S : ViewBase, A : ViewAPI<S, A> {
+    val selfView: S
+    val selfAPI: A
+}
+
 @KtxUIDsl
-abstract class View : ViewAPI {
+abstract class ViewBase : View {
 
     internal var parent: ViewContainer? = null
 
-    open fun redraw(view: View = this) {
+    open fun redraw(view: ViewBase = this) {
         parent?.redraw(view)
     }
 
@@ -24,24 +32,20 @@ abstract class View : ViewAPI {
     }
 }
 
-interface DrawableView {
-    fun draw(drawable: Drawable, viewState: ViewState)
-}
-
-interface ViewAPI
-
-abstract class ViewElement : View(), DrawableView {
+abstract class DrawableView : ViewBase() {
     override fun size(drawableData: DrawableData, screenSize: Element, location: Element, viewState: ViewState) {
         val size = size(drawableData)
         viewState.set(this, location, size)
         location + size
     }
+
+    abstract fun draw(drawable: Drawable, viewState: ViewState)
 }
 
-abstract class ViewContainer : View() {
-    internal val children: MutableList<View> = mutableListOf()
+abstract class ViewContainer : ViewBase() {
+    internal val children: MutableList<ViewBase> = mutableListOf()
 
-    open operator fun <T : View> T.unaryPlus(): T {
+    open operator fun <T : ViewBase> T.unaryPlus(): T {
         if (this@ViewContainer.children.contains(this)) {
             throw IllegalStateException("Child already set")
         }
@@ -50,7 +54,7 @@ abstract class ViewContainer : View() {
         return this
     }
 
-    open fun swap(old: View, new: View) {
+    open fun swap(old: ViewBase, new: ViewBase) {
         if (this.children.contains(old)) {
             this.children[this.children.indexOf(old)] = new
             new.parent = this
@@ -68,9 +72,9 @@ abstract class ViewContainer : View() {
 abstract class OrientedViewContainer(open val orientation: Orientation) : ViewContainer()
 
 abstract class SingleViewContainer : ViewContainer() {
-    internal var child: View? = null
+    internal var child: ViewBase? = null
 
-    override operator fun <T : View> T.unaryPlus(): T {
+    override operator fun <T : ViewBase> T.unaryPlus(): T {
         if (this@SingleViewContainer.child != null) {
             throw IllegalStateException("SingleViewContainer can only contain one view")
         }
@@ -79,7 +83,7 @@ abstract class SingleViewContainer : ViewContainer() {
         return this
     }
 
-    override fun swap(old: View, new: View) {
+    override fun swap(old: ViewBase, new: ViewBase) {
         if (this.child == old) {
             this.child = new
             new.parent = this

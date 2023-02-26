@@ -1,6 +1,7 @@
 package de.yoyosource.ktxui.views
 
 import de.yoyosource.ktxui.*
+import de.yoyosource.ktxui.api.views.layout.Spacer
 import de.yoyosource.ktxui.utils.*
 import kotlin.math.max
 import kotlin.math.min
@@ -48,7 +49,7 @@ private class VStack : OrientedViewContainer(Orientation.VERTICAL) {
 
         val spacers = children.filterIsInstance<Spacer>()
             .filter { it.isDynamic() }
-            .map { it as View }
+            .map { it as ViewBase }
         val splitSize = spacers.size + min(spacers(Orientation.VERTICAL) - spacers.size, 1)
 
         val views = children.filterNot { it is Spacer }

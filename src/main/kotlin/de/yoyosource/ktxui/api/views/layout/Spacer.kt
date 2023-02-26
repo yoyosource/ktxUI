@@ -1,4 +1,4 @@
-package de.yoyosource.ktxui.views
+package de.yoyosource.ktxui.api.views.layout
 
 import de.yoyosource.ktxui.*
 import de.yoyosource.ktxui.utils.Element
@@ -7,38 +7,29 @@ import de.yoyosource.ktxui.utils.ViewOption
 import de.yoyosource.ktxui.utils.ViewState
 import kotlin.reflect.KProperty0
 
-fun OrientedViewContainer.Spacer(): ViewAPI {
-    return +SpacerImpl()
+fun OrientedViewContainer.Spacer(): Spacer<*> {
+    return +SpacerImpl(null)
 }
 
-fun OrientedViewContainer.Spacer(length: Int): Spacer {
-    return +SpacerImpl(ViewOption(length))
+fun OrientedViewContainer.Spacer(minLength: Int): Spacer<*> {
+    return +SpacerImpl(ViewOption(minLength))
 }
 
-fun OrientedViewContainer.Spacer(length: KProperty0<Int>): Spacer {
-    return (+SpacerImpl(ViewOption(0))).length(length)
+fun OrientedViewContainer.Spacer(minLength: KProperty0<Int>): Spacer<*> {
+    val length = ViewOption(0)
+    val spacer = +SpacerImpl(length)
+    length.set(spacer, minLength)
+    return spacer
 }
 
-sealed interface Spacer: ViewAPI {
-    fun isDynamic(): Boolean
+sealed interface Spacer<S> : SpacerAPI<S, Spacer<S>> where S : ViewBase
 
-    fun length(length: Int): Spacer
-    fun length(length: KProperty0<Int>): Spacer
-}
+sealed interface SpacerAPI<S, A> : ViewAPI<S, A> where S : ViewBase, A : SpacerAPI<S, A>
 
-private class SpacerImpl constructor(private val length: ViewOption<Int>? = null) : View(), Spacer {
+private class SpacerImpl constructor(private val length: ViewOption<Int>? = null) : ViewBase(), Spacer<SpacerImpl> {
 
-    override fun isDynamic(): Boolean {
-        return length == null
-    }
-
-    override fun length(length: Int) = apply {
-        this.length?.set(this, length)
-    }
-
-    override fun length(length: KProperty0<Int>) = apply {
-        this.length?.set(this, length)
-    }
+    override val selfView: SpacerImpl = this
+    override val selfAPI: Spacer<SpacerImpl> = this
 
     override fun size(drawableData: DrawableData): Element {
         if (length == null) {
@@ -59,7 +50,6 @@ private class SpacerImpl constructor(private val length: ViewOption<Int>? = null
             } else {
                 current.x = 0
             }
-            drawableData.debug(DebugMode.SIZE, "$this $current ${(parent as OrientedViewContainer).orientation}")
             location + current
         } else {
             val current = Element(0, 0)
@@ -68,7 +58,6 @@ private class SpacerImpl constructor(private val length: ViewOption<Int>? = null
             } else {
                 current.y = length.get()
             }
-            drawableData.debug(DebugMode.SIZE, "$this $current ${(parent as OrientedViewContainer).orientation}")
             location + current
         }
     }

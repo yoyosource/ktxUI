@@ -1,8 +1,8 @@
-package de.yoyosource.ktxui.utils
+package de.yoyosource.ktxui.api.data
 
 enum class Side {
     TOP,
     BOTTOM,
     LEFT,
-    RIGHT
+    RIGHT,
 }

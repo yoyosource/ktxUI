@@ -31,7 +31,7 @@ fun ImageNetworkResource(url: String): Resource<BufferedImage> {
     return NetworkResource(url, ImageIO::read)
 }
 
-private class ImageImpl constructor(val image: () -> BufferedImage): ViewElement(), Image {
+private class ImageImpl constructor(val image: () -> BufferedImage): DrawableView(), Image {
 
     override fun size(drawableData: DrawableData): Element {
         return image().let { Element(it.width, it.height) }

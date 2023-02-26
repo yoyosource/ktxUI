@@ -35,7 +35,7 @@ sealed interface RoundedRectangle: ViewAPI {
     fun color(color: KProperty0<Color>): RoundedRectangle
 }
 
-private class RoundedRectangleImpl : ViewElement(), RoundedRectangle {
+private class RoundedRectangleImpl : DrawableView(), RoundedRectangle {
 
 
     private var width = ViewOption(0)

@@ -1,21 +1,20 @@
 package de.yoyosource
 
-import de.yoyosource.ktxui.DebugMode
 import de.yoyosource.ktxui.Drawable
 import de.yoyosource.ktxui.DrawableView
-import de.yoyosource.ktxui.ViewElement
 import de.yoyosource.ktxui.impl.Graphics2dDrawable
 import de.yoyosource.ktxui.utils.Element
 import de.yoyosource.ktxui.utils.ModifierKey
 import de.yoyosource.ktxui.utils.ViewState
-import de.yoyosource.ktxui.views.Screen
-import java.awt.*
+import de.yoyosource.ktxui.api.views.Screen
+import java.awt.Canvas
+import java.awt.Color
+import java.awt.Graphics
+import java.awt.Graphics2D
 import java.awt.event.*
 import javax.swing.JFrame
 
 class KtxUIFrame(private val screen: Screen) {
-
-    private val debugModes: MutableSet<DebugMode> = mutableSetOf()
 
     private val jFrame = JFrame()
     private lateinit var drawable: Drawable
@@ -149,7 +148,7 @@ class KtxUIFrame(private val screen: Screen) {
                 return@addRedrawListener
             }
             redraw = true
-            if (it is ViewElement) {
+            if (it is DrawableView) {
                 val previousSize = viewState!![it].second
                 val newSize = it.size(drawable)
                 if (previousSize != newSize) {
@@ -172,9 +171,6 @@ class KtxUIFrame(private val screen: Screen) {
 
     private fun redraw(g: Graphics2D) {
         drawable = Graphics2dDrawable(g, width, height)
-        debugModes.forEach {
-            drawable.enableDebug(it)
-        }
         var currentViewState = viewState
         if (currentViewState == null) {
             currentViewState = ViewState()
@@ -187,13 +183,5 @@ class KtxUIFrame(private val screen: Screen) {
             it.draw(drawable, currentViewState)
         }
         viewState = currentViewState
-    }
-
-    fun enableDebug(debugMode: DebugMode) {
-        debugModes.add(debugMode)
-    }
-
-    fun disableDebug(debugMode: DebugMode) {
-        debugModes.remove(debugMode)
     }
 }

@@ -1,7 +1,7 @@
 package de.yoyosource.ktxui.views.events
 
 import de.yoyosource.ktxui.DrawableData
-import de.yoyosource.ktxui.View
+import de.yoyosource.ktxui.ViewBase
 import de.yoyosource.ktxui.ViewContainer
 import de.yoyosource.ktxui.utils.*
 import kotlin.reflect.KProperty0
@@ -153,7 +153,7 @@ sealed interface Keyboard {
     fun onType(action: (keyCode: Int, keyChar: Char, modifier: Set<ModifierKey>) -> Unit): Keyboard
 }
 
-private class KeyboardImpl(private val keyCharFilter: ViewOption<Char>? = null, private val keyModifierFilter: ViewOption<Set<ModifierKey>>? = null, private val ignoreCaseFilter: ViewOption<Boolean>? = null) : View(), Keyboard {
+private class KeyboardImpl(private val keyCharFilter: ViewOption<Char>? = null, private val keyModifierFilter: ViewOption<Set<ModifierKey>>? = null, private val ignoreCaseFilter: ViewOption<Boolean>? = null) : ViewBase(), Keyboard {
 
     private var pressAction: (Int, Char, Set<ModifierKey>) -> Unit = { _, _, _ -> }
     private var releaseAction: (Int, Char, Set<ModifierKey>) -> Unit = { _, _, _ -> }
