@@ -5,27 +5,24 @@ import de.yoyosource.ktxui.utils.Element
 import de.yoyosource.ktxui.utils.ViewState
 import kotlin.reflect.KProperty0
 
-fun ViewContainer.FitSize(builder: SingleViewContainer.(width: KProperty0<Int>, height: KProperty0<Int>) -> Unit): ViewAPI {
-    return (+FitSizeImpl()).apply {
+fun ViewContainer.ScreenSize(builder: SingleViewContainer.(screenWidth: KProperty0<Int>, screenHeight: KProperty0<Int>) -> Unit): ViewAPI {
+    return (+ScreenSizeImpl()).apply {
         builder(this::width, this::height)
     }
 }
 
-private class FitSizeImpl : SingleViewContainer() {
+private class ScreenSizeImpl : SingleViewContainer() {
 
     var width by Observer(0)
     var height by Observer(0)
 
     override fun size(drawableData: DrawableData): Element {
-        width = 0
-        height = 0
         return child?.size(drawableData) ?: Element(0, 0)
     }
 
     override fun size(drawableData: DrawableData, screenSize: Element, location: Element, viewState: ViewState) {
-        val size = size(drawableData)
-        width = size.x
-        height = size.y
-        child?.size(drawableData, size, location, viewState)
+        width = screenSize.x
+        height = screenSize.y
+        child?.size(drawableData, screenSize, location, viewState)
     }
 }

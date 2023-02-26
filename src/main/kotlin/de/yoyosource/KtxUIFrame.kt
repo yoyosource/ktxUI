@@ -9,10 +9,7 @@ import de.yoyosource.ktxui.utils.Element
 import de.yoyosource.ktxui.utils.ModifierKey
 import de.yoyosource.ktxui.utils.ViewState
 import de.yoyosource.ktxui.views.Screen
-import java.awt.Canvas
-import java.awt.Color
-import java.awt.Graphics
-import java.awt.Graphics2D
+import java.awt.*
 import java.awt.event.*
 import javax.swing.JFrame
 
@@ -186,11 +183,7 @@ class KtxUIFrame(private val screen: Screen) {
             screen.size(drawable, Element(width, height), Element(0, 0), currentViewState)
         }
         drawable.fillBackground(Color.WHITE)
-        currentViewState.forEach {
-            if (debugModes.contains(DebugMode.DRAW_CLICKABLE)) {
-                val (location, size) = currentViewState[it]
-                drawable.drawRectangle(location.copy() - Element(1, 1), size.copy() + Element(2, 2), Color(50, 50, 50, 50))
-            }
+        currentViewState.forEach(width, height) {
             it.draw(drawable, currentViewState)
         }
         viewState = currentViewState

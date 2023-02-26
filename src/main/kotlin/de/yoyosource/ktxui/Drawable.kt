@@ -8,7 +8,6 @@ import java.awt.image.BufferedImage
 enum class DebugMode {
     SIZE,
     DRAW,
-    DRAW_CLICKABLE,
 }
 
 interface DrawableData {

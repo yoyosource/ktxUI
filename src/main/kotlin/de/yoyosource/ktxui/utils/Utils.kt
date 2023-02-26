@@ -45,8 +45,14 @@ class ViewState {
         keyboards.add(keyboard)
     }
 
-    fun forEach(action: (DrawableView) -> Unit) {
-        order.forEach(action)
+    fun forEach(width: Int, height: Int, action: (DrawableView) -> Unit) {
+        order.forEach {
+            val (position, size) = get(it)
+            if (position.x >= width || position.y >= height || position.x + size.x < 0 || position.y + size.y < 0) {
+                return@forEach
+            }
+            action(it)
+        }
     }
 
     operator fun get(view: DrawableView): Pair<Element, Element> {

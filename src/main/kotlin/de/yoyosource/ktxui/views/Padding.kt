@@ -8,7 +8,7 @@ fun ViewContainer.Padding(builder: SingleViewBuilder): Padding {
     return (+PaddingImpl()).apply(builder)
 }
 
-sealed interface Padding {
+sealed interface Padding: ViewAPI {
     fun padding(padding: Int): Padding
     fun padding(padding: KProperty0<Int>): Padding
     fun padding(side: Side, padding: Int): Padding
