@@ -6,9 +6,7 @@ import de.yoyosource.ktxui.animation.delay
 import de.yoyosource.ktxui.animation.loop
 import de.yoyosource.ktxui.animation.set
 import de.yoyosource.ktxui.api.views.*
-import de.yoyosource.ktxui.api.views.layout.Divider
-import de.yoyosource.ktxui.api.views.layout.Spacer
-import de.yoyosource.ktxui.api.views.layout.ZStack
+import de.yoyosource.ktxui.api.views.layout.*
 import de.yoyosource.ktxui.views.*
 import java.awt.Color
 

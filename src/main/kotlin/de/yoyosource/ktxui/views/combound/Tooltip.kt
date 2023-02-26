@@ -43,7 +43,7 @@ fun ViewContainer.Tooltip(builder: SingleViewBuilder): Tooltip {
     return tooltip
 }
 
-sealed interface Tooltip: ViewAPI {
+sealed interface Tooltip: ViewProtocol {
     fun setTooltip(tooltip: SingleViewBuilder): Tooltip
 }
 

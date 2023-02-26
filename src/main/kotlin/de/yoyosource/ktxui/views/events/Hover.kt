@@ -38,7 +38,7 @@ private class HoverImpl : SingleViewContainer(), Hover {
     }
 }
 
-fun <V : ViewAPI> V.onHover(action: (viewPosX: Int, viewPosY: Int, relativeX: Int, relativeY: Int, x: Int, y: Int) -> Unit): V {
+fun <V : ViewProtocol> V.onHover(action: (viewPosX: Int, viewPosY: Int, relativeX: Int, relativeY: Int, x: Int, y: Int) -> Unit): V {
     this as ViewBase
     val self = this
     val event = HoverImpl()

@@ -18,17 +18,15 @@ fun ViewContainer.Text(text: KProperty0<String>): Text<*> {
     return observableInit(text) { +TextImpl(it) }
 }
 
-sealed interface Text<S> : TextAPI<S, Text<S>> where S : ViewBase
-
-sealed interface TextAPI<S, A> : ViewAPI<S, A>, PaddingAPI<S, A>, ForegroundColorAPI<S, A>, BorderAPI<S, A>, FontAPI<S, A> where S : ViewBase, A : TextAPI<S, A> {
+sealed interface Text<S> : ViewProtocol<S, Text<S>>, PaddingProtocol<S, Text<S>>, ForegroundColorProtocol<S, Text<S>>, BorderProtocol<S, Text<S>>, FontProtocol<S, Text<S>> where S : ViewBase {
     val alignment: ViewOption<TextAlignment>
 
-    fun alignment(alignment: TextAlignment): A {
+    fun alignment(alignment: TextAlignment): Text<S> {
         this.alignment.set(selfView, alignment)
         return selfAPI
     }
 
-    fun alignment(alignment: KProperty0<TextAlignment>): A {
+    fun alignment(alignment: KProperty0<TextAlignment>): Text<S> {
         this.alignment.set(selfView, alignment)
         return selfAPI
     }

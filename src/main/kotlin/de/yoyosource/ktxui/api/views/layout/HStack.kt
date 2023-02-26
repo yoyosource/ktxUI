@@ -1,23 +1,22 @@
-package de.yoyosource.ktxui.views
+package de.yoyosource.ktxui.api.views.layout
 
 import de.yoyosource.ktxui.*
-import de.yoyosource.ktxui.api.views.layout.Spacer
 import de.yoyosource.ktxui.utils.*
 import kotlin.math.max
 import kotlin.math.min
 
-fun ViewContainer.HStack(builder: OrientedViewBuilder): ViewAPI {
-    return (+HStack()).apply(builder)
+fun ViewContainer.HStack(builder: OrientedViewBuilder): HStack<*> {
+    return (+HStackImpl()).apply(builder)
 }
 
-fun ViewContainer.HLeft(builder: OrientedViewBuilder): ViewAPI {
+fun ViewContainer.HLeft(builder: OrientedViewBuilder): HStack<*> {
     return HStack {
         builder()
         Spacer()
     }
 }
 
-fun ViewContainer.HCenter(builder: OrientedViewBuilder): ViewAPI {
+fun ViewContainer.HCenter(builder: OrientedViewBuilder): HStack<*> {
     return HStack {
         Spacer()
         builder()
@@ -25,14 +24,20 @@ fun ViewContainer.HCenter(builder: OrientedViewBuilder): ViewAPI {
     }
 }
 
-fun ViewContainer.HRight(builder: OrientedViewBuilder): ViewAPI {
+fun ViewContainer.HRight(builder: OrientedViewBuilder): HStack<*> {
     return HStack {
         Spacer()
         builder()
     }
 }
 
-private class HStack : OrientedViewContainer(Orientation.HORIZONTAL) {
+sealed interface HStack<S> : ViewProtocol<S, HStack<S>> where S : ViewBase
+
+private class HStackImpl : OrientedViewContainer(Orientation.HORIZONTAL), HStack<HStackImpl> {
+
+    override val selfView: HStackImpl = this
+    override val selfAPI: HStack<HStackImpl> = this
+
     override fun size(drawableData: DrawableData): Element {
         val size = Element(0, 0)
         children.forEach {
@@ -47,27 +52,27 @@ private class HStack : OrientedViewContainer(Orientation.HORIZONTAL) {
         val currentSize = size(drawableData)
         val spacerSize = screenSize.copy() - currentSize
 
-        val spacers = children.filterIsInstance<Spacer>()
-            .filter { it.isDynamic() }
-            .map { it as ViewBase }
+        val spacers = children.filterIsInstance<Spacer<*>>()
+            .filter { it.dynamic }
+            .map { it.selfView }
         val splitSize = spacers.size + min(spacers(Orientation.HORIZONTAL) - spacers.size, 1)
 
-        val views = children.filterNot { it is Spacer }
+        val views = children.filterNot { it is Spacer<*> }
             .filter { it.spacers(Orientation.HORIZONTAL) > 0 }
             .toSet()
         val componentSplitSize: Int = spacerSize.x / if (splitSize == 0) 1 else splitSize
 
         val spacerCalculation = SpacerCalculation(spacerSize.x, splitSize)
         val innerSpacerCalculation = SpacerCalculation(componentSplitSize, views.size)
-        drawableData.debug(DebugMode.SIZE, "Spacer: ${spacers.size}   Splitting: $splitSize   Size: $currentSize   Screen: $screenSize   SpacerSize: $spacerSize")
-        drawableData.debug(DebugMode.SIZE, "Other Views sizes: $componentSplitSize   Components: ${views.size}")
+        // drawableData.debug(DebugMode.SIZE, "Spacer: ${spacers.size}   Splitting: $splitSize   Size: $currentSize   Screen: $screenSize   SpacerSize: $spacerSize")
+        // drawableData.debug(DebugMode.SIZE, "Other Views sizes: $componentSplitSize   Components: ${views.size}")
         val currentLocation = location.copy()
         children.forEach {
-            if (it is Spacer && it.isDynamic()) {
+            if (it is Spacer<*> && it.dynamic) {
                 val size = screenSize.copy(width = spacerCalculation.next())
                 it.size(drawableData, size, currentLocation, viewState)
                 currentLocation.y = location.y
-                drawableData.debug(DebugMode.SIZE, "HStack: $it $currentLocation")
+                // drawableData.debug(DebugMode.SIZE, "HStack: $it $currentLocation")
                 return@forEach
             }
             val current = it.size(drawableData).copy()
@@ -77,7 +82,7 @@ private class HStack : OrientedViewContainer(Orientation.HORIZONTAL) {
             }
             it.size(drawableData, current, currentLocation, viewState)
             currentLocation.y = location.y
-            drawableData.debug(DebugMode.SIZE, "HStack: $it $currentLocation")
+            // drawableData.debug(DebugMode.SIZE, "HStack: $it $currentLocation")
         }
         location.x = currentLocation.x
         location.y += currentSize.y

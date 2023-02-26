@@ -16,7 +16,7 @@ fun ViewContainer.Image(image: KProperty0<BufferedImage>): Image {
     return observableInit(image) { +ImageImpl(it) }
 }
 
-sealed interface Image: ViewAPI {
+sealed interface Image: ViewProtocol {
 }
 
 fun ImageJarResource(path: String): Resource<BufferedImage> {

@@ -11,7 +11,7 @@ fun ViewContainer.Rectangle(): Rectangle {
     return +RectangleImpl()
 }
 
-sealed interface Rectangle: ViewAPI {
+sealed interface Rectangle: ViewProtocol {
     fun width(width: Int): Rectangle
     fun width(width: KProperty0<Int>): Rectangle
 

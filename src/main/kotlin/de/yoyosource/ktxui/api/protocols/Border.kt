@@ -1,12 +1,12 @@
 package de.yoyosource.ktxui.api.protocols
 
-import de.yoyosource.ktxui.ViewAPI
+import de.yoyosource.ktxui.ViewProtocol
 import de.yoyosource.ktxui.ViewBase
 import de.yoyosource.ktxui.api.data.Color
 import de.yoyosource.ktxui.utils.ViewOption
 import kotlin.reflect.KProperty0
 
-interface BorderAPI<S, A> : ViewAPI<S, A> where S : ViewBase, A : BorderAPI<S, A> {
+interface BorderProtocol<S, A> : ViewProtocol<S, A> where S : ViewBase, A : BorderProtocol<S, A> {
     val borderColor: ViewOption<Color>
     val borderWidth: ViewOption<Int>
 
@@ -35,7 +35,7 @@ interface BorderAPI<S, A> : ViewAPI<S, A> where S : ViewBase, A : BorderAPI<S, A
     }
 }
 
-fun BorderAPI<*, *>.getBorderColor(): java.awt.Color {
+fun BorderProtocol<*, *>.getBorderColor(): java.awt.Color {
     val color = borderColor.get()
     return java.awt.Color(color.red, color.green, color.blue, color.opacity)
 }

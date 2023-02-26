@@ -7,6 +7,8 @@ import de.yoyosource.ktxui.ViewContainer
 import de.yoyosource.ktxui.api.views.Screen
 import de.yoyosource.ktxui.api.views.layout.Spacer
 import de.yoyosource.ktxui.api.views.Text
+import de.yoyosource.ktxui.api.views.layout.HCenter
+import de.yoyosource.ktxui.api.views.layout.VCenter
 import de.yoyosource.ktxui.api.views.layout.ZStack
 import de.yoyosource.ktxui.utils.ViewBuilder
 import de.yoyosource.ktxui.views.*

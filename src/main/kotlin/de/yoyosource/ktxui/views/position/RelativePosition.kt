@@ -4,25 +4,25 @@ import de.yoyosource.ktxui.*
 import de.yoyosource.ktxui.utils.*
 import kotlin.reflect.KProperty0
 
-fun ViewContainer.RelativePosition(x: Int, y: Int, builder: SingleViewBuilder): ViewAPI {
+fun ViewContainer.RelativePosition(x: Int, y: Int, builder: SingleViewBuilder): ViewProtocol {
     return (+RelativePosition(ViewOption(x), ViewOption(y))).apply(builder)
 }
 
-fun ViewContainer.RelativePosition(x: KProperty0<Int>, y: Int, builder: SingleViewBuilder): ViewAPI {
+fun ViewContainer.RelativePosition(x: KProperty0<Int>, y: Int, builder: SingleViewBuilder): ViewProtocol {
     val _x = ViewOption(0)
     return (+RelativePosition(_x, ViewOption(y))).apply(builder).let {
         _x.set(it, x)
     }
 }
 
-fun ViewContainer.RelativePosition(x: Int, y: KProperty0<Int>, builder: SingleViewBuilder): ViewAPI {
+fun ViewContainer.RelativePosition(x: Int, y: KProperty0<Int>, builder: SingleViewBuilder): ViewProtocol {
     val _y = ViewOption(0)
     return (+RelativePosition(ViewOption(x), _y)).apply(builder).let {
         _y.set(it, y)
     }
 }
 
-fun ViewContainer.RelativePosition(x: KProperty0<Int>, y: KProperty0<Int>, builder: SingleViewBuilder): ViewAPI {
+fun ViewContainer.RelativePosition(x: KProperty0<Int>, y: KProperty0<Int>, builder: SingleViewBuilder): ViewProtocol {
     val _x = ViewOption(0)
     val _y = ViewOption(0)
     return (+RelativePosition(_x, _y)).apply(builder).let {

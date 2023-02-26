@@ -1,13 +1,13 @@
 package de.yoyosource.ktxui.api.protocols
 
-import de.yoyosource.ktxui.ViewAPI
+import de.yoyosource.ktxui.ViewProtocol
 import de.yoyosource.ktxui.ViewBase
 import de.yoyosource.ktxui.utils.Element
 import de.yoyosource.ktxui.api.data.Side
 import de.yoyosource.ktxui.utils.ViewOption
 import kotlin.reflect.KProperty0
 
-interface PaddingAPI<S, A> : ViewAPI<S, A> where S : ViewBase, A : PaddingAPI<S, A> {
+interface PaddingProtocol<S, A> : ViewProtocol<S, A> where S : ViewBase, A : PaddingProtocol<S, A> {
     val topPadding: ViewOption<Int>
     val bottomPadding: ViewOption<Int>
     val leftPadding: ViewOption<Int>
@@ -50,14 +50,14 @@ interface PaddingAPI<S, A> : ViewAPI<S, A> where S : ViewBase, A : PaddingAPI<S,
     }
 }
 
-fun PaddingAPI<*, *>.getWholePadding(): Element {
+fun PaddingProtocol<*, *>.getWholePadding(): Element {
     return Element(
         leftPadding.get() + rightPadding.get(),
         topPadding.get() + bottomPadding.get()
     )
 }
 
-fun PaddingAPI<*, *>.getLeadingPadding(): Element {
+fun PaddingProtocol<*, *>.getLeadingPadding(): Element {
     return Element(
         leftPadding.get(),
         topPadding.get()

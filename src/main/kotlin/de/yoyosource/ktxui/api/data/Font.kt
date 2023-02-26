@@ -3,7 +3,7 @@ package de.yoyosource.ktxui.api.data
 import de.yoyosource.ktxui.api.protocols.*
 
 fun interface Font {
-    fun invoke(fontAPI: FontAPI<*, *>)
+    fun invoke(fontAPI: FontProtocol<*, *>)
 }
 
 val largeTitle = Font {

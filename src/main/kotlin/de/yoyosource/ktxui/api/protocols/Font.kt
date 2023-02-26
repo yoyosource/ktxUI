@@ -1,13 +1,13 @@
 package de.yoyosource.ktxui.api.protocols
 
-import de.yoyosource.ktxui.ViewAPI
+import de.yoyosource.ktxui.ViewProtocol
 import de.yoyosource.ktxui.ViewBase
 import de.yoyosource.ktxui.api.data.*
 import de.yoyosource.ktxui.utils.ViewOption
 import java.awt.font.TextAttribute
 import kotlin.reflect.KProperty0
 
-interface FontAPI<S, A> : ViewAPI<S, A> where S : ViewBase, A : FontAPI<S, A> {
+interface FontProtocol<S, A> : ViewProtocol<S, A> where S : ViewBase, A : FontProtocol<S, A> {
     val design: ViewOption<FontFamily>
     val weight: ViewOption<FontWeight>
     val size: ViewOption<Float>
@@ -119,7 +119,7 @@ interface FontAPI<S, A> : ViewAPI<S, A> where S : ViewBase, A : FontAPI<S, A> {
     }
 }
 
-fun FontAPI<*, *>.getFont(): java.awt.Font {
+fun FontProtocol<*, *>.getFont(): java.awt.Font {
     val font = java.awt.Font(design.get().family, 0, (size.get() + 0.5).toInt())
     val attributes: MutableMap<TextAttribute, Any> = font.attributes as MutableMap<TextAttribute, Any>
     attributes[TextAttribute.FAMILY] = design.get().family

@@ -11,7 +11,7 @@ fun ViewContainer.RoundedRectangle(): RoundedRectangle {
     return +RoundedRectangleImpl()
 }
 
-sealed interface RoundedRectangle: ViewAPI {
+sealed interface RoundedRectangle: ViewProtocol {
     fun width(width: Int): RoundedRectangle
     fun width(width: KProperty0<Int>): RoundedRectangle
 

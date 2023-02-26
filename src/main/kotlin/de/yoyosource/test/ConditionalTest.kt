@@ -9,7 +9,7 @@ import de.yoyosource.ktxui.animation.dynamicSet
 import de.yoyosource.ktxui.animation.loop
 import de.yoyosource.ktxui.views.Conditional
 import de.yoyosource.ktxui.api.views.Text
-import de.yoyosource.ktxui.views.VStack
+import de.yoyosource.ktxui.api.views.layout.VStack
 
 var bool by Observer(true)
 

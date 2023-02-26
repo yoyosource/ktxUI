@@ -2,30 +2,30 @@ package de.yoyosource.ktxui.views.size
 
 import de.yoyosource.ktxui.DrawableData
 import de.yoyosource.ktxui.SingleViewContainer
-import de.yoyosource.ktxui.ViewAPI
+import de.yoyosource.ktxui.ViewProtocol
 import de.yoyosource.ktxui.ViewContainer
 import de.yoyosource.ktxui.utils.*
 import kotlin.reflect.KProperty0
 
-fun ViewContainer.AbsoluteSize(width: Int, height: Int, builder: SingleViewBuilder): ViewAPI {
+fun ViewContainer.AbsoluteSize(width: Int, height: Int, builder: SingleViewBuilder): ViewProtocol {
     return (+AbsoluteSize(ViewOption(width), ViewOption(height))).apply(builder)
 }
 
-fun ViewContainer.AbsoluteSize(width: KProperty0<Int>, height: Int, builder: SingleViewBuilder): ViewAPI {
+fun ViewContainer.AbsoluteSize(width: KProperty0<Int>, height: Int, builder: SingleViewBuilder): ViewProtocol {
     val _width = ViewOption(0)
     return (+AbsoluteSize(_width, ViewOption(height))).apply(builder).let {
         _width.set(it, width)
     }
 }
 
-fun ViewContainer.AbsoluteSize(width: Int, height: KProperty0<Int>, builder: SingleViewBuilder): ViewAPI {
+fun ViewContainer.AbsoluteSize(width: Int, height: KProperty0<Int>, builder: SingleViewBuilder): ViewProtocol {
     val _height = ViewOption(0)
     return (+AbsoluteSize(ViewOption(width), _height)).apply(builder).let {
         _height.set(it, height)
     }
 }
 
-fun ViewContainer.AbsoluteSize(width: KProperty0<Int>, height: KProperty0<Int>, builder: SingleViewBuilder): ViewAPI {
+fun ViewContainer.AbsoluteSize(width: KProperty0<Int>, height: KProperty0<Int>, builder: SingleViewBuilder): ViewProtocol {
     val _width = ViewOption(0)
     val _height = ViewOption(0)
     return (+AbsoluteSize(_width, _height)).apply(builder).let {

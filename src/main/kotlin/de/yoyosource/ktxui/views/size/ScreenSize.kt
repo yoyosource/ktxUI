@@ -5,7 +5,7 @@ import de.yoyosource.ktxui.utils.Element
 import de.yoyosource.ktxui.utils.ViewState
 import kotlin.reflect.KProperty0
 
-fun ViewContainer.ScreenSize(builder: SingleViewContainer.(screenWidth: KProperty0<Int>, screenHeight: KProperty0<Int>) -> Unit): ViewAPI {
+fun ViewContainer.ScreenSize(builder: SingleViewContainer.(screenWidth: KProperty0<Int>, screenHeight: KProperty0<Int>) -> Unit): ViewProtocol {
     return (+ScreenSizeImpl()).apply {
         builder(this::width, this::height)
     }

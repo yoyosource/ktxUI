@@ -6,6 +6,7 @@ import de.yoyosource.ktxui.api.data.TextAlignment
 import de.yoyosource.ktxui.api.data.Side
 import de.yoyosource.ktxui.api.data.black
 import de.yoyosource.ktxui.api.views.Screen
+import de.yoyosource.ktxui.api.views.layout.HCenter
 import de.yoyosource.ktxui.api.views.layout.ZStack
 import de.yoyosource.ktxui.views.*
 import de.yoyosource.ktxui.views.events.onClick

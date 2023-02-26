@@ -4,7 +4,7 @@ import de.yoyosource.KtxUIFrame
 import de.yoyosource.ktxui.api.views.Screen
 import de.yoyosource.ktxui.api.views.layout.Divider
 import de.yoyosource.ktxui.api.views.Text
-import de.yoyosource.ktxui.views.VStack
+import de.yoyosource.ktxui.api.views.layout.VStack
 
 fun main() {
     val screen = Screen {

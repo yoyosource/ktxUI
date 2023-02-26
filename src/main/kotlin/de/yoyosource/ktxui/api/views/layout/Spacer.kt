@@ -1,6 +1,9 @@
 package de.yoyosource.ktxui.api.views.layout
 
-import de.yoyosource.ktxui.*
+import de.yoyosource.ktxui.DrawableData
+import de.yoyosource.ktxui.OrientedViewContainer
+import de.yoyosource.ktxui.ViewBase
+import de.yoyosource.ktxui.ViewProtocol
 import de.yoyosource.ktxui.utils.Element
 import de.yoyosource.ktxui.utils.Orientation
 import de.yoyosource.ktxui.utils.ViewOption
@@ -22,14 +25,16 @@ fun OrientedViewContainer.Spacer(minLength: KProperty0<Int>): Spacer<*> {
     return spacer
 }
 
-sealed interface Spacer<S> : SpacerAPI<S, Spacer<S>> where S : ViewBase
-
-sealed interface SpacerAPI<S, A> : ViewAPI<S, A> where S : ViewBase, A : SpacerAPI<S, A>
+sealed interface Spacer<S> : ViewProtocol<S, Spacer<S>> where S : ViewBase {
+    val dynamic: Boolean
+}
 
 private class SpacerImpl constructor(private val length: ViewOption<Int>? = null) : ViewBase(), Spacer<SpacerImpl> {
 
     override val selfView: SpacerImpl = this
     override val selfAPI: Spacer<SpacerImpl> = this
+
+    override val dynamic: Boolean = length == null
 
     override fun size(drawableData: DrawableData): Element {
         if (length == null) {

@@ -5,7 +5,7 @@ import de.yoyosource.ktxui.utils.Element
 import de.yoyosource.ktxui.utils.ViewState
 import kotlin.reflect.KProperty0
 
-fun <V: ViewAPI> ViewContainer.Size(builder: SingleViewContainer.(innerWidth: KProperty0<Int>, innerHeight: KProperty0<Int>, use: V.() -> V) -> Unit): ViewAPI {
+fun <V: ViewProtocol> ViewContainer.Size(builder: SingleViewContainer.(innerWidth: KProperty0<Int>, innerHeight: KProperty0<Int>, use: V.() -> V) -> Unit): ViewProtocol {
     return (+SizeImpl()).apply {
         builder(this::width, this::height) {
             this@apply.element = this as ViewBase

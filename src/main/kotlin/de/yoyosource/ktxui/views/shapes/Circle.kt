@@ -11,7 +11,7 @@ fun ViewContainer.Circle(): Circle {
     return +CircleImpl()
 }
 
-sealed interface Circle: ViewAPI {
+sealed interface Circle: ViewProtocol {
     fun radius(radius: Int): Circle
     fun radius(radius: KProperty0<Int>): Circle
 

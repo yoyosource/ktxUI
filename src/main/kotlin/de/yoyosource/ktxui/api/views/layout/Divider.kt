@@ -3,7 +3,7 @@ package de.yoyosource.ktxui.api.views.layout
 import de.yoyosource.ktxui.*
 import de.yoyosource.ktxui.api.data.Color
 import de.yoyosource.ktxui.api.data.black
-import de.yoyosource.ktxui.api.protocols.ForegroundColorAPI
+import de.yoyosource.ktxui.api.protocols.ForegroundColorProtocol
 import de.yoyosource.ktxui.api.protocols.getForegroundColor
 import de.yoyosource.ktxui.utils.Element
 import de.yoyosource.ktxui.utils.Orientation
@@ -14,9 +14,7 @@ fun OrientedViewContainer.Divider(): Divider<*> {
     return +DividerImpl()
 }
 
-sealed interface Divider<S> : DividerAPI<S, Divider<S>> where S : ViewBase
-
-sealed interface DividerAPI<S, A> : ViewAPI<S, A>, ForegroundColorAPI<S, A> where S : ViewBase, A : DividerAPI<S, A>
+sealed interface Divider<S> : ViewProtocol<S, Divider<S>>, ForegroundColorProtocol<S, Divider<S>> where S : ViewBase
 
 private class DividerImpl : DrawableView(), Divider<DividerImpl> {
 

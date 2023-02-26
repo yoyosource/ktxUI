@@ -1,10 +1,10 @@
 package de.yoyosource.ktxui.api.views.layout
 
 import de.yoyosource.ktxui.DrawableData
-import de.yoyosource.ktxui.ViewAPI
 import de.yoyosource.ktxui.ViewBase
 import de.yoyosource.ktxui.ViewContainer
-import de.yoyosource.ktxui.api.protocols.PaddingAPI
+import de.yoyosource.ktxui.ViewProtocol
+import de.yoyosource.ktxui.api.protocols.PaddingProtocol
 import de.yoyosource.ktxui.api.protocols.getLeadingPadding
 import de.yoyosource.ktxui.api.protocols.getWholePadding
 import de.yoyosource.ktxui.utils.Element
@@ -16,10 +16,7 @@ import kotlin.math.max
 fun ViewContainer.ZStack(builder: ViewBuilder): ZStack<*> {
     return (+ZStackImpl()).apply(builder)
 }
-
-sealed interface ZStack<S> : ZStackAPI<S, ZStack<S>> where S : ViewBase
-
-sealed interface ZStackAPI<S, A> : ViewAPI<S, A>, PaddingAPI<S, A> where S : ViewBase, A : ZStackAPI<S, A>
+sealed interface ZStack<S> : ViewProtocol<S, ZStack<S>>, PaddingProtocol<S, ZStack<S>> where S : ViewBase
 
 private class ZStackImpl : ViewContainer(), ZStack<ZStackImpl> {
 

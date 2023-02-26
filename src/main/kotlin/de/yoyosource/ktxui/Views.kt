@@ -10,7 +10,7 @@ annotation class KtxUIDsl
 sealed interface View
 
 // This is equivalent to `protocols` from Swift
-interface ViewAPI<S, A> : View where S : ViewBase, A : ViewAPI<S, A> {
+interface ViewProtocol<S, A> : View where S : ViewBase, A : ViewProtocol<S, A> {
     val selfView: S
     val selfAPI: A
 }

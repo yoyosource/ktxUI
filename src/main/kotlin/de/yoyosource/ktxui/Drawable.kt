@@ -1,14 +1,14 @@
 package de.yoyosource.ktxui
 
-import de.yoyosource.ktxui.api.protocols.BorderAPI
-import de.yoyosource.ktxui.api.protocols.FontAPI
+import de.yoyosource.ktxui.api.protocols.BorderProtocol
+import de.yoyosource.ktxui.api.protocols.FontProtocol
 import de.yoyosource.ktxui.utils.Element
 import java.awt.Color
 
 interface DrawableData {
     fun getSize(): Element
 
-    fun getTextSize(text: String, font: FontAPI<*, *>): Element
+    fun getTextSize(text: String, font: FontProtocol<*, *>): Element
 }
 
 interface Drawable : DrawableData {
@@ -17,9 +17,9 @@ interface Drawable : DrawableData {
 
     fun fillBackground()
 
-    fun drawBorder(borderAPI: BorderAPI<*, *>, location: Element, size: Element)
+    fun drawBorder(borderAPI: BorderProtocol<*, *>, location: Element, size: Element)
 
-    fun drawText(text: String, font: FontAPI<*, *>, location: Element): Int
+    fun drawText(text: String, font: FontProtocol<*, *>, location: Element): Int
 
     fun fillRectangle(location: Element, size: Element)
 }

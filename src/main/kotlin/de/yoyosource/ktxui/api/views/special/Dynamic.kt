@@ -11,9 +11,7 @@ fun ViewContainer.Dynamic(value: KProperty0<SingleViewBuilder>): Dynamic<*> {
     return +DynamicImpl(value)
 }
 
-sealed interface Dynamic<S>: DynamicAPI<S, Dynamic<S>> where S: ViewBase
-
-sealed interface DynamicAPI<S, A>: ViewAPI<S, A> where S: ViewBase, A: DynamicAPI<S, A>
+sealed interface Dynamic<S>: ViewProtocol<S, Dynamic<S>> where S: ViewBase
 
 private class DynamicImpl(private val value: KProperty0<SingleViewBuilder>): SingleViewContainer(), Dynamic<DynamicImpl> {
 

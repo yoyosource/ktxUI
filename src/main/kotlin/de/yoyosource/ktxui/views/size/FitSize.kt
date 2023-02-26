@@ -5,7 +5,7 @@ import de.yoyosource.ktxui.utils.Element
 import de.yoyosource.ktxui.utils.ViewState
 import kotlin.reflect.KProperty0
 
-fun ViewContainer.FitSize(builder: SingleViewContainer.(width: KProperty0<Int>, height: KProperty0<Int>) -> Unit): ViewAPI {
+fun ViewContainer.FitSize(builder: SingleViewContainer.(width: KProperty0<Int>, height: KProperty0<Int>) -> Unit): ViewProtocol {
     return (+FitSizeImpl()).apply {
         builder(this::width, this::height)
     }

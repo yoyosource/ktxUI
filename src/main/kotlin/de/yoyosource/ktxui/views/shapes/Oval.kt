@@ -11,7 +11,7 @@ fun ViewContainer.Oval(): Oval {
     return +OvalImpl()
 }
 
-sealed interface Oval: ViewAPI {
+sealed interface Oval: ViewProtocol {
     fun width(radius: Int): Oval
     fun width(radius: KProperty0<Int>): Oval
 

@@ -4,25 +4,25 @@ import de.yoyosource.ktxui.*
 import de.yoyosource.ktxui.utils.*
 import kotlin.reflect.KProperty0
 
-fun ViewContainer.AbsolutePosition(x: Int, y: Int, builder: SingleViewBuilder): ViewAPI {
+fun ViewContainer.AbsolutePosition(x: Int, y: Int, builder: SingleViewBuilder): ViewProtocol {
     return (+AbsolutePosition(ViewOption(x), ViewOption(y))).apply(builder)
 }
 
-fun ViewContainer.AbsolutePosition(x: KProperty0<Int>, y: Int, builder: SingleViewBuilder): ViewAPI {
+fun ViewContainer.AbsolutePosition(x: KProperty0<Int>, y: Int, builder: SingleViewBuilder): ViewProtocol {
     val _x = ViewOption(0)
     return (+AbsolutePosition(_x, ViewOption(y))).apply(builder).let {
         _x.set(it, x)
     }
 }
 
-fun ViewContainer.AbsolutePosition(x: Int, y: KProperty0<Int>, builder: SingleViewBuilder): ViewAPI {
+fun ViewContainer.AbsolutePosition(x: Int, y: KProperty0<Int>, builder: SingleViewBuilder): ViewProtocol {
     val _y = ViewOption(0)
     return (+AbsolutePosition(ViewOption(x), _y)).apply(builder).let {
         _y.set(it, y)
     }
 }
 
-fun ViewContainer.AbsolutePosition(x: KProperty0<Int>, y: KProperty0<Int>, builder: SingleViewBuilder): ViewAPI {
+fun ViewContainer.AbsolutePosition(x: KProperty0<Int>, y: KProperty0<Int>, builder: SingleViewBuilder): ViewProtocol {
     val _x = ViewOption(0)
     val _y = ViewOption(0)
     return (+AbsolutePosition(_x, _y)).apply(builder).let {
