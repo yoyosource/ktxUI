@@ -2,6 +2,8 @@ package de.yoyosource.examples
 
 import de.yoyosource.KtxUIFrame
 import de.yoyosource.ktxui.Observer
+import de.yoyosource.ktxui.api.views.Image
+import de.yoyosource.ktxui.api.views.ImageJarResource
 import de.yoyosource.ktxui.api.views.Screen
 import de.yoyosource.ktxui.api.views.Text
 import de.yoyosource.ktxui.api.views.layout.ZStack

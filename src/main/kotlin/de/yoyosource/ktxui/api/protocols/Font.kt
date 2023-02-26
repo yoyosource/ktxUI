@@ -8,7 +8,7 @@ import java.awt.font.TextAttribute
 import kotlin.reflect.KProperty0
 
 interface FontProtocol<S, A> : ViewProtocol<S, A> where S : ViewBase, A : FontProtocol<S, A> {
-    val design: ViewOption<FontFamily>
+    val fontFamily: ViewOption<FontFamily>
     val weight: ViewOption<FontWeight>
     val size: ViewOption<Float>
     val italic: ViewOption<Boolean>
@@ -24,12 +24,12 @@ interface FontProtocol<S, A> : ViewProtocol<S, A> where S : ViewBase, A : FontPr
     }
 
     fun design(design: FontFamily): A {
-        this.design.set(selfView, design)
+        this.fontFamily.set(selfView, design)
         return selfAPI
     }
 
     fun design(design: KProperty0<FontFamily>): A {
-        this.design.set(selfView, design)
+        this.fontFamily.set(selfView, design)
         return selfAPI
     }
 
@@ -120,9 +120,9 @@ interface FontProtocol<S, A> : ViewProtocol<S, A> where S : ViewBase, A : FontPr
 }
 
 fun FontProtocol<*, *>.getFont(): java.awt.Font {
-    val font = java.awt.Font(design.get().family, 0, (size.get() + 0.5).toInt())
+    val font = java.awt.Font(fontFamily.get().family, 0, (size.get() + 0.5).toInt())
     val attributes: MutableMap<TextAttribute, Any> = font.attributes as MutableMap<TextAttribute, Any>
-    attributes[TextAttribute.FAMILY] = design.get().family
+    attributes[TextAttribute.FAMILY] = fontFamily.get().family
     attributes[TextAttribute.WEIGHT] = weight.get().weight
     attributes[TextAttribute.POSTURE] = if (italic.get()) TextAttribute.POSTURE_OBLIQUE else TextAttribute.POSTURE_REGULAR
     attributes[TextAttribute.STRIKETHROUGH] = if (strikeThrough.get()) TextAttribute.STRIKETHROUGH_ON else false

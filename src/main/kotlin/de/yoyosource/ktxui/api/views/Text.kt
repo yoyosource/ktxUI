@@ -47,7 +47,7 @@ private class TextImpl constructor(val text: () -> String) : DrawableView(), Tex
     override val borderColor: ViewOption<Color> = ViewOption(black)
     override val borderWidth: ViewOption<Int> = ViewOption(0)
 
-    override val design: ViewOption<FontFamily> = ViewOption(Serif)
+    override val fontFamily: ViewOption<FontFamily> = ViewOption(Serif)
     override val weight: ViewOption<FontWeight> = ViewOption(Regular)
     override val size: ViewOption<Float> = ViewOption(12f)
     override val italic: ViewOption<Boolean> = ViewOption(false)
@@ -68,12 +68,6 @@ private class TextImpl constructor(val text: () -> String) : DrawableView(), Tex
         }
         size + getWholePadding()
         return size
-    }
-
-    override fun size(drawableData: DrawableData, screenSize: Element, location: Element, viewState: ViewState) {
-        val size = size(drawableData)
-        viewState.set(this, location, size)
-        location + size
     }
 
     override fun draw(drawable: Drawable, viewState: ViewState) {
