@@ -4,7 +4,7 @@ import de.yoyosource.KtxUIFrame
 import de.yoyosource.ktxui.api.views.Text
 import de.yoyosource.ktxui.api.data.TextAlignment
 import de.yoyosource.ktxui.api.data.Side
-import de.yoyosource.ktxui.api.data.black
+import de.yoyosource.ktxui.api.data.Black
 import de.yoyosource.ktxui.api.views.Screen
 import de.yoyosource.ktxui.api.views.layout.HCenter
 import de.yoyosource.ktxui.api.views.layout.ZStack
@@ -33,7 +33,7 @@ fun main() {
                             AbsoluteSize(screenWidth, innerHeight) {
                                 HCenter {
                                     Text("Hello world")
-                                        .border(black)
+                                        .border(Black)
                                         .padding(Side.TOP, 10)
                                         .padding(Side.BOTTOM, 15)
                                         .alignment(TextAlignment.CENTER)

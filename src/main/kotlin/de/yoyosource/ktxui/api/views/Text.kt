@@ -42,9 +42,9 @@ private class TextImpl constructor(val text: () -> String) : DrawableView(), Tex
     override val leftPadding: ViewOption<Int> = ViewOption(0)
     override val rightPadding: ViewOption<Int> = ViewOption(0)
 
-    override val foregroundColor: ViewOption<Color> = ViewOption(black)
+    override val foregroundColor: ViewOption<Color> = ViewOption(Black)
 
-    override val borderColor: ViewOption<Color> = ViewOption(black)
+    override val borderColor: ViewOption<Color> = ViewOption(Black)
     override val borderWidth: ViewOption<Int> = ViewOption(0)
 
     override val fontFamily: ViewOption<FontFamily> = ViewOption(Serif)

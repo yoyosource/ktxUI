@@ -1,28 +1,23 @@
 package de.yoyosource.ktxui.api.data
 
-val black = Color(0, 0, 0)
-val blue = Color(0, 0, 255)
-val brown = Color(165, 42, 42)
-val clear = Color(0, 0, 0, 0)
-val cyan = Color(0, 255, 255)
-val gray = Color(128, 128, 128)
-val green = Color(0, 255, 0)
-val indigo = Color(75, 0, 130)
-val mint = Color(189, 252, 201)
-val orange = Color(255, 165, 0)
-val pink = Color(255, 192, 203)
-val purple = Color(128, 0, 128)
-val red = Color(255, 0, 0)
-val teal = Color(0, 128, 128)
-val white = Color(255, 255, 255)
-val yellow = Color(255, 255, 0)
+open class Color(val red: Int, val green: Int, val blue: Int, val opacity: Int = 255)
 
-data class Color(
-    val red: Int,
-    val green: Int,
-    val blue: Int,
-    val opacity: Int = 255
-)
+object Black: Color(0, 0, 0)
+object Blue: Color(0, 0, 255)
+object Brown: Color(165, 42, 42)
+object Clear: Color(0, 0, 0, 0)
+object Cyan: Color(0, 255, 255)
+object Gray: Color(128, 128, 128)
+object Green: Color(0, 255, 0)
+object Indigo: Color(75, 0, 130)
+object Mint: Color(189, 252, 201)
+object Orange: Color(255, 165, 0)
+object Pink: Color(255, 192, 203)
+object Purple: Color(128, 0, 128)
+object Red: Color(255, 0, 0)
+object Teal: Color(0, 128, 128)
+object White: Color(255, 255, 255)
+object Yellow: Color(255, 255, 0)
 
 fun RGBColor(red: Double, green: Double, blue: Double, opacity: Double = 1.0): Color {
     return Color((red * 255.0).toInt(), (green * 255.0).toInt(), (blue * 255.0).toInt(), (opacity * 255.0).toInt())

@@ -2,7 +2,7 @@ package de.yoyosource.ktxui.api.views.layout
 
 import de.yoyosource.ktxui.*
 import de.yoyosource.ktxui.api.data.Color
-import de.yoyosource.ktxui.api.data.black
+import de.yoyosource.ktxui.api.data.Black
 import de.yoyosource.ktxui.api.protocols.ForegroundColorProtocol
 import de.yoyosource.ktxui.api.protocols.getForegroundColor
 import de.yoyosource.ktxui.utils.Element
@@ -21,7 +21,7 @@ private class DividerImpl : DrawableView(), Divider<DividerImpl> {
     override val selfView: DividerImpl = this
     override val selfAPI: Divider<DividerImpl> = this
 
-    override val foregroundColor: ViewOption<Color> = ViewOption(black)
+    override val foregroundColor: ViewOption<Color> = ViewOption(Black)
 
     override fun size(drawableData: DrawableData): Element {
         return if ((parent as OrientedViewContainer).orientation == Orientation.VERTICAL) {

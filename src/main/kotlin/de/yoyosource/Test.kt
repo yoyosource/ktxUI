@@ -5,6 +5,7 @@ import de.yoyosource.ktxui.animation.animation
 import de.yoyosource.ktxui.animation.delay
 import de.yoyosource.ktxui.animation.loop
 import de.yoyosource.ktxui.animation.set
+import de.yoyosource.ktxui.api.data.Red
 import de.yoyosource.ktxui.api.views.*
 import de.yoyosource.ktxui.api.views.layout.*
 import de.yoyosource.ktxui.views.*
@@ -49,7 +50,7 @@ fun main() {
                         Text("Hello World")
                     }
                     HCenter {
-                        Text("____________").foregroundColor(Color.RED)
+                        Text("____________").foregroundColor(Red)
                     }
                 }
             }

@@ -2,8 +2,7 @@ package de.yoyosource.ktxui.api.views
 
 import de.yoyosource.ktxui.*
 import de.yoyosource.ktxui.api.data.Color
-import de.yoyosource.ktxui.api.data.black
-import de.yoyosource.ktxui.api.data.clear
+import de.yoyosource.ktxui.api.data.Clear
 import de.yoyosource.ktxui.api.protocols.*
 import de.yoyosource.ktxui.utils.Element
 import de.yoyosource.ktxui.utils.ViewOption
@@ -33,14 +32,14 @@ private class ImageImpl constructor(val image: () -> BufferedImage): DrawableVie
     override val leftPadding: ViewOption<Int> = ViewOption(0)
     override val rightPadding: ViewOption<Int> = ViewOption(0)
 
-    override val foregroundColor: ViewOption<Color> = ViewOption(clear)
+    override val foregroundColor: ViewOption<Color> = ViewOption(Clear)
 
     override fun size(drawableData: DrawableData): Element {
         return image().let { Element(it.width, it.height) } + getWholePadding()
     }
 
     override fun draw(drawable: Drawable, viewState: ViewState) {
-        if (foregroundColor.get() == clear) {
+        if (foregroundColor.get() == Clear) {
             drawable.drawImage(image(), viewState[this].first.copy() + getLeadingPadding())
         } else {
             drawable.drawImage(image(), viewState[this].first.copy() + getLeadingPadding(), getForegroundColor())
