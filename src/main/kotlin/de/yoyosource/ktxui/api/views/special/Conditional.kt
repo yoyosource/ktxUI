@@ -1,24 +1,26 @@
-package de.yoyosource.ktxui.views
+package de.yoyosource.ktxui.api.views.special
 
 import de.yoyosource.ktxui.*
 import de.yoyosource.ktxui.utils.*
 import kotlin.reflect.KProperty0
 
-fun <V: ViewContainer> V.Conditional(value: Boolean, inverted: Boolean = false, builder: V.() -> Unit): ViewProtocol {
-    if (value != inverted) {
-        builder()
-    }
-    return this
+fun ViewContainer.Conditional(value: Boolean, inverted: Boolean = false, builder: SingleViewBuilder): Conditional<*> {
+    return (+ConditionalImpl(ViewOption(value), inverted)).apply(builder)
 }
 
-fun ViewContainer.Conditional(value: KProperty0<Boolean>, inverted: Boolean = false, builder: SingleViewBuilder): ViewProtocol {
+fun ViewContainer.Conditional(value: KProperty0<Boolean>, inverted: Boolean = false, builder: SingleViewBuilder): Conditional<*> {
     val _value = ViewOption(false)
-    return (+Conditional(_value, inverted)).apply(builder).let {
+    return (+ConditionalImpl(_value, inverted)).apply(builder).let {
         _value.set(it, value)
     }
 }
 
-private class Conditional constructor(private val value: ViewOption<Boolean>, private val inverted: Boolean): SingleViewContainer() {
+sealed interface Conditional<S> : ViewProtocol<S, Conditional<S>> where S : ViewBase
+
+private class ConditionalImpl constructor(private val value: ViewOption<Boolean>, private val inverted: Boolean): SingleViewContainer(), Conditional<ConditionalImpl> {
+
+    override val selfView: ConditionalImpl = this
+    override val selfAPI: Conditional<ConditionalImpl> = this
 
     override fun redraw(view: ViewBase) {
         if (view == this || value.get() != inverted) {

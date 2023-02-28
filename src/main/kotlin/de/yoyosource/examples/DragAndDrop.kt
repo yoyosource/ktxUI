@@ -7,7 +7,7 @@ import de.yoyosource.ktxui.api.views.ImageJarResource
 import de.yoyosource.ktxui.api.views.Screen
 import de.yoyosource.ktxui.api.views.Text
 import de.yoyosource.ktxui.api.views.layout.ZStack
-import de.yoyosource.ktxui.views.*
+import de.yoyosource.ktxui.api.views.special.Conditional
 import de.yoyosource.ktxui.views.events.onClick
 import de.yoyosource.ktxui.views.events.onDrag
 import de.yoyosource.ktxui.views.events.onHover

@@ -14,6 +14,7 @@ import de.yoyosource.ktxui.utils.ViewBuilder
 import de.yoyosource.ktxui.views.*
 import de.yoyosource.ktxui.views.events.Button
 import de.yoyosource.ktxui.api.views.shapes.RoundedRectangle
+import de.yoyosource.ktxui.api.views.special.Conditional
 import de.yoyosource.ktxui.views.size.AbsoluteSize
 import de.yoyosource.ktxui.views.size.FitSize
 import java.awt.Color
