@@ -11,8 +11,8 @@ import de.yoyosource.ktxui.api.views.special.Conditional
 import de.yoyosource.ktxui.views.events.onClick
 import de.yoyosource.ktxui.views.events.onDrag
 import de.yoyosource.ktxui.views.events.onHover
-import de.yoyosource.ktxui.views.position.AbsolutePosition
-import de.yoyosource.ktxui.views.position.RelativePosition
+import de.yoyosource.ktxui.api.views.layout.position.AbsolutePosition
+import de.yoyosource.ktxui.api.views.layout.position.RelativePosition
 
 private var posX by Observer(0)
 private var posY by Observer(0)
