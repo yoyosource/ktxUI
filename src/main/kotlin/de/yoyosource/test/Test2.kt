@@ -10,7 +10,7 @@ import de.yoyosource.ktxui.api.views.Screen
 import de.yoyosource.ktxui.api.views.Text
 import de.yoyosource.ktxui.api.views.layout.ZStack
 import de.yoyosource.ktxui.views.combound.Tooltip
-import de.yoyosource.ktxui.views.shapes.RoundedRectangle
+import de.yoyosource.ktxui.api.views.shapes.RoundedRectangle
 import de.yoyosource.ktxui.views.size.FitSize
 import java.awt.Color
 

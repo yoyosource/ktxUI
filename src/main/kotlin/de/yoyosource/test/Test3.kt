@@ -10,7 +10,7 @@ import de.yoyosource.ktxui.api.views.layout.HCenter
 import de.yoyosource.ktxui.api.views.layout.ZStack
 import de.yoyosource.ktxui.views.*
 import de.yoyosource.ktxui.views.events.onClick
-import de.yoyosource.ktxui.views.shapes.RoundedRectangle
+import de.yoyosource.ktxui.api.views.shapes.RoundedRectangle
 import de.yoyosource.ktxui.views.size.AbsoluteSize
 import de.yoyosource.ktxui.views.size.FitSize
 import de.yoyosource.ktxui.views.size.Size

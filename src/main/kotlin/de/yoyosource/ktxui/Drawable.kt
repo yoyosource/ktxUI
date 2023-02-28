@@ -25,5 +25,15 @@ interface Drawable : DrawableData {
     fun drawImage(image: BufferedImage, location: Element)
     fun drawImage(image: BufferedImage, location: Element, color: Color)
 
+    fun drawRectangle(location: Element, size: Element, borderWidth: Int)
     fun fillRectangle(location: Element, size: Element)
+
+    fun drawRoundedRectangle(location: Element, size: Element, arcWidth: Int, arcHeight: Int, borderWidth: Int)
+    fun fillRoundedRectangle(location: Element, size: Element, arcWidth: Int, arcHeight: Int)
+
+    fun drawCircle(location: Element, radius: Int, borderWidth: Int)
+    fun fillCircle(location: Element, radius: Int)
+
+    fun drawOval(location: Element, width: Int, height: Int, borderWidth: Int)
+    fun fillOval(location: Element, width: Int, height: Int)
 }
