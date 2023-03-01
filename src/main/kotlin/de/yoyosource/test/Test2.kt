@@ -11,7 +11,7 @@ import de.yoyosource.ktxui.api.views.Text
 import de.yoyosource.ktxui.api.views.layout.ZStack
 import de.yoyosource.ktxui.views.combound.Tooltip
 import de.yoyosource.ktxui.api.views.shapes.RoundedRectangle
-import de.yoyosource.ktxui.views.size.FitSize
+import de.yoyosource.ktxui.api.views.layout.size.FitSize
 import java.awt.Color
 
 var text by Observer("Hello World")

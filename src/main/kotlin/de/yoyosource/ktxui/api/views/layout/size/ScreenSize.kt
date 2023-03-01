@@ -1,17 +1,22 @@
-package de.yoyosource.ktxui.views.size
+package de.yoyosource.ktxui.api.views.layout.size
 
 import de.yoyosource.ktxui.*
 import de.yoyosource.ktxui.utils.Element
 import de.yoyosource.ktxui.utils.ViewState
 import kotlin.reflect.KProperty0
 
-fun ViewContainer.ScreenSize(builder: SingleViewContainer.(screenWidth: KProperty0<Int>, screenHeight: KProperty0<Int>) -> Unit): ViewProtocol {
+fun ViewContainer.ScreenSize(builder: SingleViewContainer.(screenWidth: KProperty0<Int>, screenHeight: KProperty0<Int>) -> Unit): ScreenSize<*> {
     return (+ScreenSizeImpl()).apply {
         builder(this::width, this::height)
     }
 }
 
-private class ScreenSizeImpl : SingleViewContainer() {
+sealed interface ScreenSize<S> : ViewProtocol<S, ScreenSize<S>> where S : ViewBase
+
+private class ScreenSizeImpl : SingleViewContainer(), ScreenSize<ScreenSizeImpl> {
+
+    override val selfAPI: ScreenSize<ScreenSizeImpl> = this
+    override val selfView: ScreenSizeImpl = this
 
     var width by Observer(0)
     var height by Observer(0)

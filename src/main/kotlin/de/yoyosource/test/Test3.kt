@@ -11,10 +11,10 @@ import de.yoyosource.ktxui.api.views.layout.ZStack
 import de.yoyosource.ktxui.views.*
 import de.yoyosource.ktxui.views.events.onClick
 import de.yoyosource.ktxui.api.views.shapes.RoundedRectangle
-import de.yoyosource.ktxui.views.size.AbsoluteSize
-import de.yoyosource.ktxui.views.size.FitSize
-import de.yoyosource.ktxui.views.size.Size
-import de.yoyosource.ktxui.views.size.ScreenSize
+import de.yoyosource.ktxui.api.views.layout.size.AbsoluteSize
+import de.yoyosource.ktxui.api.views.layout.size.FitSize
+import de.yoyosource.ktxui.api.views.layout.size.Size
+import de.yoyosource.ktxui.api.views.layout.size.ScreenSize
 import java.awt.Color
 
 fun main() {

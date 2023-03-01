@@ -15,8 +15,8 @@ import de.yoyosource.ktxui.views.*
 import de.yoyosource.ktxui.views.events.Button
 import de.yoyosource.ktxui.api.views.shapes.RoundedRectangle
 import de.yoyosource.ktxui.api.views.special.Conditional
-import de.yoyosource.ktxui.views.size.AbsoluteSize
-import de.yoyosource.ktxui.views.size.FitSize
+import de.yoyosource.ktxui.api.views.layout.size.AbsoluteSize
+import de.yoyosource.ktxui.api.views.layout.size.FitSize
 import java.awt.Color
 
 var mainMenu by Observer(true)
