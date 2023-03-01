@@ -1,8 +1,8 @@
 package de.yoyosource.ktxui.api.views
 
 import de.yoyosource.ktxui.*
-import de.yoyosource.ktxui.api.data.Color
 import de.yoyosource.ktxui.api.data.Clear
+import de.yoyosource.ktxui.api.data.Color
 import de.yoyosource.ktxui.api.protocols.*
 import de.yoyosource.ktxui.utils.Element
 import de.yoyosource.ktxui.utils.ViewOption
@@ -20,7 +20,7 @@ fun ViewContainer.Image(image: KProperty0<BufferedImage>): Image<*> {
     return observableInit(image) { +ImageImpl(it) }
 }
 
-sealed interface Image<S> : ViewProtocol<S, Image<S>>, PaddingProtocol<S, Image<S>>, ForegroundColorProtocol<S, Image<S>> where S : ViewBase
+sealed interface Image<S> : ViewProtocol<S, Image<S>>, PaddingProtocol<S, Image<S>>, ForegroundColorProtocol<Image<S>> where S : ViewBase
 
 private class ImageImpl constructor(val image: () -> BufferedImage): DrawableView(), Image<ImageImpl> {
 

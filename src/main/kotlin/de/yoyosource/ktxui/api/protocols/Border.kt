@@ -1,7 +1,7 @@
 package de.yoyosource.ktxui.api.protocols
 
-import de.yoyosource.ktxui.ViewProtocol
 import de.yoyosource.ktxui.ViewBase
+import de.yoyosource.ktxui.ViewProtocol
 import de.yoyosource.ktxui.api.data.Color
 import de.yoyosource.ktxui.utils.ViewOption
 import kotlin.reflect.KProperty0
@@ -11,26 +11,26 @@ interface BorderProtocol<S, A> : ViewProtocol<S, A> where S : ViewBase, A : Bord
     val borderWidth: ViewOption<Int>
 
     fun border(color: Color, width: Int = 1): A {
-        this.borderColor.set(selfView, color)
-        this.borderWidth.set(selfView, width)
+        this.borderColor.set(redraw, color)
+        this.borderWidth.set(redraw, width)
         return selfAPI
     }
 
     fun border(color: KProperty0<Color>, width: Int = 1): A {
-        this.borderColor.set(selfView, color)
-        this.borderWidth.set(selfView, width)
+        this.borderColor.set(redraw, color)
+        this.borderWidth.set(redraw, width)
         return selfAPI
     }
 
     fun border(color: Color, width: KProperty0<Int>): A {
-        this.borderColor.set(selfView, color)
-        this.borderWidth.set(selfView, width)
+        this.borderColor.set(redraw, color)
+        this.borderWidth.set(redraw, width)
         return selfAPI
     }
 
     fun border(color: KProperty0<Color>, width: KProperty0<Int>): A {
-        this.borderColor.set(selfView, color)
-        this.borderWidth.set(selfView, width)
+        this.borderColor.set(redraw, color)
+        this.borderWidth.set(redraw, width)
         return selfAPI
     }
 }

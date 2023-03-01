@@ -14,7 +14,7 @@ import de.yoyosource.ktxui.utils.ViewState
 fun ViewContainer.Circle(): Circle<*> {
     return +CircleImpl()
 }
-sealed interface Circle<S> : ViewProtocol<S, Circle<S>>, ForegroundColorProtocol<S, Circle<S>>, BorderProtocol<S, Circle<S>>, RadiusProtocol<S, Circle<S>> where S : ViewBase
+sealed interface Circle<S> : ViewProtocol<S, Circle<S>>, ForegroundColorProtocol<Circle<S>>, BorderProtocol<S, Circle<S>>, RadiusProtocol<S, Circle<S>> where S : ViewBase
 
 private class CircleImpl : DrawableView(), Circle<CircleImpl> {
 

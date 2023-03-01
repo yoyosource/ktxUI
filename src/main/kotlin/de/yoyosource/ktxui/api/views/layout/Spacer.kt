@@ -21,7 +21,7 @@ fun OrientedViewContainer.Spacer(minLength: Int): Spacer<*> {
 fun OrientedViewContainer.Spacer(minLength: KProperty0<Int>): Spacer<*> {
     val length = ViewOption(0)
     val spacer = +SpacerImpl(length)
-    length.set(spacer, minLength)
+    length.set(spacer.redraw, minLength)
     return spacer
 }
 

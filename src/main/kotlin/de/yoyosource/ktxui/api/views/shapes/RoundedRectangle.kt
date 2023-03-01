@@ -12,7 +12,7 @@ fun ViewContainer.RoundedRectangle(): RoundedRectangle<*> {
     return +RoundedRectangleImpl()
 }
 
-sealed interface RoundedRectangle<S> : ViewProtocol<S, RoundedRectangle<S>>, ForegroundColorProtocol<S, RoundedRectangle<S>>, BorderProtocol<S, RoundedRectangle<S>>, WidthHeightProtocol<S, RoundedRectangle<S>>, CornerRadiusProtocol<S, RoundedRectangle<S>> where S : ViewBase
+sealed interface RoundedRectangle<S> : ViewProtocol<S, RoundedRectangle<S>>, ForegroundColorProtocol<RoundedRectangle<S>>, BorderProtocol<S, RoundedRectangle<S>>, WidthHeightProtocol<S, RoundedRectangle<S>>, CornerRadiusProtocol<RoundedRectangle<S>> where S : ViewBase
 
 private class RoundedRectangleImpl : DrawableView(), RoundedRectangle<RoundedRectangleImpl> {
 

@@ -14,7 +14,7 @@ fun OrientedViewContainer.Divider(): Divider<*> {
     return +DividerImpl()
 }
 
-sealed interface Divider<S> : ViewProtocol<S, Divider<S>>, ForegroundColorProtocol<S, Divider<S>> where S : ViewBase
+sealed interface Divider<S> : ViewProtocol<S, Divider<S>>, ForegroundColorProtocol<Divider<S>> where S : ViewBase
 
 private class DividerImpl : DrawableView(), Divider<DividerImpl> {
 

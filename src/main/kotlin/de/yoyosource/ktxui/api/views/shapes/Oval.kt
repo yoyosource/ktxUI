@@ -15,7 +15,7 @@ fun ViewContainer.Oval(): Oval<*> {
     return +OvalImpl()
 }
 
-sealed interface Oval<S> : ViewProtocol<S, Oval<S>>, ForegroundColorProtocol<S, Oval<S>>, BorderProtocol<S, Oval<S>>, WidthHeightProtocol<S, Oval<S>> where S : ViewBase
+sealed interface Oval<S> : ViewProtocol<S, Oval<S>>, ForegroundColorProtocol<Oval<S>>, BorderProtocol<S, Oval<S>>, WidthHeightProtocol<S, Oval<S>> where S : ViewBase
 
 private class OvalImpl : DrawableView(), Oval<OvalImpl> {
 

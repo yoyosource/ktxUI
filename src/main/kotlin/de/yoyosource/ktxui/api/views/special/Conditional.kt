@@ -10,8 +10,8 @@ fun ViewContainer.Conditional(value: Boolean, inverted: Boolean = false, builder
 
 fun ViewContainer.Conditional(value: KProperty0<Boolean>, inverted: Boolean = false, builder: SingleViewBuilder): Conditional<*> {
     val _value = ViewOption(false)
-    return (+ConditionalImpl(_value, inverted)).apply(builder).let {
-        _value.set(it, value)
+    return (+ConditionalImpl(_value, inverted)).apply(builder).apply {
+        _value.set(redraw, value)
     }
 }
 
@@ -24,7 +24,7 @@ private class ConditionalImpl constructor(private val value: ViewOption<Boolean>
 
     override fun redraw(view: ViewBase) {
         if (view == this || value.get() != inverted) {
-            super.redraw(view)
+            super<SingleViewContainer>.redraw(view)
         }
     }
 

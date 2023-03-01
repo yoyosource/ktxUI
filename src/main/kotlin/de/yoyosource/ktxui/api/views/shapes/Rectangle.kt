@@ -15,7 +15,7 @@ fun ViewContainer.Rectangle(): Rectangle<*> {
     return +RectangleImpl()
 }
 
-sealed interface Rectangle<S> : ViewProtocol<S, Rectangle<S>>, ForegroundColorProtocol<S, Rectangle<S>>, BorderProtocol<S, Rectangle<S>>, WidthHeightProtocol<S, Rectangle<S>> where S : ViewBase
+sealed interface Rectangle<S> : ViewProtocol<S, Rectangle<S>>, ForegroundColorProtocol<Rectangle<S>>, BorderProtocol<S, Rectangle<S>>, WidthHeightProtocol<S, Rectangle<S>> where S : ViewBase
 
 private class RectangleImpl : DrawableView(), Rectangle<RectangleImpl> {
 

@@ -14,37 +14,37 @@ interface PaddingProtocol<S, A> : ViewProtocol<S, A> where S : ViewBase, A : Pad
     val rightPadding: ViewOption<Int>
 
     fun padding(padding: Int): A {
-        this.topPadding.set(selfView, padding)
-        this.bottomPadding.set(selfView, padding)
-        this.leftPadding.set(selfView, padding)
-        this.rightPadding.set(selfView, padding)
+        this.topPadding.set(redraw, padding)
+        this.bottomPadding.set(redraw, padding)
+        this.leftPadding.set(redraw, padding)
+        this.rightPadding.set(redraw, padding)
         return selfAPI
     }
 
     fun padding(padding: KProperty0<Int>): A {
-        this.topPadding.set(selfView, padding)
-        this.bottomPadding.set(selfView, padding)
-        this.leftPadding.set(selfView, padding)
-        this.rightPadding.set(selfView, padding)
+        this.topPadding.set(redraw, padding)
+        this.bottomPadding.set(redraw, padding)
+        this.leftPadding.set(redraw, padding)
+        this.rightPadding.set(redraw, padding)
         return selfAPI
     }
 
     fun padding(side: Side, padding: Int): A {
         when (side) {
-            Side.TOP -> this.topPadding.set(selfView, padding)
-            Side.BOTTOM -> this.bottomPadding.set(selfView, padding)
-            Side.LEFT -> this.leftPadding.set(selfView, padding)
-            Side.RIGHT -> this.rightPadding.set(selfView, padding)
+            Side.TOP -> this.topPadding.set(redraw, padding)
+            Side.BOTTOM -> this.bottomPadding.set(redraw, padding)
+            Side.LEFT -> this.leftPadding.set(redraw, padding)
+            Side.RIGHT -> this.rightPadding.set(redraw, padding)
         }
         return selfAPI
     }
 
     fun padding(side: Side, padding: KProperty0<Int>): A {
         when (side) {
-            Side.TOP -> this.topPadding.set(selfView, padding)
-            Side.BOTTOM -> this.bottomPadding.set(selfView, padding)
-            Side.LEFT -> this.leftPadding.set(selfView, padding)
-            Side.RIGHT -> this.rightPadding.set(selfView, padding)
+            Side.TOP -> this.topPadding.set(redraw, padding)
+            Side.BOTTOM -> this.bottomPadding.set(redraw, padding)
+            Side.LEFT -> this.leftPadding.set(redraw, padding)
+            Side.RIGHT -> this.rightPadding.set(redraw, padding)
         }
         return selfAPI
     }

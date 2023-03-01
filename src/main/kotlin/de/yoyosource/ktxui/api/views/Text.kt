@@ -18,16 +18,16 @@ fun ViewContainer.Text(text: KProperty0<String>): Text<*> {
     return observableInit(text) { +TextImpl(it) }
 }
 
-sealed interface Text<S> : ViewProtocol<S, Text<S>>, PaddingProtocol<S, Text<S>>, ForegroundColorProtocol<S, Text<S>>, BorderProtocol<S, Text<S>>, FontProtocol<S, Text<S>> where S : ViewBase {
+sealed interface Text<S> : ViewProtocol<S, Text<S>>, PaddingProtocol<S, Text<S>>, ForegroundColorProtocol<Text<S>>, BorderProtocol<S, Text<S>>, FontProtocol<S, Text<S>> where S : ViewBase {
     val alignment: ViewOption<TextAlignment>
 
     fun alignment(alignment: TextAlignment): Text<S> {
-        this.alignment.set(selfView, alignment)
+        this.alignment.set(redraw, alignment)
         return selfAPI
     }
 
     fun alignment(alignment: KProperty0<TextAlignment>): Text<S> {
-        this.alignment.set(selfView, alignment)
+        this.alignment.set(redraw, alignment)
         return selfAPI
     }
 }
@@ -94,7 +94,6 @@ private class TextImpl constructor(val text: () -> String) : DrawableView(), Tex
         }
 
         val (position, size) = viewState[this]
-        drawable.setColor(getBorderColor())
         drawable.drawBorder(this, position, size)
     }
 

@@ -10,24 +10,24 @@ fun ViewContainer.RelativePosition(x: Int, y: Int, builder: SingleViewBuilder): 
 
 fun ViewContainer.RelativePosition(x: KProperty0<Int>, y: Int, builder: SingleViewBuilder): RelativePosition<*> {
     val _x = ViewOption(0)
-    return (+RelativePositionImpl(_x, ViewOption(y))).apply(builder).let {
-        _x.set(it, x)
+    return (+RelativePositionImpl(_x, ViewOption(y))).apply(builder).apply {
+        _x.set(redraw, x)
     }
 }
 
 fun ViewContainer.RelativePosition(x: Int, y: KProperty0<Int>, builder: SingleViewBuilder): RelativePosition<*> {
     val _y = ViewOption(0)
-    return (+RelativePositionImpl(ViewOption(x), _y)).apply(builder).let {
-        _y.set(it, y)
+    return (+RelativePositionImpl(ViewOption(x), _y)).apply(builder).apply {
+        _y.set(redraw, y)
     }
 }
 
 fun ViewContainer.RelativePosition(x: KProperty0<Int>, y: KProperty0<Int>, builder: SingleViewBuilder): RelativePosition<*> {
     val _x = ViewOption(0)
     val _y = ViewOption(0)
-    return (+RelativePositionImpl(_x, _y)).apply(builder).let {
-        _x.set(it, x)
-        _y.set(it, y)
+    return (+RelativePositionImpl(_x, _y)).apply(builder).apply {
+        _x.set(redraw, x)
+        _y.set(redraw, y)
     }
 }
 

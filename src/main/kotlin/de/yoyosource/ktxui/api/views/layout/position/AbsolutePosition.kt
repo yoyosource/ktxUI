@@ -10,24 +10,24 @@ fun ViewContainer.AbsolutePosition(x: Int, y: Int, builder: SingleViewBuilder): 
 
 fun ViewContainer.AbsolutePosition(x: KProperty0<Int>, y: Int, builder: SingleViewBuilder): AbsolutePosition<*> {
     val _x = ViewOption(0)
-    return (+AbsolutePositionImpl(_x, ViewOption(y))).apply(builder).let {
-        _x.set(it, x)
+    return (+AbsolutePositionImpl(_x, ViewOption(y))).apply(builder).apply {
+        _x.set(redraw, x)
     }
 }
 
 fun ViewContainer.AbsolutePosition(x: Int, y: KProperty0<Int>, builder: SingleViewBuilder): AbsolutePosition<*> {
     val _y = ViewOption(0)
-    return (+AbsolutePositionImpl(ViewOption(x), _y)).apply(builder).let {
-        _y.set(it, y)
+    return (+AbsolutePositionImpl(ViewOption(x), _y)).apply(builder).apply {
+        _y.set(redraw, y)
     }
 }
 
 fun ViewContainer.AbsolutePosition(x: KProperty0<Int>, y: KProperty0<Int>, builder: SingleViewBuilder): AbsolutePosition<*> {
     val _x = ViewOption(0)
     val _y = ViewOption(0)
-    return (+AbsolutePositionImpl(_x, _y)).apply(builder).let {
-        _x.set(it, x)
-        _y.set(it, y)
+    return (+AbsolutePositionImpl(_x, _y)).apply(builder).apply {
+        _x.set(redraw, x)
+        _y.set(redraw, y)
     }
 }
 

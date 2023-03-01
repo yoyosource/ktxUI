@@ -24,97 +24,97 @@ interface FontProtocol<S, A> : ViewProtocol<S, A> where S : ViewBase, A : FontPr
     }
 
     fun design(design: FontFamily): A {
-        this.fontFamily.set(selfView, design)
+        this.fontFamily.set(redraw, design)
         return selfAPI
     }
 
     fun design(design: KProperty0<FontFamily>): A {
-        this.fontFamily.set(selfView, design)
+        this.fontFamily.set(redraw, design)
         return selfAPI
     }
 
     fun weight(weight: FontWeight): A {
-        this.weight.set(selfView, weight)
+        this.weight.set(redraw, weight)
         return selfAPI
     }
 
     fun weight(weight: KProperty0<FontWeight>): A {
-        this.weight.set(selfView, weight)
+        this.weight.set(redraw, weight)
         return selfAPI
     }
 
     fun size(size: Float): A {
-        this.size.set(selfView, size)
+        this.size.set(redraw, size)
         return selfAPI
     }
 
     fun size(size: KProperty0<Float>): A {
-        this.size.set(selfView, size)
+        this.size.set(redraw, size)
         return selfAPI
     }
 
     fun bold(bold: Boolean = true): A {
-        this.weight.set(selfView, if (bold) Bold else Regular)
+        this.weight.set(redraw, if (bold) Bold else Regular)
         return selfAPI
     }
 
     fun italic(italic: Boolean = true): A {
-        this.italic.set(selfView, italic)
+        this.italic.set(redraw, italic)
         return selfAPI
     }
 
     fun italic(italic: KProperty0<Boolean>): A {
-        this.italic.set(selfView, italic)
+        this.italic.set(redraw, italic)
         return selfAPI
     }
 
     fun strikeThrough(strikeThrough: Boolean = true): A {
-        this.strikeThrough.set(selfView, strikeThrough)
+        this.strikeThrough.set(redraw, strikeThrough)
         return selfAPI
     }
 
     fun strikeThrough(strikeThrough: KProperty0<Boolean>): A {
-        this.strikeThrough.set(selfView, strikeThrough)
+        this.strikeThrough.set(redraw, strikeThrough)
         return selfAPI
     }
 
     fun underline(underline: Boolean = true): A {
-        this.underline.set(selfView, underline)
+        this.underline.set(redraw, underline)
         return selfAPI
     }
 
     fun underline(underline: KProperty0<Boolean>): A {
-        this.underline.set(selfView, underline)
+        this.underline.set(redraw, underline)
         return selfAPI
     }
 
     fun kerning(kerning: Float = 0f): A {
-        this.kerning.set(selfView, kerning)
+        this.kerning.set(redraw, kerning)
         return selfAPI
     }
 
     fun kerning(kerning: KProperty0<Float>): A {
-        this.kerning.set(selfView, kerning)
+        this.kerning.set(redraw, kerning)
         return selfAPI
     }
 
     fun tracking(tracking: Float = 0f): A {
-        this.tracking.set(selfView, tracking)
+        this.tracking.set(redraw, tracking)
         return selfAPI
     }
 
     fun tracking(tracking: KProperty0<Float>): A {
-        this.tracking.set(selfView, tracking)
+        this.tracking.set(redraw, tracking)
         return selfAPI
     }
 
     fun ligatures(ligatures: Boolean = true): A {
-        this.ligatures.set(selfView, ligatures)
+        this.ligatures.set(redraw, ligatures)
         return selfAPI
     }
 
     fun ligatures(ligatures: KProperty0<Boolean>): A {
-        this.ligatures.set(selfView, ligatures)
+        this.ligatures.set(redraw, ligatures)
         return selfAPI
     }
 }
